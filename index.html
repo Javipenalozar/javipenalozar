@@ -586,6 +586,248 @@ footer {
   footer { flex-direction: column; text-align: center; padding: 30px 20px; }
 }
 
+/* ── ADMIN PANEL ── */
+#admin-btn {
+  position: fixed;
+  bottom: 32px; right: 32px;
+  background: var(--oro);
+  color: #030408;
+  border: none;
+  padding: 12px 22px;
+  border-radius: 30px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  z-index: 900;
+  display: none;
+  box-shadow: 0 4px 24px rgba(232,195,10,0.4);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+#admin-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(232,195,10,0.5); }
+
+#admin-panel {
+  position: fixed;
+  inset: 0;
+  background: #080b12;
+  z-index: 2000;
+  display: flex;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+#admin-panel.open { opacity: 1; pointer-events: all; }
+
+.admin-sidebar {
+  width: 300px;
+  min-width: 260px;
+  border-right: 1px solid rgba(255,255,255,0.08);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.admin-sidebar-head {
+  padding: 28px 24px 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.admin-sidebar-head h3 {
+  color: var(--blanco);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  margin: 0;
+}
+.admin-close {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.5);
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 14px;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+}
+.admin-close:hover { background: rgba(255,255,255,0.12); color: white; }
+.admin-new-btn {
+  margin: 16px;
+  background: var(--turquesa);
+  color: #030408;
+  border: none;
+  padding: 10px;
+  border-radius: 10px;
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+  transition: opacity 0.2s;
+}
+.admin-new-btn:hover { opacity: 0.85; }
+.admin-post-list {
+  overflow-y: auto;
+  flex: 1;
+  padding: 8px 0;
+}
+.admin-post-item {
+  padding: 14px 20px;
+  cursor: pointer;
+  border-left: 3px solid transparent;
+  transition: all 0.2s;
+}
+.admin-post-item:hover { background: rgba(255,255,255,0.04); }
+.admin-post-item.selected { border-left-color: var(--turquesa); background: rgba(20,184,166,0.06); }
+.admin-post-item-title {
+  color: rgba(240,250,249,0.8);
+  font-size: 13px;
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.admin-post-item-meta {
+  font-size: 11px;
+  color: rgba(255,255,255,0.25);
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.admin-badge {
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.admin-badge.pub { background: rgba(74,222,128,0.15); color: #4ade80; }
+.admin-badge.draft { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.4); }
+
+.admin-editor {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.admin-editor-head {
+  padding: 20px 32px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.admin-action-btn {
+  padding: 8px 20px;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s;
+}
+.admin-action-btn.save { background: var(--turquesa); color: #030408; }
+.admin-action-btn.save:hover { opacity: 0.85; }
+.admin-action-btn.publish { background: #4ade80; color: #030408; }
+.admin-action-btn.publish:hover { opacity: 0.85; }
+.admin-action-btn.unpublish { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.6); border: 1px solid rgba(255,255,255,0.12); }
+.admin-action-btn.delete { background: rgba(239,68,68,0.12); color: #ef4444; border: 1px solid rgba(239,68,68,0.2); }
+.admin-action-btn.delete:hover { background: rgba(239,68,68,0.25); }
+.admin-status-msg {
+  font-size: 12px;
+  color: #4ade80;
+  margin-left: auto;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.admin-status-msg.show { opacity: 1; }
+
+.admin-form {
+  flex: 1;
+  overflow-y: auto;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.admin-field label {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+  margin-bottom: 8px;
+}
+.admin-input {
+  width: 100%;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
+  padding: 12px 16px;
+  color: var(--blanco);
+  font-family: inherit;
+  font-size: 15px;
+  box-sizing: border-box;
+  transition: border-color 0.2s;
+}
+.admin-input:focus { outline: none; border-color: var(--turquesa); }
+.admin-input.title-input { font-size: 20px; font-weight: 300; }
+select.admin-input { cursor: pointer; }
+.admin-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.admin-toolbar {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+.admin-tb-btn {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.6);
+  padding: 5px 12px;
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.admin-tb-btn:hover { background: rgba(255,255,255,0.12); color: white; }
+.admin-content-editor {
+  min-height: 320px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
+  padding: 20px;
+  color: rgba(240,250,249,0.85);
+  font-size: 15px;
+  line-height: 1.8;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.admin-content-editor:focus { border-color: var(--turquesa); }
+.admin-content-editor h3 { color: white; margin: 20px 0 8px; font-weight: 400; }
+.admin-content-editor strong { color: white; }
+.admin-empty-state {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255,255,255,0.2);
+  gap: 12px;
+}
+.admin-empty-state svg { opacity: 0.3; }
+@media(max-width:768px){
+  #admin-panel { flex-direction: column; }
+  .admin-sidebar { width: 100%; min-width: unset; border-right: none; border-bottom: 1px solid rgba(255,255,255,0.08); max-height: 200px; }
+  .admin-row { grid-template-columns: 1fr; }
+}
+
 /* ── BLOG ── */
 #blog {
   padding: 100px 40px;
@@ -990,6 +1232,73 @@ footer {
   </div>
 </section>
 
+<!-- ADMIN BUTTON -->
+<button id="admin-btn" onclick="openAdmin()">⚡ Admin</button>
+
+<!-- ADMIN PANEL -->
+<div id="admin-panel">
+  <div class="admin-sidebar">
+    <div class="admin-sidebar-head">
+      <h3>ARTÍCULOS</h3>
+      <button class="admin-close" onclick="closeAdmin()">✕</button>
+    </div>
+    <button class="admin-new-btn" onclick="newPost()">+ Nuevo artículo</button>
+    <div class="admin-post-list" id="admin-post-list"></div>
+  </div>
+  <div class="admin-editor" id="admin-editor">
+    <div class="admin-empty-state" id="admin-empty">
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+        <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/>
+      </svg>
+      <span>Selecciona un artículo o crea uno nuevo</span>
+    </div>
+    <div id="admin-form-wrap" style="display:none;flex:1;flex-direction:column;overflow:hidden">
+      <div class="admin-editor-head">
+        <button class="admin-action-btn save" onclick="savePost()">Guardar</button>
+        <button class="admin-action-btn publish" id="btn-toggle-pub" onclick="togglePublish()">Publicar</button>
+        <button class="admin-action-btn delete" onclick="deletePost()">Eliminar</button>
+        <span class="admin-status-msg" id="admin-status"></span>
+      </div>
+      <div class="admin-form">
+        <div class="admin-field">
+          <label>Título</label>
+          <input class="admin-input title-input" type="text" id="af-titulo" placeholder="Título del artículo">
+        </div>
+        <div class="admin-field">
+          <label>Extracto (resumen corto)</label>
+          <input class="admin-input" type="text" id="af-extracto" placeholder="Una frase que invite a leer...">
+        </div>
+        <div class="admin-row">
+          <div class="admin-field">
+            <label>Categoría</label>
+            <select class="admin-input" id="af-categoria">
+              <option value="General">General</option>
+              <option value="Amor Propio">Amor Propio</option>
+              <option value="Heridas Emocionales">Heridas Emocionales</option>
+              <option value="Pareja">Pareja</option>
+              <option value="Familiar">Familiar</option>
+              <option value="Energía">Energía</option>
+              <option value="Humor & Sanación">Humor & Sanación</option>
+              <option value="Mente">Mente</option>
+            </select>
+          </div>
+        </div>
+        <div class="admin-field">
+          <label>Contenido</label>
+          <div class="admin-toolbar">
+            <button class="admin-tb-btn" onclick="fmt('bold')"><strong>B</strong></button>
+            <button class="admin-tb-btn" onclick="fmt('italic')"><em>I</em></button>
+            <button class="admin-tb-btn" onclick="fmtH3()">H3</button>
+            <button class="admin-tb-btn" onclick="fmtP()">Párrafo</button>
+            <button class="admin-tb-btn" onclick="fmtLink()">🔗 Link</button>
+          </div>
+          <div class="admin-content-editor" id="af-contenido" contenteditable="true"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- BLOG -->
 <section id="blog">
   <div class="blog-header">
@@ -1169,7 +1478,10 @@ async function handleLogin(e){
     btn.disabled = false; btn.textContent = 'Entrar al mundo →'
     return
   }
+  const { data: { session } } = await supa.auth.getSession()
+  currentUser = session?.user || null
   enterWorld()
+  showAdminBtn()
 }
 
 function enterWorld(){
@@ -1196,9 +1508,149 @@ async function logout(){
 ;(async () => {
   const { data: { session } } = await supa.auth.getSession()
   if(session){
+    currentUser = session.user
     enterWorld()
+    showAdminBtn()
   }
 })()
+
+// ── ADMIN ──
+const ADMIN_EMAIL = 'psicojavi@javipenaloza.com'
+let currentUser = null
+let adminPosts = []
+let editingPostId = null
+
+function isAdmin(){ return currentUser?.email === ADMIN_EMAIL }
+
+function showAdminBtn(){
+  if(isAdmin()) document.getElementById('admin-btn').style.display = 'block'
+}
+
+function openAdmin(){
+  document.getElementById('admin-panel').classList.add('open')
+  loadAdminPosts()
+}
+function closeAdmin(){
+  document.getElementById('admin-panel').classList.remove('open')
+}
+
+async function loadAdminPosts(){
+  const { data } = await supa.from('posts').select('*').order('created_at', { ascending: false })
+  adminPosts = data || []
+  renderAdminList()
+}
+
+function renderAdminList(){
+  const list = document.getElementById('admin-post-list')
+  if(!adminPosts.length){
+    list.innerHTML = '<div style="padding:20px;color:rgba(255,255,255,0.25);font-size:13px;text-align:center">Sin artículos aún</div>'
+    return
+  }
+  list.innerHTML = adminPosts.map(p => `
+    <div class="admin-post-item${editingPostId===p.id?' selected':''}" onclick="editPost('${p.id}')">
+      <div class="admin-post-item-title">${p.titulo || 'Sin título'}</div>
+      <div class="admin-post-item-meta">
+        <span class="admin-badge ${p.publicado?'pub':'draft'}">${p.publicado?'Publicado':'Borrador'}</span>
+        <span>${new Date(p.created_at).toLocaleDateString('es-ES',{day:'numeric',month:'short'})}</span>
+      </div>
+    </div>
+  `).join('')
+}
+
+function newPost(){
+  editingPostId = null
+  document.getElementById('af-titulo').value = ''
+  document.getElementById('af-extracto').value = ''
+  document.getElementById('af-categoria').value = 'General'
+  document.getElementById('af-contenido').innerHTML = ''
+  document.getElementById('btn-toggle-pub').textContent = 'Publicar'
+  document.getElementById('btn-toggle-pub').className = 'admin-action-btn publish'
+  document.getElementById('admin-empty').style.display = 'none'
+  document.getElementById('admin-form-wrap').style.display = 'flex'
+  document.getElementById('af-titulo').focus()
+}
+
+function editPost(id){
+  const p = adminPosts.find(x => x.id === id)
+  if(!p) return
+  editingPostId = id
+  document.getElementById('af-titulo').value = p.titulo || ''
+  document.getElementById('af-extracto').value = p.extracto || ''
+  document.getElementById('af-categoria').value = p.categoria || 'General'
+  document.getElementById('af-contenido').innerHTML = p.contenido || ''
+  const btn = document.getElementById('btn-toggle-pub')
+  if(p.publicado){ btn.textContent = 'Despublicar'; btn.className = 'admin-action-btn unpublish' }
+  else { btn.textContent = 'Publicar'; btn.className = 'admin-action-btn publish' }
+  document.getElementById('admin-empty').style.display = 'none'
+  document.getElementById('admin-form-wrap').style.display = 'flex'
+  renderAdminList()
+}
+
+async function savePost(publish){
+  const titulo = document.getElementById('af-titulo').value.trim()
+  if(!titulo){ alert('El título es obligatorio'); return }
+  const payload = {
+    titulo,
+    extracto: document.getElementById('af-extracto').value.trim(),
+    categoria: document.getElementById('af-categoria').value,
+    contenido: document.getElementById('af-contenido').innerHTML,
+  }
+  if(publish !== undefined) payload.publicado = publish
+
+  let error
+  if(editingPostId){
+    payload.updated_at = new Date().toISOString()
+    ;({ error } = await supa.from('posts').update(payload).eq('id', editingPostId))
+  } else {
+    const { data, error: e } = await supa.from('posts').insert(payload).select().single()
+    error = e
+    if(data) editingPostId = data.id
+  }
+
+  if(error){ alert('Error: ' + error.message); return }
+  showStatus('Guardado ✓')
+  await loadAdminPosts()
+  await loadBlog()
+}
+
+async function togglePublish(){
+  const p = adminPosts.find(x => x.id === editingPostId)
+  const newState = p ? !p.publicado : true
+  await savePost(newState)
+  const btn = document.getElementById('btn-toggle-pub')
+  if(newState){ btn.textContent = 'Despublicar'; btn.className = 'admin-action-btn unpublish' }
+  else { btn.textContent = 'Publicar'; btn.className = 'admin-action-btn publish' }
+}
+
+async function deletePost(){
+  if(!editingPostId) return
+  if(!confirm('¿Eliminar este artículo? Esta acción no se puede deshacer.')) return
+  await supa.from('posts').delete().eq('id', editingPostId)
+  editingPostId = null
+  document.getElementById('admin-empty').style.display = 'flex'
+  document.getElementById('admin-form-wrap').style.display = 'none'
+  await loadAdminPosts()
+  await loadBlog()
+}
+
+function showStatus(msg){
+  const el = document.getElementById('admin-status')
+  el.textContent = msg; el.classList.add('show')
+  setTimeout(() => el.classList.remove('show'), 2500)
+}
+
+// Toolbar
+function fmt(cmd){ document.execCommand(cmd, false, null) }
+function fmtH3(){
+  document.execCommand('formatBlock', false, 'h3')
+}
+function fmtP(){
+  document.execCommand('formatBlock', false, 'p')
+}
+function fmtLink(){
+  const url = prompt('URL del enlace:')
+  if(url) document.execCommand('createLink', false, url)
+}
 
 // ── BLOG ──
 const CAT_COLORS = {
