@@ -416,6 +416,39 @@ footer {
   letter-spacing: 0.08em;
 }
 
+/* ── WORLDS LAYER ── */
+#worlds-layer {
+  position: absolute; inset: 0;
+  pointer-events: none;
+  z-index: 3;
+}
+.w-dot {
+  position: absolute;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  pointer-events: all;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  display: flex; align-items: center; justify-content: center;
+}
+.w-dot:hover { transform: translate(-50%, -50%) scale(1.25); }
+.w-dot svg { pointer-events: none; }
+.w-name {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0;
+  transition: opacity 0.2s;
+  pointer-events: none;
+  font-weight: 600;
+}
+.w-dot:hover .w-name { opacity: 1; }
+
 /* ── REVEAL ANIMATIONS ── */
 .reveal {
   opacity: 0; transform: translateY(30px);
@@ -452,6 +485,7 @@ footer {
 <!-- HERO: EL UNIVERSO -->
 <section id="hero">
   <canvas id="universe-canvas"></canvas>
+  <div id="worlds-layer"></div>
 
   <div class="hero-title" id="hero-title">
     <div class="hero-title-sub">Bienvenido a</div>
@@ -482,7 +516,7 @@ footer {
 <div id="modal-overlay">
   <div class="modal-card" id="modal-card">
     <div class="modal-header" id="modal-header">
-      <canvas class="modal-symbol" id="modal-symbol" width="64" height="64"></canvas>
+      <div class="modal-symbol" id="modal-symbol"></div>
       <div class="modal-tag" id="modal-tag">Mundo</div>
       <div class="modal-title" id="modal-title">Título</div>
       <button class="modal-close" id="modal-close">✕</button>
@@ -648,158 +682,56 @@ const WORLDS = [
   }
 ]
 
-// ── DRAW WORLD ──
-function drawWorld(ctx, w, x, y, scale, t){
-  const s = w.size * scale
-  const c = w.color
-
-  // Outer glow
-  const glow = ctx.createRadialGradient(x, y, 0, x, y, s * 2.4)
-  glow.addColorStop(0, w.glowColor + '0.22)')
-  glow.addColorStop(0.5, w.glowColor + '0.08)')
-  glow.addColorStop(1, w.glowColor + '0)')
-  ctx.beginPath()
-  ctx.arc(x, y, s * 2.4, 0, Math.PI * 2)
-  ctx.fillStyle = glow
-  ctx.fill()
-
-  // Core planet body
-  const body = ctx.createRadialGradient(x - s*0.2, y - s*0.2, s*0.05, x, y, s)
-  body.addColorStop(0, w.glowColor + '0.55)')
-  body.addColorStop(0.4, w.glowColor + '0.25)')
-  body.addColorStop(1, w.glowColor + '0.04)')
-  ctx.beginPath()
-  ctx.arc(x, y, s, 0, Math.PI * 2)
-  ctx.fillStyle = body
-  ctx.fill()
-
-  // Rim ring
-  ctx.beginPath()
-  ctx.arc(x, y, s, 0, Math.PI * 2)
-  ctx.strokeStyle = c
-  ctx.lineWidth = 1.5
-  ctx.globalAlpha = 0.6
-  ctx.stroke()
-  ctx.globalAlpha = 1
-
-  // Symbol
-  ctx.save()
-  ctx.translate(x, y)
-  ctx.strokeStyle = c
-  ctx.fillStyle = c
-  ctx.lineWidth = 2
-  ctx.lineCap = 'round'
-  ctx.lineJoin = 'round'
-
-  if(w.id === 'amor'){
-    // Star burst rays
-    const rays = 8
-    for(let i = 0; i < rays; i++){
-      ctx.save()
-      ctx.rotate((Math.PI*2/rays)*i + t*0.3)
-      ctx.globalAlpha = 0.5
-      ctx.beginPath(); ctx.moveTo(s*0.55, 0); ctx.lineTo(s*0.9, 0); ctx.stroke()
-      ctx.restore()
-    }
-    // Diamond
-    ctx.globalAlpha = 0.9
-    const d = s * 0.35
-    ctx.beginPath()
-    ctx.moveTo(0, -d); ctx.lineTo(d*0.65, 0)
-    ctx.lineTo(0, d); ctx.lineTo(-d*0.65, 0)
-    ctx.closePath(); ctx.stroke()
-
-  } else if(w.id === 'heridas'){
-    // Broken heart
-    ctx.globalAlpha = 0.95
-    ctx.lineWidth = 2.2
-    const hs = s * 0.55
-    ctx.beginPath()
-    ctx.moveTo(0, hs*0.4)
-    ctx.bezierCurveTo(-hs*0.05, hs*0.1, -hs*0.5, -hs*0.18, -hs*0.46, -hs*0.44)
-    ctx.bezierCurveTo(-hs*0.42, -hs*0.76, 0, -hs*0.76, 0, -hs*0.4)
-    ctx.bezierCurveTo(0, -hs*0.76, hs*0.42, -hs*0.76, hs*0.46, -hs*0.44)
-    ctx.bezierCurveTo(hs*0.5, -hs*0.18, hs*0.05, hs*0.1, 0, hs*0.4)
-    ctx.stroke()
-    // Crack
-    ctx.strokeStyle = '#fff'; ctx.lineWidth = 1.5; ctx.globalAlpha = 0.7
-    ctx.beginPath()
-    ctx.moveTo(-s*0.06, -s*0.45); ctx.lineTo(s*0.04, -s*0.2)
-    ctx.lineTo(-s*0.08, 0); ctx.lineTo(s*0.04, s*0.18)
-    ctx.stroke()
-
-  } else if(w.id === 'pareja'){
-    // Two interlocked circles
-    ctx.globalAlpha = 0.9; ctx.lineWidth = 2
-    ctx.beginPath(); ctx.arc(-s*0.22, 0, s*0.36, 0, Math.PI*2); ctx.stroke()
-    ctx.beginPath(); ctx.arc(s*0.22, 0, s*0.36, 0, Math.PI*2); ctx.stroke()
-
-  } else if(w.id === 'familiar'){
-    // House + roots
-    ctx.globalAlpha = 0.9; ctx.lineWidth = 2
-    const hs = s * 0.55
-    ctx.beginPath()
-    ctx.moveTo(-hs*0.65, hs*0.4); ctx.lineTo(-hs*0.65, -hs*0.07)
-    ctx.lineTo(0, -hs*0.7); ctx.lineTo(hs*0.65, -hs*0.07)
-    ctx.lineTo(hs*0.65, hs*0.4); ctx.closePath(); ctx.stroke()
-    ctx.globalAlpha = 0.5; ctx.lineWidth = 1.5
-    ctx.strokeRect(-hs*0.18, -hs*0.07, hs*0.36, hs*0.47)
-    ctx.globalAlpha = 0.4
-    ctx.beginPath()
-    ctx.moveTo(0, hs*0.4); ctx.lineTo(0, hs*0.85)
-    ctx.moveTo(0, hs*0.65); ctx.lineTo(-hs*0.35, hs*0.95)
-    ctx.moveTo(0, hs*0.65); ctx.lineTo(hs*0.35, hs*0.95)
-    ctx.stroke()
-
-  } else if(w.id === 'energia'){
-    // Lotus petals (rotating)
-    ctx.globalAlpha = 0.85; ctx.lineWidth = 1.8
-    for(let i = 0; i < 6; i++){
-      ctx.save(); ctx.rotate((Math.PI*2/6)*i + t*0.2)
-      const ps = s * 0.55
-      ctx.beginPath()
-      ctx.moveTo(0, 0)
-      ctx.bezierCurveTo(ps*0.36, -ps*0.18, ps*0.36, -ps*0.7, 0, -ps*0.7)
-      ctx.bezierCurveTo(-ps*0.36, -ps*0.7, -ps*0.36, -ps*0.18, 0, 0)
-      ctx.stroke(); ctx.restore()
-    }
-    ctx.beginPath(); ctx.arc(0, 0, s*0.12, 0, Math.PI*2)
-    ctx.globalAlpha = 0.8; ctx.fill()
-
-  } else if(w.id === 'humor'){
-    // Lightning bolt
-    ctx.globalAlpha = 0.95; ctx.lineWidth = 2.5
-    const ls = s * 0.55
-    ctx.beginPath()
-    ctx.moveTo(ls*0.18, -ls*0.82)
-    ctx.lineTo(-ls*0.28, 0)
-    ctx.lineTo(ls*0.12, 0)
-    ctx.lineTo(-ls*0.18, ls*0.82)
-    ctx.stroke()
-
-  } else if(w.id === 'mente'){
-    // Neural network
-    const nodes = [
-      [0, -s*0.46], [s*0.36, -s*0.15], [-s*0.38, -s*0.13],
-      [s*0.23, s*0.31], [-s*0.26, s*0.33], [0, s*0.1]
-    ]
-    const edges = [[0,1],[0,2],[1,3],[2,4],[3,5],[4,5],[0,5],[1,2]]
-    ctx.globalAlpha = 0.4; ctx.lineWidth = 1
-    edges.forEach(([a,b])=>{
-      ctx.beginPath(); ctx.moveTo(nodes[a][0], nodes[a][1])
-      ctx.lineTo(nodes[b][0], nodes[b][1]); ctx.stroke()
-    })
-    ctx.globalAlpha = 0.9
-    nodes.forEach(([nx,ny],i)=>{
-      ctx.beginPath(); ctx.arc(nx, ny, i===0 ? s*0.1 : s*0.07, 0, Math.PI*2); ctx.fill()
-    })
-  }
-
-  ctx.restore()
-  ctx.globalAlpha = 1
+// ── SVG SYMBOLS per world ──
+const SYMBOLS = {
+  amor: `<svg viewBox="-1 -1 2 2" fill="none" stroke="currentColor" stroke-width="0.12" stroke-linecap="round">
+    <line x1="0" y1="-0.9" x2="0" y2="-0.55"/><line x1="0.64" y1="-0.64" x2="0.39" y2="-0.39"/>
+    <line x1="0.9" y1="0" x2="0.55" y2="0"/><line x1="0.64" y1="0.64" x2="0.39" y2="0.39"/>
+    <line x1="0" y1="0.9" x2="0" y2="0.55"/><line x1="-0.64" y1="0.64" x2="-0.39" y2="0.39"/>
+    <line x1="-0.9" y1="0" x2="-0.55" y2="0"/><line x1="-0.64" y1="-0.64" x2="-0.39" y2="-0.39"/>
+    <polygon points="0,-0.42 0.28,0 0,0.42 -0.28,0" stroke-width="0.1"/>
+  </svg>`,
+  heridas: `<svg viewBox="-1 -1 2 2" fill="none" stroke="currentColor" stroke-width="0.13" stroke-linecap="round">
+    <path d="M0,0.5 C-0.05,0.1 -0.55,-0.2 -0.52,-0.5 C-0.48,-0.85 0,-0.85 0,-0.48 C0,-0.85 0.48,-0.85 0.52,-0.5 C0.55,-0.2 0.05,0.1 0,0.5Z"/>
+    <polyline points="-0.08,-0.65 0.04,-0.3 -0.1,0 0.05,0.22" stroke="white" stroke-width="0.09" opacity="0.8"/>
+  </svg>`,
+  pareja: `<svg viewBox="-1 -1 2 2" fill="none" stroke="currentColor" stroke-width="0.12">
+    <circle cx="-0.28" cy="0" r="0.48"/>
+    <circle cx="0.28" cy="0" r="0.48"/>
+  </svg>`,
+  familiar: `<svg viewBox="-1 -1 2 2" fill="none" stroke="currentColor" stroke-width="0.12" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="-0.72,0.55 -0.72,-0.05 0,-0.75 0.72,-0.05 0.72,0.55"/>
+    <rect x="-0.22" y="-0.05" width="0.44" height="0.6" stroke-width="0.09" opacity="0.7"/>
+    <line x1="0" y1="0.55" x2="0" y2="0.9" opacity="0.5"/>
+    <line x1="0" y1="0.72" x2="-0.3" y2="0.95" opacity="0.4"/>
+    <line x1="0" y1="0.72" x2="0.3" y2="0.95" opacity="0.4"/>
+  </svg>`,
+  energia: `<svg viewBox="-1 -1 2 2" fill="none" stroke="currentColor" stroke-width="0.1" stroke-linecap="round">
+    <path d="M0,0 C0.28,-0.14 0.28,-0.62 0,-0.62 C-0.28,-0.62 -0.28,-0.14 0,0Z"/>
+    <path d="M0,0 C0.28,-0.14 0.28,-0.62 0,-0.62 C-0.28,-0.62 -0.28,-0.14 0,0Z" transform="rotate(60)"/>
+    <path d="M0,0 C0.28,-0.14 0.28,-0.62 0,-0.62 C-0.28,-0.62 -0.28,-0.14 0,0Z" transform="rotate(120)"/>
+    <path d="M0,0 C0.28,-0.14 0.28,-0.62 0,-0.62 C-0.28,-0.62 -0.28,-0.14 0,0Z" transform="rotate(180)"/>
+    <path d="M0,0 C0.28,-0.14 0.28,-0.62 0,-0.62 C-0.28,-0.62 -0.28,-0.14 0,0Z" transform="rotate(240)"/>
+    <path d="M0,0 C0.28,-0.14 0.28,-0.62 0,-0.62 C-0.28,-0.62 -0.28,-0.14 0,0Z" transform="rotate(300)"/>
+    <circle cx="0" cy="0" r="0.12" fill="currentColor"/>
+  </svg>`,
+  humor: `<svg viewBox="-1 -1 2 2" fill="currentColor" stroke="none">
+    <polygon points="0.18,-0.88 -0.32,0 0.14,0 -0.18,0.88 0.32,0 -0.14,0"/>
+  </svg>`,
+  mente: `<svg viewBox="-1 -1 2 2" fill="currentColor" stroke="currentColor" stroke-width="0.06">
+    <circle cx="0" cy="-0.6" r="0.13"/><circle cx="0.55" cy="-0.22" r="0.1"/>
+    <circle cx="-0.58" cy="-0.2" r="0.1"/><circle cx="0.38" cy="0.48" r="0.1"/>
+    <circle cx="-0.4" cy="0.5" r="0.1"/><circle cx="0" cy="0.15" r="0.09"/>
+    <line x1="0" y1="-0.47" x2="0.45" y2="-0.22" stroke-width="0.05" opacity="0.5"/>
+    <line x1="0" y1="-0.47" x2="-0.48" y2="-0.2" stroke-width="0.05" opacity="0.5"/>
+    <line x1="0.45" y1="-0.12" x2="0.28" y2="0.38" stroke-width="0.05" opacity="0.5"/>
+    <line x1="-0.48" y1="-0.1" x2="-0.3" y2="0.4" stroke-width="0.05" opacity="0.5"/>
+    <line x1="0.28" y1="0.48" x2="-0.3" y2="0.5" stroke-width="0.05" opacity="0.5"/>
+    <line x1="0" y1="-0.47" x2="0" y2="0.06" stroke-width="0.05" opacity="0.5"/>
+  </svg>`
 }
 
-// ── CANVAS SETUP ──
+// ── CANVAS SETUP (background only) ──
 const canvas = document.getElementById('universe-canvas')
 const ctx = canvas.getContext('2d')
 let W, H, cx, cy
@@ -808,6 +740,7 @@ function resize(){
   W = canvas.width = window.innerWidth
   H = canvas.height = window.innerHeight
   cx = W/2; cy = H/2
+  positionWorlds()
 }
 resize()
 window.addEventListener('resize', resize)
@@ -820,24 +753,52 @@ const STARS = Array.from({length:200},()=>({
   tw: Math.random()*Math.PI*2
 }))
 
-// Mouse
-let mouse = {x:-999,y:-999}
-canvas.addEventListener('mousemove', e=>{
-  const r=canvas.getBoundingClientRect()
-  mouse.x=e.clientX-r.left; mouse.y=e.clientY-r.top
+// ── CREATE WORLD ELEMENTS ──
+const layer = document.getElementById('worlds-layer')
+WORLDS.forEach(w => {
+  const sz = w.size * 2
+  const el = document.createElement('div')
+  el.className = 'w-dot'
+  el.id = 'wd-' + w.id
+  el.style.cssText = `
+    width:${sz}px; height:${sz}px;
+    border: 1.5px solid ${w.color};
+    background: radial-gradient(circle at 35% 35%, ${w.color}44, ${w.color}11 60%, transparent);
+    box-shadow: 0 0 ${sz*0.8}px ${w.color}33, inset 0 0 ${sz*0.4}px ${w.color}22;
+    color: ${w.color};
+  `
+  el.innerHTML = `
+    <div style="width:${sz*0.55}px;height:${sz*0.55}px;opacity:0.9">${SYMBOLS[w.id]||''}</div>
+    <div class="w-name" style="color:${w.color}">${w.name}</div>
+  `
+  el.addEventListener('mouseenter', () => {
+    w._hovered = true
+    showPanel(w)
+  })
+  el.addEventListener('mouseleave', () => {
+    w._hovered = false
+    hidePanel()
+  })
+  el.addEventListener('click', () => openModal(w))
+  layer.appendChild(el)
 })
-canvas.addEventListener('mouseleave', ()=>{mouse.x=-999;mouse.y=-999})
 
-// Panel & Modal state
-let hoveredId = null
-let panelOpen = false
-let activeWorld = null
+function positionWorlds(){
+  WORLDS.forEach(w => {
+    const p = getPos(w)
+    const el = document.getElementById('wd-' + w.id)
+    if(el){ el.style.left = p.x + 'px'; el.style.top = p.y + 'px' }
+  })
+}
+
+// ── PANEL & MODAL ──
 const panel = document.getElementById('world-panel')
 const panelLine = document.getElementById('panel-line')
 const panelTag = document.getElementById('panel-tag')
 const panelName = document.getElementById('panel-name')
 const panelFrase = document.getElementById('panel-frase')
 const panelBtn = document.getElementById('panel-btn')
+let panelOpen = false
 
 function showPanel(w){
   panel.style.setProperty('--panel-accent', w.color)
@@ -848,7 +809,7 @@ function showPanel(w){
   panelFrase.textContent = w.frase
   panelBtn.style.borderColor = w.color
   panelBtn.style.color = w.color
-  panelBtn.onclick = ()=> openModal(w)
+  panelBtn.onclick = () => openModal(w)
   panel.classList.add('open')
   panelOpen = true
 }
@@ -857,16 +818,7 @@ function hidePanel(){
   panelOpen = false
 }
 
-// Click world → modal
-canvas.addEventListener('click', e=>{
-  if(hoveredId){
-    const w = WORLDS.find(x=>x.id===hoveredId)
-    if(w) openModal(w)
-  }
-})
-
 function openModal(w){
-  activeWorld = w
   document.getElementById('modal-tag').textContent = w.tag
   document.getElementById('modal-tag').style.color = w.color
   document.getElementById('modal-title').textContent = w.name
@@ -878,105 +830,68 @@ function openModal(w){
   document.getElementById('modal-curso-btn').href = w.curso
   document.getElementById('modal-curso-btn').textContent = w.cursoLabel + ' →'
   document.getElementById('modal-curso-btn').style.background = w.color
-
-  // Draw symbol in modal
   const sc = document.getElementById('modal-symbol')
-  const sctx = sc.getContext('2d')
-  sctx.clearRect(0,0,64,64)
-  w.draw(sctx, 32, 32, 28, 0)
-
+  sc.style.cssText = `width:64px;height:64px;border-radius:50%;border:2px solid ${w.color};background:radial-gradient(circle at 35% 35%,${w.color}44,transparent);display:flex;align-items:center;justify-content:center;color:${w.color}`
+  sc.innerHTML = `<div style="width:38px;height:38px">${SYMBOLS[w.id]||''}</div>`
   document.getElementById('modal-overlay').classList.add('open')
 }
 
-document.getElementById('modal-close').onclick = ()=>document.getElementById('modal-overlay').classList.remove('open')
-document.getElementById('modal-overlay').addEventListener('click', e=>{
-  if(e.target===document.getElementById('modal-overlay'))
+document.getElementById('modal-close').onclick = () => document.getElementById('modal-overlay').classList.remove('open')
+document.getElementById('modal-overlay').addEventListener('click', e => {
+  if(e.target === document.getElementById('modal-overlay'))
     document.getElementById('modal-overlay').classList.remove('open')
 })
 
-// ── ANIMATION LOOP ──
+// ── ANIMATION LOOP (background only) ──
 let t = 0
 
 function getPos(w){
-  if(w.orbitR===0) return {x:cx, y:cy}
+  if(w.orbitR === 0) return {x: cx, y: cy}
   return {
-    x: cx + Math.cos(w.angle)*w.orbitR,
-    y: cy + Math.sin(w.angle)*w.orbitR*0.52
+    x: cx + Math.cos(w.angle) * w.orbitR,
+    y: cy + Math.sin(w.angle) * w.orbitR * 0.52
   }
 }
 
 function loop(){
-  ctx.clearRect(0,0,W,H)
+  ctx.clearRect(0, 0, W, H)
 
-  // BG
-  const bg=ctx.createRadialGradient(cx,cy*0.7,0,cx,cy*0.7,Math.max(W,H)*0.75)
-  bg.addColorStop(0,'#0a0520'); bg.addColorStop(0.5,'#050210'); bg.addColorStop(1,'#030408')
-  ctx.fillStyle=bg; ctx.fillRect(0,0,W,H)
+  // BG gradient
+  const bg = ctx.createRadialGradient(cx, cy*0.7, 0, cx, cy*0.7, Math.max(W,H)*0.75)
+  bg.addColorStop(0, '#0a0520')
+  bg.addColorStop(0.5, '#050210')
+  bg.addColorStop(1, '#030408')
+  ctx.fillStyle = bg; ctx.fillRect(0, 0, W, H)
 
   // Stars
-  STARS.forEach(s=>{
-    const fl=Math.sin(t*0.7+s.tw)*0.3+0.7
-    ctx.beginPath(); ctx.arc(s.x*W, s.y*H*0.95, s.r, 0,Math.PI*2)
-    ctx.fillStyle=`rgba(255,255,255,${s.a*fl})`; ctx.fill()
+  STARS.forEach(s => {
+    const fl = Math.sin(t*0.7 + s.tw)*0.3 + 0.7
+    ctx.beginPath()
+    ctx.arc(s.x*W, s.y*H*0.95, s.r, 0, Math.PI*2)
+    ctx.fillStyle = `rgba(255,255,255,${s.a*fl})`
+    ctx.fill()
   })
 
   // Orbit rings
-  [150, 240].forEach(r=>{
-    ctx.save(); ctx.translate(cx,cy); ctx.scale(1,0.52)
-    ctx.beginPath(); ctx.ellipse(0,0,r,r,0,0,Math.PI*2)
-    ctx.strokeStyle='rgba(255,255,255,0.06)'; ctx.lineWidth=1; ctx.stroke()
+  ;[150, 240].forEach(r => {
+    ctx.save(); ctx.translate(cx, cy); ctx.scale(1, 0.52)
+    ctx.beginPath(); ctx.ellipse(0, 0, r, r, 0, 0, Math.PI*2)
+    ctx.strokeStyle = 'rgba(255,255,255,0.07)'; ctx.lineWidth = 1; ctx.stroke()
     ctx.restore()
   })
 
   // Center glow
-  const cg=ctx.createRadialGradient(cx,cy,0,cx,cy,120)
-  cg.addColorStop(0,'rgba(232,195,10,0.06)'); cg.addColorStop(1,'rgba(0,0,0,0)')
-  ctx.fillStyle=cg; ctx.fillRect(cx-130,cy-130,260,260)
+  const cg = ctx.createRadialGradient(cx, cy, 0, cx, cy, 140)
+  cg.addColorStop(0, 'rgba(232,195,10,0.07)'); cg.addColorStop(1, 'rgba(0,0,0,0)')
+  ctx.fillStyle = cg; ctx.fillRect(cx-150, cy-150, 300, 300)
 
-  // Check hover
-  hoveredId = null
-  let minD = 999
-  WORLDS.forEach(w=>{
-    const p=getPos(w)
-    const d=Math.hypot(mouse.x-p.x, mouse.y-p.y)
-    if(d < w.size*1.4 && d < minD){ minD=d; hoveredId=w.id }
-  })
-
-  // Advance orbits
-  WORLDS.forEach(w=>{
-    if(w.orbitR>0 && w.id!==hoveredId) w.angle += w.speed
-  })
-
-  // Draw worlds
-  WORLDS.forEach(w=>{
+  // Advance orbits & update HTML positions
+  WORLDS.forEach(w => {
+    if(w.orbitR > 0 && !w._hovered) w.angle += w.speed
     const p = getPos(w)
-    const isHover = w.id === hoveredId
-    const scale = isHover ? 1.25 : 1
-
-    try {
-      drawWorld(ctx, w, p.x, p.y, scale, t)
-    } catch(e){ console.warn('draw error', w.id, e) }
-
-    // Name label on hover
-    if(isHover){
-      ctx.save()
-      ctx.font = '600 12px Inter, sans-serif'
-      ctx.textAlign = 'center'
-      ctx.fillStyle = w.color
-      ctx.globalAlpha = 0.95
-      ctx.fillText(w.name, p.x, p.y - w.size * 1.3 - 10)
-      ctx.globalAlpha = 1
-      ctx.restore()
-    }
+    const el = document.getElementById('wd-' + w.id)
+    if(el){ el.style.left = p.x + 'px'; el.style.top = p.y + 'px' }
   })
-
-  // Panel
-  const hw = WORLDS.find(w=>w.id===hoveredId)
-  if(hw && !panelOpen) showPanel(hw)
-  else if(!hw && panelOpen) hidePanel()
-
-  // Cursor
-  canvas.style.cursor = hoveredId ? 'pointer' : 'default'
 
   t += 0.016
   requestAnimationFrame(loop)
