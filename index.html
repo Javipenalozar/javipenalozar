@@ -677,6 +677,32 @@ footer {
   .panel-inner { padding: 16px 20px; }
   .panel-cta-area { display: none; }
   footer { flex-direction: column; text-align: center; padding: 30px 20px; }
+
+  /* Modal móvil — ocupa pantalla completa desde abajo */
+  .modal-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    max-height: 92vh !important;
+    border-radius: 20px 20px 0 0 !important;
+    overflow-y: auto !important;
+  }
+  #modal-overlay {
+    align-items: flex-end !important;
+    padding: 0 !important;
+  }
+  #modal-overlay.open .modal-card {
+    transform: scale(1) translateY(0) !important;
+  }
+  .modal-header { padding: 24px 20px 16px !important; }
+  .modal-body, .modal-posts-list, .modal-curso-tab { padding-left: 20px !important; padding-right: 20px !important; }
+  .modal-tabs { padding: 0 20px !important; }
+
+  /* Panel inferior — más compacto */
+  #world-panel { padding-bottom: env(safe-area-inset-bottom, 0px); }
+
+  /* Auth card móvil */
+  .auth-card { padding: 28px 20px !important; }
+  .auth-row { grid-template-columns: 1fr !important; }
 }
 
 /* ── PERFIL ── */
@@ -2530,12 +2556,24 @@ const SYMBOLS = {
 // ── CANVAS SETUP (background only) ──
 const canvas = document.getElementById('universe-canvas')
 const ctx = canvas.getContext('2d')
-let W, H, cx, cy
+let W, H, cx, cy, orbitScale
+
+function getOrbitScale(){
+  // En móvil reducir órbitas para que quepan en pantalla
+  const minDim = Math.min(window.innerWidth, window.innerHeight)
+  if(minDim < 400) return 0.45
+  if(minDim < 600) return 0.60
+  if(minDim < 800) return 0.80
+  return 1
+}
 
 function resize(){
   W = canvas.width = window.innerWidth
   H = canvas.height = window.innerHeight
-  cx = W/2; cy = H/2
+  cx = W/2
+  // En móvil centrar más arriba para que el título no tape los mundos
+  cy = W < 600 ? H * 0.42 : H/2
+  orbitScale = getOrbitScale()
   positionWorlds()
 }
 resize()
@@ -2567,15 +2605,18 @@ WORLDS.forEach(w => {
     <div style="width:${sz*0.55}px;height:${sz*0.55}px;opacity:0.9">${SYMBOLS[w.id]||''}</div>
     <div class="w-name" style="color:${w.color}">${w.name}</div>
   `
-  el.addEventListener('mouseenter', () => {
-    w._hovered = true
-    showPanel(w)
-  })
-  el.addEventListener('mouseleave', () => {
-    w._hovered = false
-    hidePanel()
-  })
+  el.addEventListener('mouseenter', () => { w._hovered = true; showPanel(w) })
+  el.addEventListener('mouseleave', () => { w._hovered = false; hidePanel() })
   el.addEventListener('click', () => openModal(w))
+
+  // Touch: tap abre modal directo, sin hover
+  let touchMoved = false
+  el.addEventListener('touchstart', () => { touchMoved = false }, { passive: true })
+  el.addEventListener('touchmove', () => { touchMoved = true }, { passive: true })
+  el.addEventListener('touchend', (e) => {
+    if(!touchMoved){ e.preventDefault(); openModal(w) }
+  })
+
   layer.appendChild(el)
 })
 
@@ -2696,9 +2737,10 @@ let t = 0
 
 function getPos(w){
   if(w.orbitR === 0) return {x: cx, y: cy}
+  const r = w.orbitR * orbitScale
   return {
-    x: cx + Math.cos(w.angle) * w.orbitR,
-    y: cy + Math.sin(w.angle) * w.orbitR * 0.52
+    x: cx + Math.cos(w.angle) * r,
+    y: cy + Math.sin(w.angle) * r * 0.52
   }
 }
 
@@ -2721,10 +2763,11 @@ function loop(){
     ctx.fill()
   })
 
-  // Orbit rings
+  // Orbit rings (escalados igual que los planetas)
   ;[150, 240].forEach(r => {
+    const rs = r * orbitScale
     ctx.save(); ctx.translate(cx, cy); ctx.scale(1, 0.52)
-    ctx.beginPath(); ctx.ellipse(0, 0, r, r, 0, 0, Math.PI*2)
+    ctx.beginPath(); ctx.ellipse(0, 0, rs, rs, 0, 0, Math.PI*2)
     ctx.strokeStyle = 'rgba(255,255,255,0.07)'; ctx.lineWidth = 1; ctx.stroke()
     ctx.restore()
   })
