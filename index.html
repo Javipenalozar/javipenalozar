@@ -848,10 +848,10 @@ async function handleRegistro(e){
   }
 
   const ok = document.getElementById('ok-registro')
-  ok.textContent = '¡Bienvenido/a! Revisa tu email para confirmar tu cuenta, luego inicia sesión.'
+  ok.innerHTML = '✓ Cuenta creada. Te enviamos un email a <strong>' + email + '</strong> — confírmalo y luego inicia sesión aquí.'
   ok.style.display = 'block'
-  btn.textContent = 'Cuenta creada ✓'
-  setTimeout(() => switchTab('login'), 3000)
+  btn.textContent = 'Revisa tu email ✓'
+  setTimeout(() => switchTab('login'), 4000)
 }
 
 async function handleLogin(e){
