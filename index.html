@@ -93,9 +93,9 @@ nav.scrolled {
 }
 .hero-title {
   position: absolute;
-  top: 50%;
+  top: 14%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translateX(-50%);
   text-align: center;
   pointer-events: none;
   z-index: 2;
@@ -553,213 +553,251 @@ const WORLDS = [
     name: 'Amor Propio',
     tag: 'Plaza Central · El origen de todo',
     color: '#E8C30A',
+    glowColor: 'rgba(232,195,10,',
     bg: 'linear-gradient(135deg,#1a2e05,#0a1500)',
     frase: '"No puedes construir nada sólido sobre una relación contigo mismo que está rota."',
     question: '¿Cómo te hablas a ti mismo/a cuando nadie te está mirando?',
     tools: ['Autocompasión activa','Diario de fortalezas','Límites desde el amor','Identidad sana'],
     curso: 'https://eventosjv.com#cursos',
     cursoLabel: 'Ver: Amor Propio: La Base',
-    orbitR: 0, speed: 0, angle: 0, size: 48,
-    draw(ctx, x, y, s, t){
-      const rays=8
-      ctx.save(); ctx.translate(x,y)
-      for(let i=0;i<rays;i++){
-        ctx.save(); ctx.rotate((Math.PI*2/rays)*i + t*0.25)
-        ctx.strokeStyle=this.color; ctx.lineWidth=1.5; ctx.globalAlpha=0.3
-        ctx.beginPath(); ctx.moveTo(s*0.65,0); ctx.lineTo(s*1.1,0); ctx.stroke()
-        ctx.restore()
-      }
-      const g=ctx.createRadialGradient(0,0,0,0,0,s*0.5)
-      g.addColorStop(0,'#ffe55a'); g.addColorStop(0.5,'#E8C30A'); g.addColorStop(1,'rgba(232,195,10,0)')
-      ctx.globalAlpha=1; ctx.beginPath(); ctx.arc(0,0,s*0.5,0,Math.PI*2)
-      ctx.fillStyle=g; ctx.fill()
-      ctx.strokeStyle='rgba(255,255,255,0.5)'; ctx.lineWidth=1.5; ctx.globalAlpha=0.55
-      ctx.beginPath()
-      ctx.moveTo(0,-s*0.22); ctx.lineTo(s*0.14,0); ctx.lineTo(0,s*0.22); ctx.lineTo(-s*0.14,0)
-      ctx.closePath(); ctx.stroke()
-      ctx.restore()
-    }
+    orbitR: 0, speed: 0, angle: 0, size: 52
   },
   {
     id: 'heridas',
     name: 'Heridas Emocionales',
     tag: 'Mundo Oscuro · Sanación',
     color: '#ef4444',
+    glowColor: 'rgba(239,68,68,',
     bg: 'linear-gradient(135deg,#3d0a0a,#1a0505)',
     frase: '"Las heridas que no se nombran no sanan. Solo se disfrazan de fortaleza."',
     question: '¿Cuál es la herida que has estado cargando convencido/a de que ya no duele?',
     tools: ['Técnica de la silla vacía','Journaling de liberación','Meditación del perdón','Carta al dolor'],
     curso: 'https://eventosjv.com#cursos',
     cursoLabel: 'Ver: Inteligencia Emocional',
-    orbitR: 130, speed: 0.0055, angle: 0.3, size: 30,
-    draw(ctx, x, y, s, t){
-      ctx.save(); ctx.translate(x,y)
-      const g=ctx.createRadialGradient(0,0,0,0,0,s)
-      g.addColorStop(0,'#7f1d1d'); g.addColorStop(0.6,'#3d0505'); g.addColorStop(1,'rgba(40,0,0,0)')
-      ctx.beginPath(); ctx.arc(0,0,s,0,Math.PI*2); ctx.fillStyle=g; ctx.fill()
-      ctx.strokeStyle=this.color; ctx.lineWidth=2; ctx.globalAlpha=0.9
-      ctx.beginPath()
-      ctx.moveTo(0,s*0.22)
-      ctx.bezierCurveTo(-s*0.04,s*0.06,-s*0.28,-s*0.1,-s*0.26,-s*0.24)
-      ctx.bezierCurveTo(-s*0.24,-s*0.42,0,-s*0.42,0,-s*0.22)
-      ctx.bezierCurveTo(0,-s*0.42,s*0.24,-s*0.42,s*0.26,-s*0.24)
-      ctx.bezierCurveTo(s*0.28,-s*0.1,s*0.04,s*0.06,0,s*0.22)
-      ctx.stroke()
-      ctx.strokeStyle='#fca5a5'; ctx.lineWidth=1.2; ctx.globalAlpha=0.65
-      ctx.beginPath()
-      ctx.moveTo(-s*0.04,-s*0.28); ctx.lineTo(s*0.02,-s*0.1)
-      ctx.lineTo(-s*0.06,0); ctx.lineTo(s*0.02,s*0.12); ctx.stroke()
-      ctx.restore()
-    }
+    orbitR: 150, speed: 0.0055, angle: 0.3, size: 34
   },
   {
     id: 'pareja',
     name: 'Pareja',
     tag: 'Mundo del Vínculo · Amor',
     color: '#f472b6',
+    glowColor: 'rgba(244,114,182,',
     bg: 'linear-gradient(135deg,#4a0a2a,#200510)',
     frase: '"Amar mucho no es lo mismo que amar bien. Empieza por saber quién eres."',
     question: '¿Estás eligiendo a esta persona en libertad, o desde el miedo a quedarte solo/a?',
     tools: ['Comunicación no violenta','Mapa de apego emocional','Rituales de reconexión','Límites sanos'],
     curso: 'https://eventosjv.com',
     cursoLabel: 'Ver: Amar Bien 2026',
-    orbitR: 130, speed: 0.004, angle: Math.PI*0.65, size: 28,
-    draw(ctx, x, y, s, t){
-      ctx.save(); ctx.translate(x,y)
-      const g=ctx.createRadialGradient(0,0,0,0,0,s)
-      g.addColorStop(0,'#500724'); g.addColorStop(0.6,'#2d0415'); g.addColorStop(1,'rgba(30,0,10,0)')
-      ctx.beginPath(); ctx.arc(0,0,s,0,Math.PI*2); ctx.fillStyle=g; ctx.fill()
-      ctx.strokeStyle=this.color; ctx.lineWidth=1.8; ctx.globalAlpha=0.85
-      ctx.beginPath(); ctx.arc(-s*0.18,0,s*0.3,0,Math.PI*2); ctx.stroke()
-      ctx.beginPath(); ctx.arc(s*0.18,0,s*0.3,0,Math.PI*2); ctx.stroke()
-      ctx.strokeStyle='#fce7f3'; ctx.lineWidth=1; ctx.globalAlpha=0.35
-      ctx.beginPath(); ctx.arc(-s*0.18,0,s*0.3,-Math.PI*0.5,Math.PI*0.5); ctx.stroke()
-      ctx.restore()
-    }
+    orbitR: 150, speed: 0.004, angle: Math.PI*0.65, size: 32
   },
   {
     id: 'familiar',
     name: 'Familiar',
     tag: 'Mundo de las Raíces · Herencia',
     color: '#fb923c',
+    glowColor: 'rgba(251,146,60,',
     bg: 'linear-gradient(135deg,#3a1a00,#150800)',
     frase: '"Tu familia te dio tu primer mapa del mundo. Pero el mapa no es el territorio."',
     question: '¿Qué patrón familiar estás repitiendo sin haberlo elegido conscientemente?',
     tools: ['Genograma emocional','Carta al niño interior','Dinámica de roles','Constelaciones familiares'],
     curso: 'https://eventosjv.com#cursos',
     cursoLabel: 'Ver: Relaciones Conscientes',
-    orbitR: 200, speed: 0.003, angle: 1.1, size: 28,
-    draw(ctx, x, y, s, t){
-      ctx.save(); ctx.translate(x,y)
-      const g=ctx.createRadialGradient(0,0,0,0,0,s)
-      g.addColorStop(0,'#431407'); g.addColorStop(0.6,'#200a03'); g.addColorStop(1,'rgba(20,5,0,0)')
-      ctx.beginPath(); ctx.arc(0,0,s,0,Math.PI*2); ctx.fillStyle=g; ctx.fill()
-      ctx.strokeStyle=this.color; ctx.lineWidth=1.8; ctx.lineJoin='round'; ctx.globalAlpha=0.9
-      ctx.beginPath()
-      ctx.moveTo(-s*0.36,s*0.22); ctx.lineTo(-s*0.36,-s*0.04)
-      ctx.lineTo(0,-s*0.38); ctx.lineTo(s*0.36,-s*0.04)
-      ctx.lineTo(s*0.36,s*0.22); ctx.closePath(); ctx.stroke()
-      ctx.strokeStyle='#fed7aa'; ctx.lineWidth=1.2; ctx.globalAlpha=0.5
-      ctx.strokeRect(-s*0.1,-s*0.04,s*0.2,s*0.26)
-      ctx.strokeStyle=this.color; ctx.lineWidth=1.2; ctx.globalAlpha=0.35
-      ctx.beginPath()
-      ctx.moveTo(0,s*0.22); ctx.lineTo(0,s*0.5)
-      ctx.moveTo(0,s*0.38); ctx.lineTo(-s*0.2,s*0.55)
-      ctx.moveTo(0,s*0.38); ctx.lineTo(s*0.2,s*0.55)
-      ctx.stroke()
-      ctx.restore()
-    }
+    orbitR: 240, speed: 0.003, angle: 1.1, size: 32
   },
   {
     id: 'energia',
     name: 'Energía',
     tag: 'Mundo Anahata · Energía vital',
     color: '#4ade80',
+    glowColor: 'rgba(74,222,128,',
     bg: 'linear-gradient(135deg,#052e16,#021008)',
     frase: '"Tu cuerpo no miente. Sabe lo que tu mente aún no ha aceptado."',
     question: '¿En qué parte de tu cuerpo guardas las emociones que no te permites expresar?',
     tools: ['Activación de chakras','Respiración consciente','Reiki de autoaplicación','Movimiento energético'],
     curso: 'https://anahata.eventosjv.com',
     cursoLabel: 'Ver: Academia Anahata',
-    orbitR: 200, speed: 0.0042, angle: Math.PI*0.9, size: 26,
-    draw(ctx, x, y, s, t){
-      ctx.save(); ctx.translate(x,y)
-      const g=ctx.createRadialGradient(0,0,0,0,0,s)
-      g.addColorStop(0,'#052e16'); g.addColorStop(0.6,'#021008'); g.addColorStop(1,'rgba(0,10,3,0)')
-      ctx.beginPath(); ctx.arc(0,0,s,0,Math.PI*2); ctx.fillStyle=g; ctx.fill()
-      const petals=6; ctx.strokeStyle=this.color; ctx.lineWidth=1.5; ctx.globalAlpha=0.85
-      for(let i=0;i<petals;i++){
-        ctx.save(); ctx.rotate((Math.PI*2/petals)*i + t*0.15)
-        ctx.beginPath()
-        ctx.moveTo(0,0); ctx.bezierCurveTo(s*0.2,-s*0.1,s*0.2,-s*0.38,0,-s*0.38)
-        ctx.bezierCurveTo(-s*0.2,-s*0.38,-s*0.2,-s*0.1,0,0)
-        ctx.stroke(); ctx.restore()
-      }
-      ctx.beginPath(); ctx.arc(0,0,s*0.12,0,Math.PI*2)
-      ctx.strokeStyle='#bbf7d0'; ctx.lineWidth=1; ctx.globalAlpha=0.7; ctx.stroke()
-      ctx.restore()
-    }
+    orbitR: 240, speed: 0.0042, angle: Math.PI*0.9, size: 30
   },
   {
     id: 'humor',
     name: 'Humor & Sanación',
     tag: 'Mundo Luminoso · Stand-Up Therapy',
     color: '#fde68a',
+    glowColor: 'rgba(253,230,138,',
     bg: 'linear-gradient(135deg,#2a2000,#100c00)',
     frase: '"La risa es la forma más corta entre dos personas que necesitan sanar."',
     question: '¿Cuándo fue la última vez que te reíste de algo que antes solo te dolía?',
     tools: ['Humor terapéutico','Reencuadre cognitivo','Stand-Up Therapy en vivo','Narrativa cómica'],
     curso: 'https://standup.eventosjv.com',
     cursoLabel: 'Ver: Stand-Up Therapy 2 sep',
-    orbitR: 200, speed: 0.0035, angle: Math.PI*1.6, size: 26,
-    draw(ctx, x, y, s, t){
-      ctx.save(); ctx.translate(x,y)
-      const g=ctx.createRadialGradient(0,0,0,0,0,s)
-      g.addColorStop(0,'#2a2000'); g.addColorStop(0.6,'#100c00'); g.addColorStop(1,'rgba(10,8,0,0)')
-      ctx.beginPath(); ctx.arc(0,0,s,0,Math.PI*2); ctx.fillStyle=g; ctx.fill()
-      ctx.strokeStyle=this.color; ctx.lineWidth=2.2; ctx.lineJoin='round'; ctx.globalAlpha=0.9
-      ctx.beginPath()
-      ctx.moveTo(s*0.1,-s*0.45); ctx.lineTo(-s*0.16,0)
-      ctx.lineTo(s*0.08,0); ctx.lineTo(-s*0.1,s*0.45); ctx.stroke()
-      ctx.strokeStyle='#fffbeb'; ctx.lineWidth=0.8; ctx.globalAlpha=0.25
-      ctx.beginPath()
-      ctx.moveTo(s*0.1,-s*0.45); ctx.lineTo(-s*0.16,0)
-      ctx.lineTo(s*0.08,0); ctx.lineTo(-s*0.1,s*0.45); ctx.stroke()
-      ctx.restore()
-    }
+    orbitR: 240, speed: 0.0035, angle: Math.PI*1.6, size: 30
   },
   {
     id: 'mente',
     name: 'Mente',
     tag: 'Mundo Profundo · Psicología',
     color: '#93c5fd',
+    glowColor: 'rgba(147,197,253,',
     bg: 'linear-gradient(135deg,#050a30,#020415)',
     frase: '"La mente que no se conoce a sí misma construye jaulas y las llama hogar."',
     question: '¿Qué historia te sigues contando sobre ti mismo/a que ya no sirve?',
     tools: ['Reestructuración cognitiva','Mindfulness clínico','Diario de pensamientos','Psicoeducación'],
     curso: 'https://eventosjv.com#cursos',
     cursoLabel: 'Ver cursos disponibles',
-    orbitR: 130, speed: 0.0048, angle: Math.PI*1.4, size: 27,
-    draw(ctx, x, y, s, t){
-      ctx.save(); ctx.translate(x,y)
-      const g=ctx.createRadialGradient(0,0,0,0,0,s)
-      g.addColorStop(0,'#0c1461'); g.addColorStop(0.6,'#040820'); g.addColorStop(1,'rgba(2,4,20,0)')
-      ctx.beginPath(); ctx.arc(0,0,s,0,Math.PI*2); ctx.fillStyle=g; ctx.fill()
-      const nodes=[[0,-s*0.36],[s*0.28,-s*0.12],[-s*0.3,-s*0.1],[s*0.18,s*0.24],[-s*0.2,s*0.26],[0,s*0.08]]
-      const edges=[[0,1],[0,2],[1,3],[2,4],[3,5],[4,5],[1,5],[0,5],[2,3]]
-      ctx.strokeStyle=this.color; ctx.lineWidth=0.8; ctx.globalAlpha=0.35
-      edges.forEach(([a,b])=>{
-        ctx.beginPath(); ctx.moveTo(nodes[a][0],nodes[a][1])
-        ctx.lineTo(nodes[b][0],nodes[b][1]); ctx.stroke()
-      })
-      ctx.fillStyle=this.color; ctx.globalAlpha=0.85
-      nodes.forEach(([nx,ny])=>{
-        ctx.beginPath(); ctx.arc(nx,ny,s*0.06,0,Math.PI*2); ctx.fill()
-      })
-      ctx.restore()
-    }
+    orbitR: 150, speed: 0.0048, angle: Math.PI*1.4, size: 31
   }
 ]
+
+// ── DRAW WORLD ──
+function drawWorld(ctx, w, x, y, scale, t){
+  const s = w.size * scale
+  const c = w.color
+
+  // Outer glow
+  const glow = ctx.createRadialGradient(x, y, 0, x, y, s * 2.4)
+  glow.addColorStop(0, w.glowColor + '0.22)')
+  glow.addColorStop(0.5, w.glowColor + '0.08)')
+  glow.addColorStop(1, w.glowColor + '0)')
+  ctx.beginPath()
+  ctx.arc(x, y, s * 2.4, 0, Math.PI * 2)
+  ctx.fillStyle = glow
+  ctx.fill()
+
+  // Core planet body
+  const body = ctx.createRadialGradient(x - s*0.2, y - s*0.2, s*0.05, x, y, s)
+  body.addColorStop(0, w.glowColor + '0.55)')
+  body.addColorStop(0.4, w.glowColor + '0.25)')
+  body.addColorStop(1, w.glowColor + '0.04)')
+  ctx.beginPath()
+  ctx.arc(x, y, s, 0, Math.PI * 2)
+  ctx.fillStyle = body
+  ctx.fill()
+
+  // Rim ring
+  ctx.beginPath()
+  ctx.arc(x, y, s, 0, Math.PI * 2)
+  ctx.strokeStyle = c
+  ctx.lineWidth = 1.5
+  ctx.globalAlpha = 0.6
+  ctx.stroke()
+  ctx.globalAlpha = 1
+
+  // Symbol
+  ctx.save()
+  ctx.translate(x, y)
+  ctx.strokeStyle = c
+  ctx.fillStyle = c
+  ctx.lineWidth = 2
+  ctx.lineCap = 'round'
+  ctx.lineJoin = 'round'
+
+  if(w.id === 'amor'){
+    // Star burst rays
+    const rays = 8
+    for(let i = 0; i < rays; i++){
+      ctx.save()
+      ctx.rotate((Math.PI*2/rays)*i + t*0.3)
+      ctx.globalAlpha = 0.5
+      ctx.beginPath(); ctx.moveTo(s*0.55, 0); ctx.lineTo(s*0.9, 0); ctx.stroke()
+      ctx.restore()
+    }
+    // Diamond
+    ctx.globalAlpha = 0.9
+    const d = s * 0.35
+    ctx.beginPath()
+    ctx.moveTo(0, -d); ctx.lineTo(d*0.65, 0)
+    ctx.lineTo(0, d); ctx.lineTo(-d*0.65, 0)
+    ctx.closePath(); ctx.stroke()
+
+  } else if(w.id === 'heridas'){
+    // Broken heart
+    ctx.globalAlpha = 0.95
+    ctx.lineWidth = 2.2
+    const hs = s * 0.55
+    ctx.beginPath()
+    ctx.moveTo(0, hs*0.4)
+    ctx.bezierCurveTo(-hs*0.05, hs*0.1, -hs*0.5, -hs*0.18, -hs*0.46, -hs*0.44)
+    ctx.bezierCurveTo(-hs*0.42, -hs*0.76, 0, -hs*0.76, 0, -hs*0.4)
+    ctx.bezierCurveTo(0, -hs*0.76, hs*0.42, -hs*0.76, hs*0.46, -hs*0.44)
+    ctx.bezierCurveTo(hs*0.5, -hs*0.18, hs*0.05, hs*0.1, 0, hs*0.4)
+    ctx.stroke()
+    // Crack
+    ctx.strokeStyle = '#fff'; ctx.lineWidth = 1.5; ctx.globalAlpha = 0.7
+    ctx.beginPath()
+    ctx.moveTo(-s*0.06, -s*0.45); ctx.lineTo(s*0.04, -s*0.2)
+    ctx.lineTo(-s*0.08, 0); ctx.lineTo(s*0.04, s*0.18)
+    ctx.stroke()
+
+  } else if(w.id === 'pareja'){
+    // Two interlocked circles
+    ctx.globalAlpha = 0.9; ctx.lineWidth = 2
+    ctx.beginPath(); ctx.arc(-s*0.22, 0, s*0.36, 0, Math.PI*2); ctx.stroke()
+    ctx.beginPath(); ctx.arc(s*0.22, 0, s*0.36, 0, Math.PI*2); ctx.stroke()
+
+  } else if(w.id === 'familiar'){
+    // House + roots
+    ctx.globalAlpha = 0.9; ctx.lineWidth = 2
+    const hs = s * 0.55
+    ctx.beginPath()
+    ctx.moveTo(-hs*0.65, hs*0.4); ctx.lineTo(-hs*0.65, -hs*0.07)
+    ctx.lineTo(0, -hs*0.7); ctx.lineTo(hs*0.65, -hs*0.07)
+    ctx.lineTo(hs*0.65, hs*0.4); ctx.closePath(); ctx.stroke()
+    ctx.globalAlpha = 0.5; ctx.lineWidth = 1.5
+    ctx.strokeRect(-hs*0.18, -hs*0.07, hs*0.36, hs*0.47)
+    ctx.globalAlpha = 0.4
+    ctx.beginPath()
+    ctx.moveTo(0, hs*0.4); ctx.lineTo(0, hs*0.85)
+    ctx.moveTo(0, hs*0.65); ctx.lineTo(-hs*0.35, hs*0.95)
+    ctx.moveTo(0, hs*0.65); ctx.lineTo(hs*0.35, hs*0.95)
+    ctx.stroke()
+
+  } else if(w.id === 'energia'){
+    // Lotus petals (rotating)
+    ctx.globalAlpha = 0.85; ctx.lineWidth = 1.8
+    for(let i = 0; i < 6; i++){
+      ctx.save(); ctx.rotate((Math.PI*2/6)*i + t*0.2)
+      const ps = s * 0.55
+      ctx.beginPath()
+      ctx.moveTo(0, 0)
+      ctx.bezierCurveTo(ps*0.36, -ps*0.18, ps*0.36, -ps*0.7, 0, -ps*0.7)
+      ctx.bezierCurveTo(-ps*0.36, -ps*0.7, -ps*0.36, -ps*0.18, 0, 0)
+      ctx.stroke(); ctx.restore()
+    }
+    ctx.beginPath(); ctx.arc(0, 0, s*0.12, 0, Math.PI*2)
+    ctx.globalAlpha = 0.8; ctx.fill()
+
+  } else if(w.id === 'humor'){
+    // Lightning bolt
+    ctx.globalAlpha = 0.95; ctx.lineWidth = 2.5
+    const ls = s * 0.55
+    ctx.beginPath()
+    ctx.moveTo(ls*0.18, -ls*0.82)
+    ctx.lineTo(-ls*0.28, 0)
+    ctx.lineTo(ls*0.12, 0)
+    ctx.lineTo(-ls*0.18, ls*0.82)
+    ctx.stroke()
+
+  } else if(w.id === 'mente'){
+    // Neural network
+    const nodes = [
+      [0, -s*0.46], [s*0.36, -s*0.15], [-s*0.38, -s*0.13],
+      [s*0.23, s*0.31], [-s*0.26, s*0.33], [0, s*0.1]
+    ]
+    const edges = [[0,1],[0,2],[1,3],[2,4],[3,5],[4,5],[0,5],[1,2]]
+    ctx.globalAlpha = 0.4; ctx.lineWidth = 1
+    edges.forEach(([a,b])=>{
+      ctx.beginPath(); ctx.moveTo(nodes[a][0], nodes[a][1])
+      ctx.lineTo(nodes[b][0], nodes[b][1]); ctx.stroke()
+    })
+    ctx.globalAlpha = 0.9
+    nodes.forEach(([nx,ny],i)=>{
+      ctx.beginPath(); ctx.arc(nx, ny, i===0 ? s*0.1 : s*0.07, 0, Math.PI*2); ctx.fill()
+    })
+  }
+
+  ctx.restore()
+  ctx.globalAlpha = 1
+}
 
 // ── CANVAS SETUP ──
 const canvas = document.getElementById('universe-canvas')
@@ -883,10 +921,10 @@ function loop(){
   })
 
   // Orbit rings
-  [130, 200].forEach(r=>{
+  [150, 240].forEach(r=>{
     ctx.save(); ctx.translate(cx,cy); ctx.scale(1,0.52)
     ctx.beginPath(); ctx.ellipse(0,0,r,r,0,0,Math.PI*2)
-    ctx.strokeStyle='rgba(255,255,255,0.04)'; ctx.lineWidth=1; ctx.stroke()
+    ctx.strokeStyle='rgba(255,255,255,0.06)'; ctx.lineWidth=1; ctx.stroke()
     ctx.restore()
   })
 
@@ -911,27 +949,23 @@ function loop(){
 
   // Draw worlds
   WORLDS.forEach(w=>{
-    const p=getPos(w)
-    const isHover = w.id===hoveredId
-    const s = isHover ? w.size*1.25 : w.size
+    const p = getPos(w)
+    const isHover = w.id === hoveredId
+    const scale = isHover ? 1.25 : 1
 
-    if(isHover){
-      const halo=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,s*2.5)
-      halo.addColorStop(0,w.color+'28'); halo.addColorStop(1,'rgba(0,0,0,0)')
-      ctx.fillStyle=halo
-      ctx.beginPath(); ctx.arc(p.x,p.y,s*2.5,0,Math.PI*2); ctx.fill()
-    }
+    try {
+      drawWorld(ctx, w, p.x, p.y, scale, t)
+    } catch(e){ console.warn('draw error', w.id, e) }
 
-    ctx.globalAlpha = isHover ? 1 : 0.78
-    w.draw(ctx, p.x, p.y, s, t)
-    ctx.globalAlpha = 1
-
-    // Pulse ring on hover
+    // Name label on hover
     if(isHover){
       ctx.save()
-      ctx.font='600 11px Inter,sans-serif'; ctx.textAlign='center'
-      ctx.fillStyle=w.color; ctx.globalAlpha=0.88
-      ctx.fillText(w.name, p.x, p.y-s-12)
+      ctx.font = '600 12px Inter, sans-serif'
+      ctx.textAlign = 'center'
+      ctx.fillStyle = w.color
+      ctx.globalAlpha = 0.95
+      ctx.fillText(w.name, p.x, p.y - w.size * 1.3 - 10)
+      ctx.globalAlpha = 1
       ctx.restore()
     }
   })
