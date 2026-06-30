@@ -585,6 +585,219 @@ footer {
   .panel-cta-area { display: none; }
   footer { flex-direction: column; text-align: center; padding: 30px 20px; }
 }
+
+/* ── BLOG ── */
+#blog {
+  padding: 100px 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.blog-header { text-align: center; margin-bottom: 60px; }
+.blog-tag {
+  display: inline-block;
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--turquesa);
+  border: 1px solid var(--turquesa);
+  padding: 4px 14px;
+  border-radius: 20px;
+  margin-bottom: 20px;
+}
+.blog-title {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  color: var(--blanco);
+  margin: 0 0 16px;
+  font-weight: 300;
+  letter-spacing: -1px;
+}
+.blog-sub {
+  color: rgba(240,250,249,0.5);
+  font-size: 1rem;
+  max-width: 520px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+.blog-filters {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
+  justify-content: center;
+}
+.blog-filter-btn {
+  background: none;
+  border: 1px solid rgba(255,255,255,0.15);
+  color: rgba(240,250,249,0.5);
+  padding: 6px 18px;
+  border-radius: 20px;
+  font-size: 12px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: inherit;
+}
+.blog-filter-btn:hover, .blog-filter-btn.active {
+  border-color: var(--turquesa);
+  color: var(--turquesa);
+  background: rgba(20,184,166,0.08);
+}
+.blog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 28px;
+}
+.blog-loading {
+  color: rgba(255,255,255,0.3);
+  text-align: center;
+  padding: 60px;
+  grid-column: 1/-1;
+  font-size: 14px;
+  letter-spacing: 2px;
+}
+.blog-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  padding: 32px;
+  cursor: pointer;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+.blog-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent, #14B8A6), transparent);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.blog-card:hover {
+  border-color: rgba(255,255,255,0.18);
+  background: rgba(255,255,255,0.06);
+  transform: translateY(-4px);
+}
+.blog-card:hover::before { opacity: 1; }
+.blog-card-cat {
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+  font-weight: 600;
+}
+.blog-card-title {
+  font-size: 1.25rem;
+  color: var(--blanco);
+  margin: 0 0 12px;
+  font-weight: 400;
+  line-height: 1.4;
+}
+.blog-card-excerpt {
+  color: rgba(240,250,249,0.45);
+  font-size: 0.875rem;
+  line-height: 1.7;
+  margin-bottom: 24px;
+}
+.blog-card-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11px;
+  color: rgba(255,255,255,0.3);
+  letter-spacing: 0.5px;
+}
+.blog-card-read {
+  color: var(--turquesa);
+  font-size: 11px;
+  letter-spacing: 1px;
+}
+
+/* BLOG MODAL */
+.blog-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(3,4,8,0.92);
+  backdrop-filter: blur(12px);
+  z-index: 1200;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 40px 20px;
+  overflow-y: auto;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+.blog-modal-overlay.open {
+  opacity: 1;
+  pointer-events: all;
+}
+.blog-modal-card {
+  background: #0c0f17;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 20px;
+  padding: 52px;
+  max-width: 740px;
+  width: 100%;
+  position: relative;
+}
+.blog-modal-close {
+  position: absolute;
+  top: 24px; right: 24px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.5);
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 14px;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+}
+.blog-modal-close:hover { background: rgba(255,255,255,0.12); color: white; }
+.blog-modal-cat {
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+.blog-modal-title {
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  color: var(--blanco);
+  margin: 0 0 16px;
+  font-weight: 300;
+  line-height: 1.3;
+}
+.blog-modal-meta {
+  font-size: 12px;
+  color: rgba(255,255,255,0.3);
+  margin-bottom: 40px;
+  padding-bottom: 40px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  letter-spacing: 0.5px;
+}
+.blog-modal-body {
+  color: rgba(240,250,249,0.75);
+  font-size: 1rem;
+  line-height: 1.9;
+}
+.blog-modal-body h3 {
+  color: var(--blanco);
+  font-size: 1.2rem;
+  margin: 32px 0 12px;
+  font-weight: 400;
+}
+.blog-modal-body p { margin: 0 0 20px; }
+.blog-modal-body strong { color: var(--blanco); font-weight: 500; }
+.blog-modal-body em { color: var(--turquesa); font-style: normal; }
+@media(max-width:768px){
+  #blog { padding: 80px 20px; }
+  .blog-modal-card { padding: 32px 24px; }
+  .blog-grid { grid-template-columns: 1fr; }
+}
 </style>
 </head>
 <body>
@@ -686,6 +899,7 @@ footer {
   <a href="#" class="nav-logo">Javi <span>Peñaloza</span></a>
   <ul class="nav-links">
     <li><a href="#sobre">Quién soy</a></li>
+    <li><a href="#blog">Blog</a></li>
     <li><a href="https://eventosjv.com" target="_blank">Eventos</a></li>
     <li><a href="https://eventosjv.com#cursos" target="_blank">Cursos</a></li>
   </ul>
@@ -775,6 +989,30 @@ footer {
     </div>
   </div>
 </section>
+
+<!-- BLOG -->
+<section id="blog">
+  <div class="blog-header">
+    <div class="blog-tag">Reflexiones</div>
+    <h2 class="blog-title">Desde El Mundo de Javi</h2>
+    <p class="blog-sub">Artículos sobre salud mental, vínculos y crecimiento personal — solo para quienes forman parte de este mundo.</p>
+  </div>
+  <div class="blog-filters" id="blog-filters"></div>
+  <div class="blog-grid" id="blog-grid">
+    <div class="blog-loading">Cargando artículos...</div>
+  </div>
+</section>
+
+<!-- MODAL BLOG -->
+<div id="blog-modal" class="blog-modal-overlay" onclick="if(event.target===this)closeBlogModal()">
+  <div class="blog-modal-card">
+    <button class="blog-modal-close" onclick="closeBlogModal()">✕</button>
+    <div class="blog-modal-cat" id="bm-cat"></div>
+    <h2 class="blog-modal-title" id="bm-title"></h2>
+    <div class="blog-modal-meta" id="bm-meta"></div>
+    <div class="blog-modal-body" id="bm-body"></div>
+  </div>
+</div>
 
 <!-- FOOTER -->
 <footer>
@@ -938,6 +1176,7 @@ function enterWorld(){
   const overlay = document.getElementById('auth-overlay')
   overlay.classList.add('fade-out')
   setTimeout(() => overlay.classList.add('hidden'), 700)
+  loadBlog()
   // Agregar botón logout al nav
   const navLinks = document.querySelector('.nav-links')
   if(navLinks && !document.getElementById('nav-logout')){
@@ -960,6 +1199,100 @@ async function logout(){
     enterWorld()
   }
 })()
+
+// ── BLOG ──
+const CAT_COLORS = {
+  'Amor Propio':        '#E8C30A',
+  'Heridas Emocionales':'#ef4444',
+  'Pareja':             '#f472b6',
+  'Familiar':           '#fb923c',
+  'Energía':            '#4ade80',
+  'Humor & Sanación':   '#fde68a',
+  'Mente':              '#93c5fd',
+  'General':            '#14B8A6',
+}
+
+let allPosts = []
+let activeFilter = 'Todos'
+
+async function loadBlog(){
+  const { data, error } = await supa
+    .from('posts')
+    .select('id,titulo,extracto,contenido,categoria,created_at')
+    .eq('publicado', true)
+    .order('created_at', { ascending: false })
+
+  if(error || !data || data.length === 0){
+    document.getElementById('blog-grid').innerHTML =
+      '<div class="blog-loading">Pronto habrá artículos aquí.</div>'
+    return
+  }
+
+  allPosts = data
+  renderFilters()
+  renderPosts(allPosts)
+}
+
+function renderFilters(){
+  const cats = ['Todos', ...new Set(allPosts.map(p => p.categoria).filter(Boolean))]
+  const container = document.getElementById('blog-filters')
+  container.innerHTML = cats.map(c =>
+    `<button class="blog-filter-btn${c==='Todos'?' active':''}" onclick="filterPosts('${c}')">${c}</button>`
+  ).join('')
+}
+
+function filterPosts(cat){
+  activeFilter = cat
+  document.querySelectorAll('.blog-filter-btn').forEach(b => {
+    b.classList.toggle('active', b.textContent === cat)
+  })
+  const filtered = cat === 'Todos' ? allPosts : allPosts.filter(p => p.categoria === cat)
+  renderPosts(filtered)
+}
+
+function renderPosts(posts){
+  const grid = document.getElementById('blog-grid')
+  if(!posts.length){
+    grid.innerHTML = '<div class="blog-loading">No hay artículos en esta categoría aún.</div>'
+    return
+  }
+  grid.innerHTML = posts.map(p => {
+    const color = CAT_COLORS[p.categoria] || '#14B8A6'
+    const fecha = new Date(p.created_at).toLocaleDateString('es-ES', { day:'numeric', month:'long', year:'numeric' })
+    return `
+    <div class="blog-card" style="--accent:${color}" onclick="openBlogPost('${p.id}')">
+      <div class="blog-card-cat" style="color:${color}">${p.categoria || 'General'}</div>
+      <h3 class="blog-card-title">${p.titulo}</h3>
+      <p class="blog-card-excerpt">${p.extracto || ''}</p>
+      <div class="blog-card-meta">
+        <span>${fecha}</span>
+        <span class="blog-card-read">Leer →</span>
+      </div>
+    </div>`
+  }).join('')
+}
+
+function openBlogPost(id){
+  const p = allPosts.find(x => x.id === id)
+  if(!p) return
+  const color = CAT_COLORS[p.categoria] || '#14B8A6'
+  const fecha = new Date(p.created_at).toLocaleDateString('es-ES', { day:'numeric', month:'long', year:'numeric' })
+  document.getElementById('bm-cat').textContent = p.categoria || 'General'
+  document.getElementById('bm-cat').style.color = color
+  document.getElementById('bm-title').textContent = p.titulo
+  document.getElementById('bm-meta').textContent = fecha
+  document.getElementById('bm-body').innerHTML = p.contenido
+  document.getElementById('blog-modal').classList.add('open')
+  document.body.style.overflow = 'hidden'
+}
+
+function closeBlogModal(){
+  document.getElementById('blog-modal').classList.remove('open')
+  document.body.style.overflow = ''
+}
+
+// Cargar blog cuando el usuario entre
+const _origEnterWorld = typeof enterWorld === 'function' ? enterWorld : null
 
 // ── WORLDS DATA ──
 const WORLDS = [
