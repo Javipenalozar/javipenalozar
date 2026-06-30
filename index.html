@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>El Mundo de Javi — Javi Peñaloza</title>
 <meta name="description" content="Una experiencia inmersiva en salud mental. 7 mundos emocionales. Tu viaje empieza aquí.">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 :root {
   --negro: #030408;
@@ -24,6 +25,125 @@ body {
   color: var(--blanco);
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   overflow-x: hidden;
+}
+
+/* ── AUTH OVERLAY ── */
+#auth-overlay {
+  position: fixed; inset: 0; z-index: 999;
+  background: #030408;
+  display: flex; align-items: center; justify-content: center;
+  transition: opacity 0.6s ease;
+  overflow-y: auto;
+  padding: 20px;
+}
+#auth-overlay.fade-out { opacity: 0; pointer-events: none; }
+#auth-overlay.hidden { display: none; }
+
+.auth-bg {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 50% 30%, #0a0520 0%, #030408 70%);
+}
+.auth-stars { position: absolute; inset: 0; pointer-events: none; }
+
+.auth-card {
+  position: relative; z-index: 2;
+  width: 480px; max-width: 100%;
+  background: rgba(10,15,30,0.85);
+  border: 1px solid rgba(232,195,10,0.15);
+  border-radius: 20px;
+  backdrop-filter: blur(20px);
+  overflow: hidden;
+}
+.auth-header {
+  padding: 36px 36px 24px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  text-align: center;
+}
+.auth-logo {
+  font-family: Georgia, serif;
+  font-size: 22px; font-weight: 700;
+  color: #F0FAF9; margin-bottom: 6px;
+}
+.auth-logo span { color: #E8C30A; }
+.auth-subtitle {
+  font-size: 11px; letter-spacing: 0.2em;
+  text-transform: uppercase; color: rgba(255,255,255,0.3);
+}
+.auth-tabs {
+  display: flex; border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.auth-tab {
+  flex: 1; padding: 14px;
+  background: none; border: none;
+  font-size: 11px; letter-spacing: 0.18em;
+  text-transform: uppercase; cursor: pointer;
+  color: rgba(255,255,255,0.35);
+  transition: color 0.3s, border-bottom 0.3s;
+  border-bottom: 2px solid transparent;
+}
+.auth-tab.active {
+  color: #E8C30A;
+  border-bottom: 2px solid #E8C30A;
+}
+.auth-body { padding: 28px 36px 36px; }
+
+.auth-form { display: none; }
+.auth-form.active { display: block; }
+
+.auth-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.auth-field { margin-bottom: 14px; }
+.auth-label {
+  display: block;
+  font-size: 9px; letter-spacing: 0.2em;
+  text-transform: uppercase; color: rgba(255,255,255,0.4);
+  margin-bottom: 6px;
+}
+.auth-input {
+  width: 100%; padding: 11px 14px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px; color: #F0FAF9;
+  font-size: 13px; outline: none;
+  transition: border-color 0.25s;
+  font-family: inherit;
+}
+.auth-input:focus { border-color: rgba(232,195,10,0.5); }
+.auth-input::placeholder { color: rgba(255,255,255,0.2); }
+
+select.auth-input option { background: #0a0f1e; color: #F0FAF9; }
+
+.auth-btn {
+  width: 100%; padding: 14px;
+  background: #E8C30A; border: none;
+  color: #030408; font-size: 11px;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  font-weight: 700; cursor: pointer;
+  border-radius: 8px; margin-top: 6px;
+  transition: opacity 0.2s, transform 0.2s;
+  font-family: inherit;
+}
+.auth-btn:hover { opacity: 0.88; transform: translateY(-1px); }
+.auth-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+.auth-error {
+  background: rgba(239,68,68,0.1);
+  border: 1px solid rgba(239,68,68,0.3);
+  color: #fca5a5; font-size: 12px;
+  padding: 10px 14px; border-radius: 8px;
+  margin-bottom: 14px; display: none;
+}
+.auth-success {
+  background: rgba(74,222,128,0.1);
+  border: 1px solid rgba(74,222,128,0.3);
+  color: #86efac; font-size: 12px;
+  padding: 10px 14px; border-radius: 8px;
+  margin-bottom: 14px; display: none;
+  text-align: center;
+}
+.auth-footer-text {
+  text-align: center; font-size: 11px;
+  color: rgba(255,255,255,0.25);
+  margin-top: 20px; line-height: 1.6;
 }
 
 /* ── BARRA DE PROGRESO ── */
@@ -469,6 +589,91 @@ footer {
 </head>
 <body>
 
+<!-- AUTH OVERLAY -->
+<div id="auth-overlay">
+  <canvas class="auth-stars" id="auth-canvas"></canvas>
+  <div class="auth-card">
+    <div class="auth-header">
+      <div class="auth-logo">Javi <span>Peñaloza</span></div>
+      <div class="auth-subtitle">El Mundo de Javi · Acceso exclusivo</div>
+    </div>
+    <div class="auth-tabs">
+      <button class="auth-tab active" id="tab-registro" onclick="switchTab('registro')">Registrarse</button>
+      <button class="auth-tab" id="tab-login" onclick="switchTab('login')">Iniciar sesión</button>
+    </div>
+    <div class="auth-body">
+
+      <!-- REGISTRO -->
+      <form class="auth-form active" id="form-registro" onsubmit="handleRegistro(event)">
+        <div id="err-registro" class="auth-error"></div>
+        <div id="ok-registro" class="auth-success"></div>
+        <div class="auth-row">
+          <div class="auth-field">
+            <label class="auth-label">Nombres *</label>
+            <input class="auth-input" type="text" name="nombres" placeholder="Tu nombre" required>
+          </div>
+          <div class="auth-field">
+            <label class="auth-label">Apellidos *</label>
+            <input class="auth-input" type="text" name="apellidos" placeholder="Tus apellidos" required>
+          </div>
+        </div>
+        <div class="auth-field">
+          <label class="auth-label">Email *</label>
+          <input class="auth-input" type="email" name="email" placeholder="tu@email.com" required>
+        </div>
+        <div class="auth-field">
+          <label class="auth-label">Contraseña *</label>
+          <input class="auth-input" type="password" name="password" placeholder="Mínimo 6 caracteres" minlength="6" required>
+        </div>
+        <div class="auth-row">
+          <div class="auth-field">
+            <label class="auth-label">WhatsApp</label>
+            <input class="auth-input" type="tel" name="whatsapp" placeholder="+57 300 000 0000">
+          </div>
+          <div class="auth-field">
+            <label class="auth-label">País</label>
+            <input class="auth-input" type="text" name="pais" placeholder="Colombia">
+          </div>
+        </div>
+        <div class="auth-field">
+          <label class="auth-label">Ciudad</label>
+          <input class="auth-input" type="text" name="ciudad" placeholder="Tu ciudad">
+        </div>
+        <div class="auth-field">
+          <label class="auth-label">¿Cómo llegaste aquí?</label>
+          <select class="auth-input" name="como_llego">
+            <option value="">Selecciona una opción</option>
+            <option value="Instagram">Instagram</option>
+            <option value="Evento">Asistí a un evento</option>
+            <option value="Recomendacion">Me recomendaron</option>
+            <option value="Google">Google / búsqueda</option>
+            <option value="Libro">Por el libro ¿Cómo Estás?</option>
+            <option value="Otro">Otro</option>
+          </select>
+        </div>
+        <button class="auth-btn" type="submit" id="btn-registro">Crear mi cuenta →</button>
+        <div class="auth-footer-text">Al registrarte aceptas recibir contenido sobre salud mental y bienestar de Javi Peñaloza.</div>
+      </form>
+
+      <!-- LOGIN -->
+      <form class="auth-form" id="form-login" onsubmit="handleLogin(event)">
+        <div id="err-login" class="auth-error"></div>
+        <div class="auth-field">
+          <label class="auth-label">Email</label>
+          <input class="auth-input" type="email" name="email" placeholder="tu@email.com" required>
+        </div>
+        <div class="auth-field">
+          <label class="auth-label">Contraseña</label>
+          <input class="auth-input" type="password" name="password" placeholder="Tu contraseña" required>
+        </div>
+        <button class="auth-btn" type="submit" id="btn-login">Entrar al mundo →</button>
+        <div class="auth-footer-text">¿Olvidaste tu contraseña? <a href="mailto:psicojavi@javipenaloza.com" style="color:#E8C30A;text-decoration:none">Escríbenos</a></div>
+      </form>
+
+    </div>
+  </div>
+</div>
+
 <div id="scroll-bar"></div>
 
 <!-- NAV -->
@@ -580,6 +785,123 @@ footer {
 </footer>
 
 <script>
+// ── SUPABASE AUTH ──
+const SUPA_URL = 'https://rpgagnnhsefwaethszfl.supabase.co'
+const SUPA_KEY = 'sb_publishable_RxdzH9llP6n2CvBi0ItXZw_xI_aA9Ef'
+const supa = supabase.createClient(SUPA_URL, SUPA_KEY)
+
+// Auth canvas stars
+const ac = document.getElementById('auth-canvas')
+if(ac){
+  const ax = ac.getContext('2d')
+  ac.width = window.innerWidth; ac.height = window.innerHeight
+  for(let i=0;i<180;i++){
+    ax.beginPath()
+    ax.arc(Math.random()*ac.width, Math.random()*ac.height, Math.random()*1.2+0.2, 0, Math.PI*2)
+    ax.fillStyle = `rgba(255,255,255,${Math.random()*0.5+0.1})`
+    ax.fill()
+  }
+}
+
+function switchTab(tab){
+  document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'))
+  document.querySelectorAll('.auth-form').forEach(f => f.classList.remove('active'))
+  document.getElementById('tab-'+tab).classList.add('active')
+  document.getElementById('form-'+tab).classList.add('active')
+}
+
+function showAuthError(id, msg){
+  const el = document.getElementById(id)
+  el.textContent = msg; el.style.display = 'block'
+}
+function hideAuthMessages(){
+  document.querySelectorAll('.auth-error, .auth-success').forEach(e => e.style.display = 'none')
+}
+
+async function handleRegistro(e){
+  e.preventDefault()
+  hideAuthMessages()
+  const btn = document.getElementById('btn-registro')
+  btn.disabled = true; btn.textContent = 'Creando cuenta...'
+  const fd = new FormData(e.target)
+  const email = fd.get('email')
+  const password = fd.get('password')
+
+  const { data, error } = await supa.auth.signUp({ email, password })
+
+  if(error){
+    showAuthError('err-registro', error.message)
+    btn.disabled = false; btn.textContent = 'Crear mi cuenta →'
+    return
+  }
+
+  if(data.user){
+    await supa.from('profiles').insert({
+      id: data.user.id,
+      nombres: fd.get('nombres'),
+      apellidos: fd.get('apellidos'),
+      whatsapp: fd.get('whatsapp') || null,
+      pais: fd.get('pais') || null,
+      ciudad: fd.get('ciudad') || null,
+      como_llego: fd.get('como_llego') || null
+    })
+  }
+
+  const ok = document.getElementById('ok-registro')
+  ok.textContent = '¡Bienvenido/a! Revisa tu email para confirmar tu cuenta, luego inicia sesión.'
+  ok.style.display = 'block'
+  btn.textContent = 'Cuenta creada ✓'
+  setTimeout(() => switchTab('login'), 3000)
+}
+
+async function handleLogin(e){
+  e.preventDefault()
+  hideAuthMessages()
+  const btn = document.getElementById('btn-login')
+  btn.disabled = true; btn.textContent = 'Entrando...'
+  const fd = new FormData(e.target)
+
+  const { error } = await supa.auth.signInWithPassword({
+    email: fd.get('email'),
+    password: fd.get('password')
+  })
+
+  if(error){
+    showAuthError('err-login', error.message === 'Invalid login credentials'
+      ? 'Email o contraseña incorrectos.' : error.message)
+    btn.disabled = false; btn.textContent = 'Entrar al mundo →'
+    return
+  }
+  enterWorld()
+}
+
+function enterWorld(){
+  const overlay = document.getElementById('auth-overlay')
+  overlay.classList.add('fade-out')
+  setTimeout(() => overlay.classList.add('hidden'), 700)
+  // Agregar botón logout al nav
+  const navLinks = document.querySelector('.nav-links')
+  if(navLinks && !document.getElementById('nav-logout')){
+    const li = document.createElement('li')
+    li.id = 'nav-logout'
+    li.innerHTML = `<a href="#" onclick="logout()" style="color:rgba(255,255,255,0.4)">Salir</a>`
+    navLinks.appendChild(li)
+  }
+}
+
+async function logout(){
+  await supa.auth.signOut()
+  location.reload()
+}
+
+// Verificar sesión al cargar
+;(async () => {
+  const { data: { session } } = await supa.auth.getSession()
+  if(session){
+    enterWorld()
+  }
+})()
+
 // ── WORLDS DATA ──
 const WORLDS = [
   {
