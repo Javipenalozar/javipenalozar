@@ -1541,9 +1541,12 @@ select.admin-input { cursor: pointer; }
 </div>
 
 <!-- TEST MODAL -->
-<div id="test-modal">
+<div id="test-modal" onclick="if(event.target===this)closeTest()">
   <div class="test-card" id="test-card">
-    <div class="test-world-name" id="test-world-name"></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
+      <div class="test-world-name" id="test-world-name"></div>
+      <button onclick="closeTest()" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.4);width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0">✕</button>
+    </div>
     <div class="test-progress-bar"><div class="test-progress-fill" id="test-progress-fill"></div></div>
     <div id="test-content"></div>
   </div>
