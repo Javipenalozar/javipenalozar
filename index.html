@@ -669,20 +669,77 @@ footer {
 }
 .reveal.visible { opacity: 1; transform: none; }
 
+/* ── HAMBURGER NAV ── */
+#nav-hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  padding: 4px;
+  background: none;
+  border: none;
+}
+#nav-hamburger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: rgba(255,255,255,0.7);
+  border-radius: 2px;
+  transition: all 0.3s;
+}
+#nav-mobile-menu {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(3,4,8,0.98);
+  backdrop-filter: blur(20px);
+  z-index: 99;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+}
+#nav-mobile-menu.open { display: flex; }
+#nav-mobile-menu a {
+  color: rgba(255,255,255,0.7);
+  text-decoration: none;
+  font-size: 18px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  transition: color 0.2s;
+}
+#nav-mobile-menu a:hover { color: var(--oro); }
+#nav-mobile-close {
+  position: absolute;
+  top: 24px; right: 24px;
+  background: none; border: none;
+  color: rgba(255,255,255,0.5);
+  font-size: 24px; cursor: pointer;
+}
+
 @media (max-width: 700px) {
   nav { padding: 16px 20px; }
   nav.scrolled { padding: 12px 20px; }
   .nav-links { display: none; }
-  #sobre { grid-template-columns: 1fr; padding: 60px 20px; }
-  .panel-inner { padding: 16px 20px; }
-  .panel-cta-area { display: none; }
-  footer { flex-direction: column; text-align: center; padding: 30px 20px; }
+  .nav-cta { display: none; }
+  #nav-hamburger { display: flex; }
 
-  /* Modal móvil — ocupa pantalla completa desde abajo */
+  /* Hero título más pequeño y arriba */
+  .hero-title { top: 10%; width: 90%; }
+  .hero-title-main { font-size: clamp(22px, 7vw, 36px); }
+  .hero-sub { font-size: 11px; }
+
+  /* Nombres de planetas ocultos en móvil — muy juntos */
+  .w-name { display: none; }
+
+  /* Panel inferior oculto en móvil (usan tap directo) */
+  #world-panel { display: none; }
+
+  /* Modal como sheet desde abajo */
   .modal-card {
     width: 100% !important;
     max-width: 100% !important;
-    max-height: 92vh !important;
+    max-height: 88vh !important;
     border-radius: 20px 20px 0 0 !important;
     overflow-y: auto !important;
   }
@@ -696,13 +753,39 @@ footer {
   .modal-header { padding: 24px 20px 16px !important; }
   .modal-body, .modal-posts-list, .modal-curso-tab { padding-left: 20px !important; padding-right: 20px !important; }
   .modal-tabs { padding: 0 20px !important; }
+  .modal-frase { font-size: 14px !important; }
 
-  /* Panel inferior — más compacto */
-  #world-panel { padding-bottom: env(safe-area-inset-bottom, 0px); }
+  /* Auth */
+  .auth-card { border-radius: 16px; }
+  .auth-header { padding: 24px 20px 16px; }
+  .auth-body { padding: 20px 20px 28px; }
+  .auth-row { grid-template-columns: 1fr !important; gap: 0; }
 
-  /* Auth card móvil */
-  .auth-card { padding: 28px 20px !important; }
-  .auth-row { grid-template-columns: 1fr !important; }
+  /* Sobre */
+  #sobre { grid-template-columns: 1fr; padding: 60px 20px; }
+
+  /* Footer */
+  footer { flex-direction: column; text-align: center; padding: 30px 20px; gap: 16px; }
+  .footer-links { flex-direction: column; gap: 12px; }
+
+  /* Admin */
+  #admin-btn { bottom: 20px; right: 20px; padding: 10px 18px; font-size: 12px; }
+
+  /* Blog */
+  #blog { padding: 60px 20px; }
+  .blog-grid { grid-template-columns: 1fr; }
+  .blog-modal-card { padding: 28px 20px; }
+
+  /* Perfil */
+  .perfil-body { padding: 24px 16px 60px; }
+  .perfil-header { flex-direction: column; text-align: center; gap: 16px; }
+  .perfil-stats { grid-template-columns: 1fr 1fr; }
+  .perfil-stat:last-child { grid-column: 1/-1; }
+  .perfil-worlds { grid-template-columns: 1fr 1fr; }
+  .perfil-nav { padding: 16px 20px; }
+
+  /* Test */
+  .test-card { padding: 28px 20px; }
 }
 
 /* ── PERFIL ── */
@@ -1412,7 +1495,22 @@ select.admin-input { cursor: pointer; }
     <li><a href="https://eventosjv.com#cursos" target="_blank">Cursos</a></li>
   </ul>
   <a href="https://eventosjv.com" target="_blank" class="nav-cta">Amar Bien 2026</a>
+  <button id="nav-hamburger" onclick="document.getElementById('nav-mobile-menu').classList.add('open')">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<!-- MENÚ MÓVIL -->
+<div id="nav-mobile-menu">
+  <button id="nav-mobile-close" onclick="document.getElementById('nav-mobile-menu').classList.remove('open')">✕</button>
+  <a href="#sobre" onclick="document.getElementById('nav-mobile-menu').classList.remove('open')">Quién es Javi</a>
+  <a href="#blog" onclick="document.getElementById('nav-mobile-menu').classList.remove('open')">Blog</a>
+  <a href="#" id="mob-perfil" onclick="document.getElementById('nav-mobile-menu').classList.remove('open');openPerfil();return false;" style="display:none">Mi perfil</a>
+  <a href="https://eventosjv.com" target="_blank">Eventos</a>
+  <a href="https://eventosjv.com#cursos" target="_blank">Cursos</a>
+  <a href="#" id="mob-logout" onclick="logout();return false;" style="display:none;color:rgba(255,255,255,0.3)">Salir</a>
+  <a href="https://eventosjv.com" target="_blank" style="color:var(--oro);border:1px solid var(--oro);padding:10px 28px;border-radius:4px">Amar Bien 2026</a>
+</div>
 
 <!-- HERO: EL UNIVERSO -->
 <section id="hero">
@@ -1830,8 +1928,11 @@ function enterWorld(){
   setTimeout(() => overlay.classList.add('hidden'), 700)
   loadBlog()
   loadUserProfile().then(() => renderPerfil())
-  // Mostrar links de usuario en nav
+  // Mostrar links de usuario en nav desktop
   document.getElementById('nav-perfil').style.display = 'inline'
+  // Mostrar en menú móvil
+  document.getElementById('mob-perfil').style.display = 'block'
+  document.getElementById('mob-logout').style.display = 'block'
   const navLinks = document.querySelector('.nav-links')
   if(navLinks && !document.getElementById('nav-logout')){
     const li = document.createElement('li')
@@ -2590,7 +2691,7 @@ const STARS = Array.from({length:200},()=>({
 // ── CREATE WORLD ELEMENTS ──
 const layer = document.getElementById('worlds-layer')
 WORLDS.forEach(w => {
-  const sz = w.size * 2
+  const sz = Math.round(w.size * 2 * orbitScale)
   const el = document.createElement('div')
   el.className = 'w-dot'
   el.id = 'wd-' + w.id
