@@ -464,6 +464,99 @@ nav.scrolled {
 }
 .modal-btn:hover { opacity: 0.88; transform: translateY(-1px); }
 
+/* MODAL TABS */
+.modal-tabs {
+  display: flex;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  background: #070b18;
+  padding: 0 32px;
+}
+.modal-tab {
+  padding: 14px 0;
+  margin-right: 28px;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.35);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s;
+  background: none;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  font-family: inherit;
+}
+.modal-tab.active {
+  color: var(--modal-accent, var(--turquesa));
+  border-bottom-color: var(--modal-accent, var(--turquesa));
+}
+.modal-tab-content { display: none; }
+.modal-tab-content.active { display: block; }
+
+/* Artículos dentro del modal */
+.modal-posts-list { display: flex; flex-direction: column; gap: 12px; padding: 24px 32px 32px; background: #070b18; }
+.modal-post-card {
+  padding: 16px 20px;
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: rgba(255,255,255,0.02);
+}
+.modal-post-card:hover {
+  border-color: rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.05);
+}
+.modal-post-card-title {
+  font-size: 14px;
+  color: rgba(240,250,249,0.85);
+  margin-bottom: 6px;
+  line-height: 1.4;
+}
+.modal-post-card-excerpt {
+  font-size: 12px;
+  color: rgba(255,255,255,0.35);
+  line-height: 1.6;
+}
+.modal-posts-empty {
+  padding: 40px 32px;
+  text-align: center;
+  color: rgba(255,255,255,0.2);
+  font-size: 13px;
+  background: #070b18;
+  line-height: 1.7;
+}
+
+/* Tab curso */
+.modal-curso-tab { padding: 28px 32px 32px; background: #070b18; }
+.modal-curso-desc {
+  font-size: 14px;
+  color: rgba(240,250,249,0.6);
+  line-height: 1.8;
+  margin-bottom: 24px;
+}
+.modal-reflection {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 24px;
+}
+.modal-reflection-label {
+  font-size: 9px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--modal-accent, var(--turquesa));
+  margin-bottom: 10px;
+}
+.modal-reflection-q {
+  font-size: 14px;
+  color: rgba(255,255,255,0.75);
+  font-style: italic;
+  line-height: 1.7;
+}
+
 /* ── SOBRE JAVI ── */
 #sobre {
   padding: 100px 40px;
@@ -1187,18 +1280,48 @@ select.admin-input { cursor: pointer; }
       <div class="modal-title" id="modal-title">Título</div>
       <button class="modal-close" id="modal-close">✕</button>
     </div>
-    <div class="modal-body">
-      <div class="modal-frase" id="modal-frase"></div>
-      <div class="modal-section">
-        <div class="modal-label">Pregunta que transforma</div>
-        <div class="modal-question" id="modal-q"></div>
-      </div>
-      <div class="modal-section">
-        <div class="modal-label">Herramientas de este mundo</div>
-        <div class="modal-tools" id="modal-tools"></div>
-      </div>
-      <a class="modal-btn" id="modal-curso-btn" href="https://eventosjv.com" target="_blank">Ver curso</a>
+
+    <!-- TABS NAV -->
+    <div class="modal-tabs">
+      <button class="modal-tab active" onclick="switchModalTab('explorar')">Explorar</button>
+      <button class="modal-tab" onclick="switchModalTab('articulos')">Artículos</button>
+      <button class="modal-tab" onclick="switchModalTab('curso')">Curso</button>
     </div>
+
+    <!-- TAB: EXPLORAR -->
+    <div class="modal-tab-content active" id="mtab-explorar">
+      <div class="modal-body">
+        <div class="modal-frase" id="modal-frase"></div>
+        <div class="modal-section">
+          <div class="modal-label">Pregunta que transforma</div>
+          <div class="modal-question" id="modal-q"></div>
+        </div>
+        <div class="modal-section">
+          <div class="modal-label">Herramientas de este mundo</div>
+          <div class="modal-tools" id="modal-tools"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: ARTÍCULOS -->
+    <div class="modal-tab-content" id="mtab-articulos">
+      <div class="modal-posts-list" id="modal-posts-list">
+        <div class="modal-posts-empty">Cargando artículos...</div>
+      </div>
+    </div>
+
+    <!-- TAB: CURSO -->
+    <div class="modal-tab-content" id="mtab-curso">
+      <div class="modal-curso-tab">
+        <div class="modal-reflection">
+          <div class="modal-reflection-label">Antes de ir al curso</div>
+          <div class="modal-reflection-q" id="modal-reflection-q"></div>
+        </div>
+        <div class="modal-curso-desc" id="modal-curso-desc"></div>
+        <a class="modal-btn" id="modal-curso-btn" href="https://eventosjv.com" target="_blank">Ver curso →</a>
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -1971,28 +2094,80 @@ function hidePanel(){
   panelOpen = false
 }
 
+function switchModalTab(tab){
+  document.querySelectorAll('.modal-tab').forEach(t => t.classList.remove('active'))
+  document.querySelectorAll('.modal-tab-content').forEach(t => t.classList.remove('active'))
+  document.getElementById('mtab-' + tab).classList.add('active')
+  const idx = ['explorar','articulos','curso'].indexOf(tab)
+  document.querySelectorAll('.modal-tab')[idx].classList.add('active')
+}
+
 function openModal(w){
+  // Resetear al primer tab
+  switchModalTab('explorar')
+
+  // Accent color
+  document.getElementById('modal-overlay').style.setProperty('--modal-accent', w.color)
+  document.getElementById('modal-card').style.setProperty('--modal-accent', w.color)
+
+  // Header
   document.getElementById('modal-tag').textContent = w.tag
   document.getElementById('modal-tag').style.color = w.color
   document.getElementById('modal-title').textContent = w.name
   document.getElementById('modal-header').style.background = w.bg
-  document.getElementById('modal-frase').textContent = w.frase
-  document.getElementById('modal-q').textContent = w.question
-  document.getElementById('modal-q').style.borderLeftColor = w.color
-  document.getElementById('modal-tools').innerHTML = w.tools.map(t=>`<span class="modal-tool">${t}</span>`).join('')
-  document.getElementById('modal-curso-btn').href = w.curso
-  document.getElementById('modal-curso-btn').textContent = w.cursoLabel + ' →'
-  document.getElementById('modal-curso-btn').style.background = w.color
+
+  // Symbol
   const sc = document.getElementById('modal-symbol')
   sc.style.cssText = `width:64px;height:64px;border-radius:50%;border:2px solid ${w.color};background:radial-gradient(circle at 35% 35%,${w.color}44,transparent);display:flex;align-items:center;justify-content:center;color:${w.color}`
   sc.innerHTML = `<div style="width:38px;height:38px">${SYMBOLS[w.id]||''}</div>`
+
+  // Tab Explorar
+  document.getElementById('modal-frase').textContent = w.frase
+  document.getElementById('modal-q').textContent = w.question
+  document.getElementById('modal-q').style.borderLeftColor = w.color
+  document.getElementById('modal-tools').innerHTML = w.tools.map(t=>`<span class="modal-tool" style="border-color:${w.color}33;color:rgba(255,255,255,0.7)">${t}</span>`).join('')
+
+  // Tab Artículos — filtrar del blog
+  const postsList = document.getElementById('modal-posts-list')
+  const worldPosts = allPosts.filter(p => p.categoria === w.name)
+  if(worldPosts.length === 0){
+    postsList.innerHTML = `<div class="modal-posts-empty">Todavía no hay artículos en este mundo.<br><span style="color:rgba(255,255,255,0.15);font-size:11px;letter-spacing:1px">Pronto habrá reflexiones sobre ${w.name}</span></div>`
+  } else {
+    postsList.innerHTML = worldPosts.map(p => `
+      <div class="modal-post-card" onclick="closeThenOpenPost('${p.id}')">
+        <div class="modal-post-card-title">${p.titulo}</div>
+        <div class="modal-post-card-excerpt">${p.extracto || ''}</div>
+      </div>
+    `).join('')
+  }
+
+  // Tab Curso
+  document.getElementById('modal-reflection-q').textContent = w.question
+  document.getElementById('modal-curso-desc').textContent = `Explora el mundo de ${w.name} con herramientas concretas, ejercicios y acompañamiento. Este curso es parte del ecosistema de Javi Peñaloza.`
+  document.getElementById('modal-curso-btn').href = w.curso
+  document.getElementById('modal-curso-btn').textContent = w.cursoLabel + ' →'
+  document.getElementById('modal-curso-btn').style.background = w.color
+  document.getElementById('modal-curso-btn').style.color = '#030408'
+
   document.getElementById('modal-overlay').classList.add('open')
+  document.body.style.overflow = 'hidden'
 }
 
-document.getElementById('modal-close').onclick = () => document.getElementById('modal-overlay').classList.remove('open')
+function closeThenOpenPost(id){
+  document.getElementById('modal-overlay').classList.remove('open')
+  document.body.style.overflow = ''
+  setTimeout(() => openBlogPost(id), 300)
+}
+
+document.getElementById('modal-close').onclick = () => {
+  document.getElementById('modal-overlay').classList.remove('open')
+  document.body.style.overflow = ''
+}
 document.getElementById('modal-overlay').addEventListener('click', e => {
-  if(e.target === document.getElementById('modal-overlay'))
+  if(e.target === document.getElementById('modal-overlay')){
     document.getElementById('modal-overlay').classList.remove('open')
+    document.body.style.overflow = ''
+  }
 })
 
 // ── ANIMATION LOOP (background only) ──
