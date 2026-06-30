@@ -618,8 +618,8 @@ footer {
           </div>
         </div>
         <div class="auth-field">
-          <label class="auth-label">Nombre de usuario *</label>
-          <input class="auth-input" type="text" name="username" id="input-username" placeholder="@tunombre" pattern="[a-zA-Z0-9_]{3,20}" title="Solo letras, números y guión bajo. Entre 3 y 20 caracteres." required oninput="this.value=this.value.replace(/[^a-zA-Z0-9_]/g,'').toLowerCase()">
+          <label class="auth-label">¿Cómo quieres llamarte en El Mundo de Javi? *</label>
+          <input class="auth-input" type="text" name="username" id="input-username" placeholder="ej: maria_estrella" pattern="[a-zA-Z0-9_]{3,20}" title="Solo letras, números y guión bajo. Entre 3 y 20 caracteres." required oninput="this.value=this.value.replace(/[^a-zA-Z0-9_]/g,'').toLowerCase()">
           <span id="username-status" style="font-size:11px;margin-top:3px;display:block;min-height:14px"></span>
         </div>
         <div class="auth-field">
@@ -664,8 +664,8 @@ footer {
       <form class="auth-form" id="form-login" onsubmit="handleLogin(event)">
         <div id="err-login" class="auth-error"></div>
         <div class="auth-field">
-          <label class="auth-label">Email</label>
-          <input class="auth-input" type="email" name="email" placeholder="tu@email.com" required>
+          <label class="auth-label">Tu nombre en El Mundo de Javi</label>
+          <input class="auth-input" type="text" name="username" placeholder="ej: maria_estrella" required oninput="this.value=this.value.replace(/[^a-zA-Z0-9_]/g,'').toLowerCase()">
         </div>
         <div class="auth-field">
           <label class="auth-label">Contraseña</label>
@@ -865,6 +865,7 @@ async function handleRegistro(e){
     const { error: profileError } = await supa.from('profiles').insert({
       id: data.user.id,
       username: fd.get('username'),
+      email: email,
       nombres: fd.get('nombres'),
       apellidos: fd.get('apellidos'),
       whatsapp: fd.get('whatsapp') || null,
@@ -892,15 +893,41 @@ async function handleLogin(e){
   const btn = document.getElementById('btn-login')
   btn.disabled = true; btn.textContent = 'Entrando...'
   const fd = new FormData(e.target)
+  const username = fd.get('username').trim().toLowerCase()
 
-  const { error } = await supa.auth.signInWithPassword({
-    email: fd.get('email'),
-    password: fd.get('password')
-  })
+  // Buscar email por username
+  const { data: profile, error: lookupError } = await supa
+    .from('profiles')
+    .select('id')
+    .eq('username', username)
+    .maybeSingle()
+
+  if(lookupError || !profile){
+    showAuthError('err-login', 'Nombre de usuario no encontrado.')
+    btn.disabled = false; btn.textContent = 'Entrar al mundo →'
+    return
+  }
+
+  // Obtener email del usuario via admin no disponible en client — usar metadata guardada en signup
+  // Alternativa: guardar email también en profiles
+  const { data: userData } = await supa
+    .from('profiles')
+    .select('email')
+    .eq('username', username)
+    .maybeSingle()
+
+  const email = userData?.email
+  if(!email){
+    showAuthError('err-login', 'No se pudo recuperar la cuenta. Intenta con tu email.')
+    btn.disabled = false; btn.textContent = 'Entrar al mundo →'
+    return
+  }
+
+  const { error } = await supa.auth.signInWithPassword({ email, password: fd.get('password') })
 
   if(error){
     showAuthError('err-login', error.message === 'Invalid login credentials'
-      ? 'Email o contraseña incorrectos.' : error.message)
+      ? 'Nombre de usuario o contraseña incorrectos.' : error.message)
     btn.disabled = false; btn.textContent = 'Entrar al mundo →'
     return
   }
