@@ -679,6 +679,152 @@ footer {
   footer { flex-direction: column; text-align: center; padding: 30px 20px; }
 }
 
+/* ── PERFIL ── */
+#perfil-overlay {
+  position: fixed; inset: 0; z-index: 1500;
+  background: #080b12;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.35s;
+  overflow-y: auto;
+}
+#perfil-overlay.open { opacity: 1; pointer-events: all; }
+
+.perfil-nav {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 24px 40px;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  position: sticky; top: 0; background: #080b12; z-index: 10;
+}
+.perfil-nav-title { color: rgba(255,255,255,0.4); font-size: 12px; letter-spacing: 3px; text-transform: uppercase; }
+.perfil-close {
+  background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.5); width: 36px; height: 36px; border-radius: 50%;
+  cursor: pointer; font-size: 14px; display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+}
+.perfil-close:hover { background: rgba(255,255,255,0.12); color: white; }
+
+.perfil-body { max-width: 900px; margin: 0 auto; padding: 48px 40px 80px; }
+
+.perfil-header {
+  display: flex; align-items: center; gap: 28px; margin-bottom: 56px;
+}
+.perfil-avatar {
+  width: 80px; height: 80px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 28px; font-weight: 300; color: #030408;
+  background: var(--turquesa); flex-shrink: 0;
+  letter-spacing: -1px;
+}
+.perfil-info h2 { color: var(--blanco); font-size: 1.8rem; font-weight: 300; margin: 0 0 6px; }
+.perfil-info p { color: rgba(255,255,255,0.35); font-size: 13px; margin: 0; letter-spacing: 0.5px; }
+
+.perfil-stats {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 48px;
+}
+.perfil-stat {
+  background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 14px; padding: 24px; text-align: center;
+}
+.perfil-stat-num { font-size: 2.2rem; font-weight: 200; color: var(--blanco); line-height: 1; margin-bottom: 8px; }
+.perfil-stat-label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.3); }
+
+.perfil-section-title {
+  font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+  color: rgba(255,255,255,0.3); margin-bottom: 20px;
+}
+
+/* Mapa de mundos en perfil */
+.perfil-worlds { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; margin-bottom: 48px; }
+.perfil-world-card {
+  border-radius: 14px; padding: 20px;
+  border: 1px solid rgba(255,255,255,0.07);
+  background: rgba(255,255,255,0.02);
+  transition: all 0.2s; cursor: pointer; position: relative; overflow: hidden;
+}
+.perfil-world-card:hover { border-color: rgba(255,255,255,0.15); background: rgba(255,255,255,0.05); }
+.perfil-world-card.visited { border-color: var(--wcolor); background: rgba(255,255,255,0.04); }
+.perfil-world-glow {
+  position: absolute; top: -20px; right: -20px;
+  width: 80px; height: 80px; border-radius: 50%;
+  opacity: 0; transition: opacity 0.3s;
+}
+.perfil-world-card.visited .perfil-world-glow { opacity: 1; }
+.perfil-world-symbol { width: 32px; height: 32px; margin-bottom: 12px; }
+.perfil-world-name { font-size: 13px; color: rgba(240,250,249,0.7); margin-bottom: 6px; }
+.perfil-world-status { font-size: 10px; letter-spacing: 1px; text-transform: uppercase; }
+.perfil-world-status.visited { color: var(--wcolor); }
+.perfil-world-status.unvisited { color: rgba(255,255,255,0.2); }
+
+/* Tests en perfil */
+.perfil-tests { display: flex; flex-direction: column; gap: 12px; margin-bottom: 48px; }
+.perfil-test-row {
+  display: flex; align-items: center; gap: 16px;
+  padding: 16px 20px; border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.07);
+  background: rgba(255,255,255,0.02);
+}
+.perfil-test-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.perfil-test-world { font-size: 13px; color: rgba(255,255,255,0.6); flex: 1; }
+.perfil-test-result { font-size: 12px; font-weight: 600; }
+.perfil-test-btn {
+  font-size: 11px; letter-spacing: 1px; padding: 6px 14px;
+  border-radius: 20px; border: 1px solid rgba(255,255,255,0.15);
+  background: none; color: rgba(255,255,255,0.4); cursor: pointer;
+  font-family: inherit; transition: all 0.2s;
+}
+.perfil-test-btn:hover { border-color: var(--turquesa); color: var(--turquesa); }
+
+/* TEST MODAL */
+#test-modal {
+  position: fixed; inset: 0; z-index: 2000;
+  background: rgba(3,4,8,0.95); backdrop-filter: blur(16px);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none; transition: opacity 0.3s;
+  padding: 20px;
+}
+#test-modal.open { opacity: 1; pointer-events: all; }
+.test-card {
+  background: #0c0f17; border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 20px; padding: 48px; max-width: 560px; width: 100%;
+}
+.test-world-name { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 16px; }
+.test-progress-bar {
+  height: 2px; background: rgba(255,255,255,0.07); border-radius: 2px; margin-bottom: 36px; overflow: hidden;
+}
+.test-progress-fill { height: 100%; border-radius: 2px; transition: width 0.4s ease; }
+.test-question { font-size: 1.2rem; color: var(--blanco); line-height: 1.5; margin-bottom: 28px; font-weight: 300; }
+.test-options { display: flex; flex-direction: column; gap: 10px; }
+.test-option {
+  padding: 14px 20px; border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.03);
+  color: rgba(240,250,249,0.75); font-size: 14px; cursor: pointer;
+  transition: all 0.2s; text-align: left; font-family: inherit;
+}
+.test-option:hover { border-color: var(--wcolor, var(--turquesa)); color: white; background: rgba(255,255,255,0.07); }
+
+/* Resultado del test */
+.test-result-wrap { text-align: center; }
+.test-result-icon { font-size: 48px; margin-bottom: 16px; }
+.test-result-level { font-size: 1.6rem; color: var(--blanco); font-weight: 300; margin-bottom: 12px; }
+.test-result-desc { color: rgba(255,255,255,0.5); font-size: 14px; line-height: 1.7; margin-bottom: 28px; }
+.test-result-btn {
+  padding: 12px 32px; border-radius: 30px; border: none;
+  font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer;
+  background: var(--wcolor, var(--turquesa)); color: #030408;
+  transition: opacity 0.2s;
+}
+.test-result-btn:hover { opacity: 0.85; }
+
+@media(max-width:768px){
+  .perfil-body { padding: 32px 20px 60px; }
+  .perfil-header { flex-direction: column; text-align: center; gap: 16px; }
+  .perfil-stats { grid-template-columns: 1fr 1fr; }
+  .perfil-worlds { grid-template-columns: 1fr 1fr; }
+  .test-card { padding: 32px 24px; }
+  .perfil-nav { padding: 20px; }
+}
+
 /* ── ADMIN PANEL ── */
 #admin-btn {
   position: fixed;
@@ -1235,6 +1381,7 @@ select.admin-input { cursor: pointer; }
   <ul class="nav-links">
     <li><a href="#sobre">Quién soy</a></li>
     <li><a href="#blog">Blog</a></li>
+    <li><a href="#" id="nav-perfil" onclick="openPerfil();return false;" style="display:none">Mi perfil</a></li>
     <li><a href="https://eventosjv.com" target="_blank">Eventos</a></li>
     <li><a href="https://eventosjv.com#cursos" target="_blank">Cursos</a></li>
   </ul>
@@ -1354,6 +1501,53 @@ select.admin-input { cursor: pointer; }
     </div>
   </div>
 </section>
+
+<!-- PERFIL OVERLAY -->
+<div id="perfil-overlay">
+  <div class="perfil-nav">
+    <span class="perfil-nav-title">Mi Perfil</span>
+    <button class="perfil-close" onclick="closePerfil()">✕</button>
+  </div>
+  <div class="perfil-body">
+    <div class="perfil-header">
+      <div class="perfil-avatar" id="perfil-avatar">J</div>
+      <div class="perfil-info">
+        <h2 id="perfil-username">@usuario</h2>
+        <p id="perfil-desde">Miembro desde —</p>
+      </div>
+    </div>
+
+    <div class="perfil-stats">
+      <div class="perfil-stat">
+        <div class="perfil-stat-num" id="pstat-mundos">0</div>
+        <div class="perfil-stat-label">Mundos explorados</div>
+      </div>
+      <div class="perfil-stat">
+        <div class="perfil-stat-num" id="pstat-tests">0</div>
+        <div class="perfil-stat-label">Tests completados</div>
+      </div>
+      <div class="perfil-stat">
+        <div class="perfil-stat-num" id="pstat-dias">1</div>
+        <div class="perfil-stat-label">Días en el mundo</div>
+      </div>
+    </div>
+
+    <div class="perfil-section-title">Mis Mundos</div>
+    <div class="perfil-worlds" id="perfil-worlds"></div>
+
+    <div class="perfil-section-title">Tests de Autodiagnóstico</div>
+    <div class="perfil-tests" id="perfil-tests"></div>
+  </div>
+</div>
+
+<!-- TEST MODAL -->
+<div id="test-modal">
+  <div class="test-card" id="test-card">
+    <div class="test-world-name" id="test-world-name"></div>
+    <div class="test-progress-bar"><div class="test-progress-fill" id="test-progress-fill"></div></div>
+    <div id="test-content"></div>
+  </div>
+</div>
 
 <!-- ADMIN BUTTON -->
 <button id="admin-btn" onclick="openAdmin()">⚡ Admin</button>
@@ -1599,12 +1793,14 @@ function enterWorld(){
   overlay.classList.add('fade-out')
   setTimeout(() => overlay.classList.add('hidden'), 700)
   loadBlog()
-  // Agregar botón logout al nav
+  loadUserProfile().then(() => renderPerfil())
+  // Mostrar links de usuario en nav
+  document.getElementById('nav-perfil').style.display = 'inline'
   const navLinks = document.querySelector('.nav-links')
   if(navLinks && !document.getElementById('nav-logout')){
     const li = document.createElement('li')
     li.id = 'nav-logout'
-    li.innerHTML = `<a href="#" onclick="logout()" style="color:rgba(255,255,255,0.4)">Salir</a>`
+    li.innerHTML = `<a href="#" onclick="logout()" style="color:rgba(255,255,255,0.3)">Salir</a>`
     navLinks.appendChild(li)
   }
 }
@@ -1623,6 +1819,282 @@ async function logout(){
     showAdminBtn()
   }
 })()
+
+// ── TESTS DATA ──
+const TESTS = {
+  amor: {
+    titulo: 'Amor Propio',
+    preguntas: [
+      { q: '¿Con qué frecuencia te criticas duramente cuando cometes un error?', opts: ['Casi siempre','Con frecuencia','A veces','Rara vez'] },
+      { q: '¿Puedes decir "no" sin sentirte culpable?', opts: ['Nunca','Me cuesta mucho','A veces logro hacerlo','Lo hago con naturalidad'] },
+      { q: '¿Cómo te sientes con tu cuerpo y tu apariencia?', opts: ['Muy insatisfecho/a','Bastante insatisfecho/a','Más o menos bien','En paz con él/ella'] },
+      { q: '¿Necesitas la aprobación de otros para sentirte bien contigo mismo/a?', opts: ['Todo el tiempo','Frecuentemente','A veces','Casi nunca'] },
+      { q: '¿Te permites descansar sin sentirte improductivo/a?', opts: ['Nunca','Casi nunca','A veces','Con facilidad'] },
+    ],
+    niveles: [
+      { min:0,  max:5,  nivel:'En construcción',  desc:'Tu amor propio está comenzando a despertar. Es momento de hacer las paces contigo mismo/a — sin prisa, con honestidad.' },
+      { min:6,  max:10, nivel:'En proceso',        desc:'Estás en un camino real. Hay días buenos y días difíciles, pero algo en ti ya sabe que mereces más amabilidad propia.' },
+      { min:11, max:15, nivel:'Floreciendo',       desc:'Tu relación contigo mismo/a tiene una base sólida. Sigues creciendo y eso es poderoso.' },
+      { min:16, max:20, nivel:'En plenitud',       desc:'Tienes una relación profundamente sana contigo. Eres un referente de lo que el amor propio puede construir.' },
+    ]
+  },
+  heridas: {
+    titulo: 'Heridas Emocionales',
+    preguntas: [
+      { q: '¿Hay situaciones del pasado que aún te generan dolor cuando las recuerdas?', opts: ['Muchas y con mucha intensidad','Algunas, bastante dolor','Pocas, dolor manejable','Casi ninguna'] },
+      { q: '¿Tus heridas del pasado afectan tus relaciones actuales?', opts: ['Todo el tiempo','Con frecuencia','A veces','Rara vez'] },
+      { q: '¿Has podido hablar abiertamente sobre lo que te ha dolido?', opts: ['Nunca','Con muy pocas personas','Con algunas personas de confianza','Con bastante apertura'] },
+      { q: '¿Sientes que has perdonado (no olvidado) a quienes te lastimaron?', opts: ['Para nada','Estoy en proceso, es difícil','En algunos casos sí','En la mayoría de casos'] },
+      { q: '¿Buscas ayuda profesional o espacios de sanación?', opts: ['Nunca lo he considerado','Lo he pensado pero no lo hago','Lo hice en el pasado','Lo hago actualmente'] },
+    ],
+    niveles: [
+      { min:0,  max:5,  nivel:'Herida abierta',    desc:'Hay dolor que merece atención y cuidado. No estás solo/a en esto — buscar ayuda es un acto de valentía.' },
+      { min:6,  max:10, nivel:'Sanando',            desc:'Estás en un proceso real de sanación. Reconocer el dolor es el primer paso y ya lo diste.' },
+      { min:11, max:15, nivel:'Integrando',         desc:'Has recorrido un camino importante. Tu herida se está convirtiendo en sabiduría.' },
+      { min:16, max:20, nivel:'Transformado/a',     desc:'Has trabajado profundamente en ti. Tu historia difícil se volvió tu mayor fortaleza.' },
+    ]
+  },
+  pareja: {
+    titulo: 'Vínculos de Pareja',
+    preguntas: [
+      { q: '¿Puedes expresar lo que sientes en tu relación (o en relaciones pasadas) sin miedo?', opts: ['Nunca','Con mucha dificultad','A veces','Con bastante libertad'] },
+      { q: '¿Repites patrones de relación que sabes que no te hacen bien?', opts: ['Siempre los mismos','Con frecuencia','A veces lo noto','Rara vez'] },
+      { q: '¿Sabes lo que necesitas en una relación para ser feliz?', opts: ['No tengo idea','Algo vago','Más o menos claro','Muy claro'] },
+      { q: '¿Confundes amor con dependencia o miedo a la soledad?', opts: ['Con frecuencia','A veces','Rara vez','Casi nunca'] },
+      { q: '¿Mantienes tu identidad y espacios propios dentro de una relación?', opts: ['Me pierdo completamente','Me cuesta mucho','Lo intento','Lo logro bien'] },
+    ],
+    niveles: [
+      { min:0,  max:5,  nivel:'Aprendiendo a amar', desc:'Tus vínculos te están enseñando mucho sobre ti. Cada relación tiene un mensaje.' },
+      { min:6,  max:10, nivel:'En consciencia',      desc:'Ya identificas patrones. Ese reconocimiento es el inicio del cambio real.' },
+      { min:11, max:15, nivel:'Construyendo bien',   desc:'Tus relaciones tienen cada vez más salud. Sabes más de lo que crees.' },
+      { min:16, max:20, nivel:'Vínculo sano',        desc:'Amas desde un lugar libre y consciente. Eso es raro y hermoso.' },
+    ]
+  },
+  familiar: {
+    titulo: 'Mundo Familiar',
+    preguntas: [
+      { q: '¿Tu familia de origen influyó negativamente en tu autoestima?', opts: ['Mucho y aún lo siento','Bastante','Algo','Poco o nada'] },
+      { q: '¿Puedes poner límites con tu familia sin sentirte mal?', opts: ['Imposible para mí','Muy difícil','A veces lo logro','Con naturalidad'] },
+      { q: '¿Repites en tu vida actual dinámicas que viviste en tu familia?', opts: ['Claramente sí','Creo que sí','Algo','No lo creo'] },
+      { q: '¿Has podido hablar con tu familia sobre lo que te dolió?', opts: ['Nunca','Lo intenté sin resultado','Algunas conversaciones','Hemos hablado bastante'] },
+      { q: '¿Sientes que tu historia familiar te define o la has resignificado?', opts: ['Me define completamente','Mucho','Algo','La he integrado'] },
+    ],
+    niveles: [
+      { min:0,  max:5,  nivel:'Desenredando raíces', desc:'Tu historia familiar pesa. Entenderla es el primer paso para no repetirla.' },
+      { min:6,  max:10, nivel:'Poniendo límites',     desc:'Estás aprendiendo a separar lo que es tuyo de lo que heredaste.' },
+      { min:11, max:15, nivel:'Resignificando',       desc:'Estás reescribiendo tu historia desde la consciencia. Eso toma valentía.' },
+      { min:16, max:20, nivel:'Raíces sanas',         desc:'Has hecho un trabajo profundo con tu historia. Tu árbol tiene raíces propias.' },
+    ]
+  },
+  energia: {
+    titulo: 'Energía y Bienestar',
+    preguntas: [
+      { q: '¿Cómo describes tu nivel de energía en el día a día?', opts: ['Agotado/a casi siempre','Muy variable, más bajo','Aceptable','Estable y bueno'] },
+      { q: '¿Tienes hábitos de autocuidado (sueño, movimiento, alimentación)?', opts: ['Ninguno','Pocos y no constantes','Algunos con regularidad','Sí, son parte de mi vida'] },
+      { q: '¿El estrés te paraliza o lo puedes gestionar?', opts: ['Me paraliza','Me afecta bastante','Lo manejo regularmente','Lo gestiono bien'] },
+      { q: '¿Dedicas tiempo a actividades que te recargan?', opts: ['Nunca tengo tiempo','Muy pocas veces','A veces','Con regularidad'] },
+      { q: '¿Tu cuerpo y tu mente van en la misma dirección?', opts: ['Para nada','Pocas veces','A veces se alinean','La mayoría del tiempo'] },
+    ],
+    niveles: [
+      { min:0,  max:5,  nivel:'En reserva',       desc:'Tu energía está muy baja. Tu cuerpo y mente necesitan atención urgente y cuidado real.' },
+      { min:6,  max:10, nivel:'Recargando',        desc:'Hay días mejores que otros. Pequeños hábitos pueden cambiar mucho tu energía.' },
+      { min:11, max:15, nivel:'En movimiento',     desc:'Tu bienestar es una prioridad que estás aprendiendo a sostener.' },
+      { min:16, max:20, nivel:'En flujo',          desc:'Tu energía es un recurso que cuidas y gestionas bien. Eres un ejemplo de autocuidado.' },
+    ]
+  },
+  humor: {
+    titulo: 'Humor y Sanación',
+    preguntas: [
+      { q: '¿Puedes reírte de tus propios errores sin hacerte daño?', opts: ['Para nada','Me cuesta mucho','A veces','Con facilidad'] },
+      { q: '¿El humor es una herramienta que usas para conectar con otros?', opts: ['No, me cuesta','Rara vez','A veces','Es natural en mí'] },
+      { q: '¿Usas el humor para evitar hablar de lo que sientes (defensa)?', opts: ['Siempre','Con frecuencia','A veces','Rara vez'] },
+      { q: '¿Cuándo fue la última vez que reíste de verdad?', opts: ['No lo recuerdo','Hace mucho tiempo','Esta semana','Hoy o ayer'] },
+      { q: '¿Puedes encontrar algo de ligereza incluso en momentos difíciles?', opts: ['Nunca','Rara vez','A veces','Casi siempre'] },
+    ],
+    niveles: [
+      { min:0,  max:5,  nivel:'La risa se fue',     desc:'La ligereza y el humor se han apagado. Es señal de que algo necesita atención y cuidado.' },
+      { min:6,  max:10, nivel:'Recuperando la risa', desc:'El humor está volviendo. Hay destellos de ligereza que vale la pena cultivar.' },
+      { min:11, max:15, nivel:'Sonriendo de verdad', desc:'El humor es parte de tu vida y te ayuda a sanar. Eso es una fortaleza.' },
+      { min:16, max:20, nivel:'El humor como medicina', desc:'Ríes, conectas y sanas a través del humor. Eso es un regalo para ti y para quienes te rodean.' },
+    ]
+  },
+  mente: {
+    titulo: 'Salud Mental',
+    preguntas: [
+      { q: '¿Con qué frecuencia tienes pensamientos negativos repetitivos?', opts: ['Todo el día','Con mucha frecuencia','A veces','Rara vez'] },
+      { q: '¿Puedes observar tus pensamientos sin identificarte completamente con ellos?', opts: ['No, soy mis pensamientos','Casi no puedo','A veces lo logro','Con bastante facilidad'] },
+      { q: '¿Duermes bien y despiertas descansado/a?', opts: ['Casi nunca','Pocas veces','La mayoría de veces','Casi siempre'] },
+      { q: '¿Has buscado o tienes acompañamiento profesional en salud mental?', opts: ['Nunca lo consideré','Lo pensé pero no actué','Lo hice antes','Lo tengo actualmente'] },
+      { q: '¿Tu estado emocional te permite funcionar bien en el día a día?', opts: ['Casi no puedo funcionar','Me cuesta bastante','Más o menos','Funciono bien'] },
+    ],
+    niveles: [
+      { min:0,  max:5,  nivel:'Necesita atención',  desc:'Tu salud mental necesita apoyo profesional. Pedir ayuda es el acto más inteligente que puedes hacer.' },
+      { min:6,  max:10, nivel:'En proceso',          desc:'Hay días difíciles pero también momentos de claridad. Estás en un camino real.' },
+      { min:11, max:15, nivel:'Construyendo estabilidad', desc:'Tu mente tiene cada vez más recursos para manejarse. Sigue en esa dirección.' },
+      { min:16, max:20, nivel:'Mente sana',          desc:'Tienes herramientas mentales sólidas y las usas. Eso es salud mental real.' },
+    ]
+  }
+}
+
+// ── PERFIL ──
+let userProfile = null
+let worldVisits = {}
+let testResults = {}
+let testState = { worldId: null, qIndex: 0, score: 0 }
+
+async function loadUserProfile(){
+  if(!currentUser) return
+  const { data } = await supa.from('profiles')
+    .select('username, nombres, created_at')
+    .eq('id', currentUser.id).single()
+  userProfile = data
+
+  // Cargar visitas
+  const { data: visits } = await supa.from('world_visits').select('world_id').eq('user_id', currentUser.id)
+  worldVisits = {}
+  visits?.forEach(v => worldVisits[v.world_id] = true)
+
+  // Cargar resultados de tests
+  const { data: tests } = await supa.from('test_results').select('world_id, nivel, score').eq('user_id', currentUser.id)
+  testResults = {}
+  tests?.forEach(t => testResults[t.world_id] = t)
+}
+
+function openPerfil(){
+  document.getElementById('perfil-overlay').classList.add('open')
+  renderPerfil()
+}
+function closePerfil(){
+  document.getElementById('perfil-overlay').classList.remove('open')
+}
+
+function renderPerfil(){
+  if(!userProfile) return
+  const username = userProfile.username || userProfile.nombres || 'Usuario'
+  const initial = username[0].toUpperCase()
+  document.getElementById('perfil-avatar').textContent = initial
+  document.getElementById('perfil-username').textContent = '@' + username
+  const desde = new Date(userProfile.created_at)
+  document.getElementById('perfil-desde').textContent = 'Miembro desde ' + desde.toLocaleDateString('es-ES',{day:'numeric',month:'long',year:'numeric'})
+
+  // Días en el mundo
+  const dias = Math.max(1, Math.floor((Date.now() - desde.getTime()) / 86400000))
+  document.getElementById('pstat-dias').textContent = dias
+  document.getElementById('pstat-mundos').textContent = Object.keys(worldVisits).length
+  document.getElementById('pstat-tests').textContent = Object.keys(testResults).length
+
+  // Mapa de mundos
+  const worldsEl = document.getElementById('perfil-worlds')
+  worldsEl.innerHTML = WORLDS.map(w => {
+    const visited = worldVisits[w.id]
+    return `
+    <div class="perfil-world-card ${visited?'visited':''}" style="--wcolor:${w.color}" onclick="openModal(${JSON.stringify(w).replace(/"/g,'&quot;')})">
+      <div class="perfil-world-glow" style="background:radial-gradient(circle,${w.color}33,transparent)"></div>
+      <div class="perfil-world-symbol" style="color:${w.color}">${SYMBOLS[w.id]||''}</div>
+      <div class="perfil-world-name">${w.name}</div>
+      <div class="perfil-world-status ${visited?'visited':'unvisited'}">${visited?'Explorado':'Sin explorar'}</div>
+    </div>`
+  }).join('')
+
+  // Tests
+  const testsEl = document.getElementById('perfil-tests')
+  testsEl.innerHTML = WORLDS.map(w => {
+    const result = testResults[w.id]
+    return `
+    <div class="perfil-test-row">
+      <div class="perfil-test-dot" style="background:${w.color}"></div>
+      <div class="perfil-test-world">${w.name}</div>
+      ${result
+        ? `<div class="perfil-test-result" style="color:${w.color}">${result.nivel}</div>
+           <button class="perfil-test-btn" onclick="startTest('${w.id}')">Repetir</button>`
+        : `<button class="perfil-test-btn" onclick="startTest('${w.id}')">Hacer test</button>`
+      }
+    </div>`
+  }).join('')
+}
+
+async function trackWorldVisit(worldId){
+  if(!currentUser || worldVisits[worldId]) return
+  worldVisits[worldId] = true
+  await supa.from('world_visits').upsert({ user_id: currentUser.id, world_id: worldId }, { onConflict: 'user_id,world_id' })
+}
+
+// ── TESTS ──
+function startTest(worldId){
+  const test = TESTS[worldId]
+  if(!test) return
+  testState = { worldId, qIndex: 0, score: 0 }
+  const w = WORLDS.find(x => x.id === worldId)
+  document.getElementById('test-world-name').textContent = test.titulo
+  document.getElementById('test-world-name').style.color = w?.color || '#14B8A6'
+  document.getElementById('test-card').style.setProperty('--wcolor', w?.color || '#14B8A6')
+  document.getElementById('test-modal').classList.add('open')
+  renderTestQuestion()
+}
+
+function renderTestQuestion(){
+  const test = TESTS[testState.worldId]
+  const q = test.preguntas[testState.qIndex]
+  const total = test.preguntas.length
+  const pct = (testState.qIndex / total) * 100
+
+  document.getElementById('test-progress-fill').style.width = pct + '%'
+  document.getElementById('test-progress-fill').style.background = document.getElementById('test-card').style.getPropertyValue('--wcolor') || '#14B8A6'
+
+  document.getElementById('test-content').innerHTML = `
+    <div style="font-size:11px;letter-spacing:2px;color:rgba(255,255,255,0.3);margin-bottom:20px;text-transform:uppercase">Pregunta ${testState.qIndex+1} de ${total}</div>
+    <div class="test-question">${q.q}</div>
+    <div class="test-options">
+      ${q.opts.map((opt, i) => `
+        <button class="test-option" onclick="answerTest(${i})">${opt}</button>
+      `).join('')}
+    </div>
+  `
+}
+
+async function answerTest(optIndex){
+  testState.score += optIndex // 0=peor, 3=mejor → 5 preguntas × 3 = máx 15... ajustado en niveles
+  testState.qIndex++
+  const test = TESTS[testState.worldId]
+
+  if(testState.qIndex >= test.preguntas.length){
+    // Calcular resultado
+    const maxScore = (test.preguntas.length - 1) * 3 // máx si elige siempre la última opción
+    const scaledScore = Math.round((testState.score / maxScore) * 20)
+    const nivel = test.niveles.find(n => scaledScore >= n.min && scaledScore <= n.max) || test.niveles[0]
+    const w = WORLDS.find(x => x.id === testState.worldId)
+
+    // Guardar en Supabase
+    if(currentUser){
+      await supa.from('test_results').upsert({
+        user_id: currentUser.id,
+        world_id: testState.worldId,
+        nivel: nivel.nivel,
+        score: scaledScore,
+        updated_at: new Date().toISOString()
+      }, { onConflict: 'user_id,world_id' })
+      testResults[testState.worldId] = { nivel: nivel.nivel, score: scaledScore }
+    }
+
+    document.getElementById('test-progress-fill').style.width = '100%'
+    document.getElementById('test-content').innerHTML = `
+      <div class="test-result-wrap">
+        <div class="test-result-level" style="color:${w?.color||'#14B8A6'}">${nivel.nivel}</div>
+        <div class="test-result-desc">${nivel.desc}</div>
+        <button class="test-result-btn" style="background:${w?.color||'#14B8A6'}" onclick="closeTest()">Ver mi perfil →</button>
+      </div>
+    `
+    // Actualizar stat de tests
+    document.getElementById('pstat-tests').textContent = Object.keys(testResults).length
+  } else {
+    renderTestQuestion()
+  }
+}
+
+function closeTest(){
+  document.getElementById('test-modal').classList.remove('open')
+  renderPerfil()
+}
 
 // ── ADMIN ──
 const ADMIN_EMAIL = 'psicojavi@javipenaloza.com'
@@ -2151,6 +2623,7 @@ function openModal(w){
 
   document.getElementById('modal-overlay').classList.add('open')
   document.body.style.overflow = 'hidden'
+  trackWorldVisit(w.id)
 }
 
 function closeThenOpenPost(id){
