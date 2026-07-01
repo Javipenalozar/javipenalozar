@@ -1007,6 +1007,60 @@ footer {
 
 /* Tests en perfil */
 .perfil-tests { display: flex; flex-direction: column; gap: 12px; margin-bottom: 48px; }
+
+/* ── NIVEL Y PUNTOS ── */
+.perfil-nivel-wrap { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); border-radius: 16px; padding: 20px 24px; margin-bottom: 32px; }
+.perfil-nivel-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+.perfil-nivel-badge { display: flex; align-items: center; gap: 10px; }
+.perfil-nivel-emoji { font-size: 24px; }
+.perfil-nivel-name { font-size: 14px; font-weight: 500; color: var(--blanco); }
+.perfil-nivel-pts { font-size: 11px; color: rgba(255,255,255,0.3); margin-top: 2px; }
+.perfil-puntos-total { text-align: right; }
+.perfil-puntos-num { font-size: 28px; font-weight: 200; color: var(--oro); line-height: 1; }
+.perfil-puntos-label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.25); }
+.perfil-nivel-bar-wrap { margin-bottom: 8px; }
+.perfil-nivel-bar-bg { height: 6px; background: rgba(255,255,255,0.07); border-radius: 3px; overflow: hidden; }
+.perfil-nivel-bar-fill { height: 100%; border-radius: 3px; transition: width 0.8s ease; }
+.perfil-nivel-meta { font-size: 11px; color: rgba(255,255,255,0.25); display: flex; justify-content: space-between; }
+.perfil-racha { display: flex; align-items: center; gap: 8px; margin-top: 14px; padding-top: 14px; border-top: 1px solid rgba(255,255,255,0.05); }
+.perfil-racha-fuego { font-size: 18px; }
+.perfil-racha-txt { font-size: 13px; color: rgba(255,255,255,0.5); }
+.perfil-racha-num { color: var(--oro); font-weight: 500; }
+
+/* ── INSIGNIAS ── */
+.perfil-badges-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; margin-bottom: 16px; }
+.badge-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); border-radius: 12px; padding: 14px 12px; text-align: center; cursor: pointer; transition: all 0.2s; position: relative; }
+.badge-card:hover { border-color: rgba(255,255,255,0.15); }
+.badge-card.selected { border-color: var(--turquesa); background: rgba(20,184,166,0.08); }
+.badge-card.approved { border-color: #4ade80; background: rgba(74,222,128,0.06); }
+.badge-card.pending { border-color: var(--oro); background: rgba(232,195,10,0.06); }
+.badge-icon { font-size: 22px; margin-bottom: 6px; }
+.badge-name { font-size: 11px; color: rgba(255,255,255,0.6); line-height: 1.3; }
+.badge-status { font-size: 9px; letter-spacing: 1px; text-transform: uppercase; margin-top: 5px; }
+.badge-status.approved { color: #4ade80; }
+.badge-status.pending { color: var(--oro); }
+.badge-pts { position: absolute; top: 6px; right: 8px; font-size: 9px; color: rgba(255,255,255,0.2); }
+.badges-save-btn { background: var(--turquesa); color: #030408; border: none; border-radius: 8px; padding: 11px 24px; font-size: 13px; font-weight: 600; cursor: pointer; transition: opacity 0.2s; }
+.badges-save-btn:hover { opacity: 0.85; }
+.badges-msg { font-size: 12px; color: #4ade80; margin-top: 8px; min-height: 18px; }
+
+/* ── REFERIDOS ── */
+.perfil-ref-wrap { background: rgba(232,195,10,0.04); border: 1px solid rgba(232,195,10,0.12); border-radius: 16px; padding: 20px 24px; margin-bottom: 32px; }
+.perfil-ref-title { font-size: 13px; font-weight: 500; color: var(--oro); margin-bottom: 6px; }
+.perfil-ref-sub { font-size: 12px; color: rgba(255,255,255,0.3); margin-bottom: 14px; line-height: 1.5; }
+.perfil-ref-link { display: flex; gap: 8px; align-items: center; margin-bottom: 16px; }
+.perfil-ref-input { flex: 1; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: var(--blanco); font-size: 12px; padding: 10px 14px; font-family: monospace; }
+.perfil-ref-copy { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); color: rgba(255,255,255,0.6); border-radius: 8px; padding: 10px 16px; font-size: 12px; cursor: pointer; white-space: nowrap; transition: all 0.2s; }
+.perfil-ref-copy:hover { background: rgba(255,255,255,0.14); color: white; }
+.perfil-ref-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+.perfil-ref-stat { background: rgba(255,255,255,0.03); border-radius: 10px; padding: 12px; text-align: center; }
+.perfil-ref-stat-num { font-size: 22px; font-weight: 200; color: var(--blanco); }
+.perfil-ref-stat-label { font-size: 10px; color: rgba(255,255,255,0.25); margin-top: 2px; }
+.perfil-ref-pasados { border-top: 1px solid rgba(255,255,255,0.06); padding-top: 14px; }
+.perfil-ref-pasados-label { font-size: 11px; color: rgba(255,255,255,0.3); margin-bottom: 8px; line-height: 1.5; }
+.perfil-ref-pasados-form { display: flex; gap: 8px; align-items: center; }
+.perfil-ref-pasados-select { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: var(--blanco); font-size: 12px; padding: 9px 12px; font-family: inherit; cursor: pointer; }
+.perfil-ref-pasados-btn { background: rgba(232,195,10,0.15); border: 1px solid rgba(232,195,10,0.25); color: var(--oro); border-radius: 8px; padding: 9px 16px; font-size: 12px; cursor: pointer; white-space: nowrap; }
 .perfil-test-row {
   display: flex; align-items: center; gap: 16px;
   padding: 16px 20px; border-radius: 12px;
@@ -1853,6 +1907,42 @@ select.admin-input { cursor: pointer; }
       </div>
     </div>
 
+    <!-- NIVEL Y PUNTOS -->
+    <div class="perfil-nivel-wrap" id="perfil-nivel-wrap"></div>
+
+    <!-- REFERIDOS -->
+    <div class="perfil-ref-wrap">
+      <div class="perfil-ref-title">🔗 Tu link de referidos</div>
+      <div class="perfil-ref-sub">Comparte este link. Cuando alguien se registre y consuma algo con Javi, tú ganas puntos.</div>
+      <div class="perfil-ref-link">
+        <input class="perfil-ref-input" id="perfil-ref-url" readonly>
+        <button class="perfil-ref-copy" onclick="copiarRefLink()">Copiar</button>
+      </div>
+      <div class="perfil-ref-stats">
+        <div class="perfil-ref-stat"><div class="perfil-ref-stat-num" id="ref-count-1">0</div><div class="perfil-ref-stat-label">Referidos directos</div></div>
+        <div class="perfil-ref-stat"><div class="perfil-ref-stat-num" id="ref-count-2">0</div><div class="perfil-ref-stat-label">Referidos de nivel 2</div></div>
+      </div>
+      <div class="perfil-ref-pasados" id="perfil-ref-pasados-wrap">
+        <div class="perfil-ref-pasados-label">¿Antes del 1 de julio 2026 referiste personas que consumieron algo con Javi? Decláralo honestamente — será verificado por el equipo.</div>
+        <div class="perfil-ref-pasados-form">
+          <select class="perfil-ref-pasados-select" id="ref-pasados-select">
+            <option value="">Selecciona un rango</option>
+            <option value="1-5">1 – 5 personas</option>
+            <option value="6-10">6 – 10 personas</option>
+            <option value="11-20">11 – 20 personas</option>
+            <option value="21-50">21 – 50 personas</option>
+            <option value="50+">50+ personas</option>
+          </select>
+          <button class="perfil-ref-pasados-btn" onclick="declararRefPasados()">Declarar</button>
+        </div>
+        <div class="badges-msg" id="ref-pasados-msg"></div>
+      </div>
+    </div>
+
+    <!-- INSIGNIAS -->
+    <div class="perfil-section-title">Mis Insignias</div>
+    <div id="perfil-badges-wrap"></div>
+
     <div class="perfil-section-title">Mis Mundos</div>
     <div class="perfil-worlds" id="perfil-worlds"></div>
 
@@ -1883,6 +1973,7 @@ select.admin-input { cursor: pointer; }
       <div class="admin-tabs">
         <button class="admin-tab active" id="tab-articulos" onclick="switchAdminTab('articulos')">Artículos</button>
         <button class="admin-tab" id="tab-stats" onclick="switchAdminTab('stats')">Estadísticas</button>
+        <button class="admin-tab" id="tab-pendientes" onclick="switchAdminTab('pendientes')">Pendientes</button>
       </div>
       <button class="admin-close" onclick="closeAdmin()">✕</button>
     </div>
@@ -1891,6 +1982,7 @@ select.admin-input { cursor: pointer; }
       <div class="admin-post-list" id="admin-post-list"></div>
     </div>
     <div id="admin-tab-stats" style="display:none;overflow-y:auto;flex:1"></div>
+    <div id="admin-tab-pendientes" style="display:none;overflow-y:auto;flex:1"></div>
   </div>
   <div class="admin-editor" id="admin-editor">
     <div class="admin-empty-state" id="admin-empty">
@@ -2056,6 +2148,8 @@ async function handleRegistro(e){
   }
 
   if(data.user){
+    const refCode = localStorage.getItem('javi_ref') || null
+    const myRefCode = data.user.id.slice(0,6).toUpperCase()
     const { error: profileError } = await supa.from('profiles').insert({
       id: data.user.id,
       username: fd.get('username'),
@@ -2065,8 +2159,11 @@ async function handleRegistro(e){
       whatsapp: fd.get('whatsapp') || null,
       pais: fd.get('pais') || null,
       ciudad: fd.get('ciudad') || null,
-      como_llego: fd.get('como_llego') || null
+      como_llego: fd.get('como_llego') || null,
+      ref_code: myRefCode,
+      referred_by: refCode
     })
+    if(refCode) localStorage.removeItem('javi_ref')
     if(profileError && profileError.code === '23505'){
       showAuthError('err-registro', 'Ese nombre de usuario ya está en uso. Elige otro.')
       btn.disabled = false; btn.textContent = 'Crear mi cuenta →'
@@ -2353,7 +2450,287 @@ function renderPerfil(){
       }
     </div>`
   }).join('')
+
+  renderNivel()
+  renderInsignias()
 }
+
+// ── SISTEMA DE PUNTOS Y NIVELES ──
+const NIVELES = [
+  { nombre: 'Sin nivel',  emoji: '🌑', min: 0,     max: 799,   color: 'rgba(255,255,255,0.2)' },
+  { nombre: 'Bronce',     emoji: '🥉', min: 800,   max: 2499,  color: '#cd7f32' },
+  { nombre: 'Plata',      emoji: '🥈', min: 2500,  max: 4999,  color: '#a8a9ad' },
+  { nombre: 'Oro',        emoji: '🥇', min: 5000,  max: 9999,  color: '#E8C30A' },
+  { nombre: 'Diamante',   emoji: '💎', min: 10000, max: Infinity, color: '#a855f7' }
+]
+
+const RECOMPENSAS = {
+  'Bronce':   '10% descuento en Stand-Up Therapy o cualquier evento',
+  'Plata':    '20% en cualquier curso de Academia Anahata',
+  'Oro':      '50% descuento en un retiro',
+  'Diamante': '3 sesiones con Javi + 30% en certificación de coaching'
+}
+
+function getNivel(pts){
+  return NIVELES.find(n => pts >= n.min && pts <= n.max) || NIVELES[0]
+}
+
+// ── INSIGNIAS ──
+const CUTOFF = '2026-07-01'
+const BADGE_DEFS = [
+  // Libros - auto
+  { id:'libro-solo-por-hoy',   nombre:'Libro Solo por Hoy',    icon:'📖', cat:'Libros',         auto:true,  pts_pre:15, pts_post:30 },
+  { id:'libro-como-estas',     nombre:'Libro ¿Cómo estás?',    icon:'📗', cat:'Libros',         auto:true,  pts_pre:15, pts_post:30 },
+  // Sesiones - auto
+  { id:'sesion-coaching',      nombre:'Sesión de Coaching',     icon:'🎯', cat:'Sesiones',       auto:true,  pts_pre:25, pts_post:50 },
+  { id:'sesion-reiki',         nombre:'Sesión de Reiki',        icon:'✨', cat:'Sesiones',       auto:true,  pts_pre:25, pts_post:50 },
+  { id:'sesion-psicologia',    nombre:'Sesión de Psicología',   icon:'🧠', cat:'Sesiones',       auto:true,  pts_pre:25, pts_post:50 },
+  { id:'terapia-pareja',       nombre:'Terapia de Pareja',      icon:'💑', cat:'Sesiones',       auto:true,  pts_pre:25, pts_post:50 },
+  { id:'terapia-individual',   nombre:'Terapia Individual',     icon:'🛋️', cat:'Sesiones',       auto:true,  pts_pre:25, pts_post:50 },
+  // Eventos - verificados
+  { id:'standup-therapy',      nombre:'Stand-Up Therapy',       icon:'🎤', cat:'Eventos',        auto:false, pts_pre:35, pts_post:80 },
+  { id:'expo-parejas',         nombre:'Expo Parejas',           icon:'💞', cat:'Eventos',        auto:false, pts_pre:35, pts_post:80 },
+  { id:'spa-alma',             nombre:'Spa para el Alma',       icon:'🌸', cat:'Eventos',        auto:false, pts_pre:35, pts_post:80 },
+  { id:'retiro-diosa',         nombre:'Retiro Diosa',           icon:'🌙', cat:'Retiros',        auto:false, pts_pre:60, pts_post:150 },
+  { id:'retiro',               nombre:'Retiro',                 icon:'🏕️', cat:'Retiros',        auto:false, pts_pre:60, pts_post:150 },
+  // Cursos - verificados
+  { id:'curso-ie',             nombre:'Inteligencia Emocional', icon:'💡', cat:'Cursos',         auto:false, pts_pre:30, pts_post:70 },
+  { id:'curso-mindfulness',    nombre:'Curso Mindfulness',      icon:'🧘', cat:'Cursos',         auto:false, pts_pre:30, pts_post:70 },
+  { id:'taller-heridas',       nombre:'Taller Sanando Heridas', icon:'💜', cat:'Cursos',         auto:false, pts_pre:30, pts_post:70 },
+  { id:'taller-heridas-pareja',nombre:'Taller Heridas de Pareja',icon:'🤝',cat:'Cursos',         auto:false, pts_pre:30, pts_post:70 },
+  // Certificaciones - verificadas
+  { id:'cert-reiki',           nombre:'Certificación Reiki',    icon:'🏅', cat:'Certificaciones',auto:false, pts_pre:150, pts_post:300 },
+  { id:'cert-coaching',        nombre:'Certificación Coaching', icon:'🎓', cat:'Certificaciones',auto:false, pts_pre:150, pts_post:300 },
+]
+
+let userBadges = {}
+let userPoints = 0
+let userStreak = 0
+let userRefCode = null
+
+async function loadUserProfile(){
+  if(!currentUser) return
+  const { data } = await supa.from('profiles')
+    .select('username, nombres, created_at, points, ref_code, referred_by')
+    .eq('id', currentUser.id).single()
+  userProfile = data
+  userPoints = data?.points || 0
+  userRefCode = data?.ref_code
+
+  // Generar ref_code si no tiene
+  if(!userRefCode){
+    userRefCode = currentUser.id.slice(0,6).toUpperCase()
+    await supa.from('profiles').update({ ref_code: userRefCode }).eq('id', currentUser.id)
+  }
+
+  // Visitas
+  const { data: visits } = await supa.from('world_visits').select('world_id').eq('user_id', currentUser.id)
+  worldVisits = {}
+  visits?.forEach(v => worldVisits[v.world_id] = true)
+
+  // Tests
+  const { data: tests } = await supa.from('test_results').select('world_id, nivel, score').eq('user_id', currentUser.id)
+  testResults = {}
+  tests?.forEach(t => testResults[t.world_id] = t)
+
+  // Insignias
+  const { data: badges } = await supa.from('badges').select('badge_id, status, created_at').eq('user_id', currentUser.id)
+  userBadges = {}
+  badges?.forEach(b => userBadges[b.badge_id] = { status: b.status, created_at: b.created_at })
+
+  // Racha: contar días consecutivos con reflexiones
+  const { data: refls } = await supa.from('reflections')
+    .select('created_at').eq('user_id', currentUser.id).order('created_at', { ascending: false })
+  userStreak = calcularRacha(refls || [])
+
+  // Referidos
+  const { count: ref1 } = await supa.from('profiles').select('*', { count:'exact', head:true }).eq('referred_by', userRefCode)
+  document.getElementById('ref-count-1').textContent = ref1 || 0
+
+  // Referidos nivel 2 — personas referidas por mis referidos
+  const { data: misReferidos } = await supa.from('profiles').select('ref_code').eq('referred_by', userRefCode)
+  let ref2count = 0
+  if(misReferidos?.length){
+    const refCodes = misReferidos.map(r => r.ref_code).filter(Boolean)
+    if(refCodes.length){
+      const { count } = await supa.from('profiles').select('*', { count:'exact', head:true }).in('referred_by', refCodes)
+      ref2count = count || 0
+    }
+  }
+  document.getElementById('ref-count-2').textContent = ref2count
+
+  // Link de referido
+  const refUrl = `${location.origin}${location.pathname}?ref=${userRefCode}`
+  document.getElementById('perfil-ref-url').value = refUrl
+
+  // Ocultar declaración de pasados si ya la hizo
+  const { data: pastRef } = await supa.from('badges').select('id').eq('user_id', currentUser.id).eq('badge_id', 'referidos-pasados').single()
+  if(pastRef) document.getElementById('perfil-ref-pasados-wrap').style.display = 'none'
+}
+
+function calcularRacha(reflexiones){
+  if(!reflexiones.length) return 0
+  const dias = [...new Set(reflexiones.map(r => r.created_at.slice(0,10)))].sort().reverse()
+  const hoy = new Date().toISOString().slice(0,10)
+  if(dias[0] !== hoy && dias[0] !== new Date(Date.now()-86400000).toISOString().slice(0,10)) return 0
+  let streak = 1
+  for(let i = 1; i < dias.length; i++){
+    const prev = new Date(dias[i-1]), curr = new Date(dias[i])
+    const diff = (prev - curr) / 86400000
+    if(diff === 1) streak++
+    else break
+  }
+  return streak
+}
+
+function renderNivel(){
+  const nivel = getNivel(userPoints)
+  const nextNivel = NIVELES[NIVELES.indexOf(nivel) + 1]
+  const pct = nextNivel ? Math.min(100, Math.round((userPoints - nivel.min) / (nextNivel.min - nivel.min) * 100)) : 100
+  const wrap = document.getElementById('perfil-nivel-wrap')
+  if(!wrap) return
+  wrap.innerHTML = `
+    <div class="perfil-nivel-top">
+      <div class="perfil-nivel-badge">
+        <div class="perfil-nivel-emoji">${nivel.emoji}</div>
+        <div>
+          <div class="perfil-nivel-name">${nivel.nombre}</div>
+          ${RECOMPENSAS[nivel.nombre] ? `<div class="perfil-nivel-pts" style="color:${nivel.color}">${RECOMPENSAS[nivel.nombre]}</div>` : '<div class="perfil-nivel-pts">Acumula puntos para desbloquear recompensas</div>'}
+        </div>
+      </div>
+      <div class="perfil-puntos-total">
+        <div class="perfil-puntos-num">${userPoints}</div>
+        <div class="perfil-puntos-label">puntos</div>
+      </div>
+    </div>
+    <div class="perfil-nivel-bar-wrap">
+      <div class="perfil-nivel-bar-bg">
+        <div class="perfil-nivel-bar-fill" style="width:${pct}%;background:${nivel.color}"></div>
+      </div>
+    </div>
+    <div class="perfil-nivel-meta">
+      <span>${userPoints} pts</span>
+      ${nextNivel ? `<span>${nextNivel.min - userPoints} pts para ${nextNivel.emoji} ${nextNivel.nombre}</span>` : '<span>¡Nivel máximo!</span>'}
+    </div>
+    <div class="perfil-racha">
+      <div class="perfil-racha-fuego">${userStreak > 0 ? '🔥' : '💧'}</div>
+      <div class="perfil-racha-txt">Racha actual: <span class="perfil-racha-num">${userStreak} ${userStreak === 1 ? 'día' : 'días'}</span>${userStreak >= 7 ? ' · ¡Sigue así!' : ''}</div>
+    </div>
+  `
+}
+
+function renderInsignias(){
+  const cats = [...new Set(BADGE_DEFS.map(b => b.cat))]
+  const wrap = document.getElementById('perfil-badges-wrap')
+  if(!wrap) return
+
+  let html = ''
+  cats.forEach(cat => {
+    const defs = BADGE_DEFS.filter(b => b.cat === cat)
+    html += `<div style="margin-bottom:20px">
+      <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.2);margin-bottom:10px">${cat} ${defs[0].auto ? '' : '<span style="color:rgba(232,195,10,0.5);font-size:9px">· verificado por admin</span>'}</div>
+      <div class="perfil-badges-grid">`
+    defs.forEach(b => {
+      const estado = userBadges[b.id]
+      const cls = estado ? (estado.status === 'approved' ? 'approved' : 'pending') : ''
+      const statusTxt = estado ? (estado.status === 'approved' ? '✓ obtenida' : '⏳ pendiente') : ''
+      html += `<div class="badge-card ${cls}" onclick="toggleBadge('${b.id}')" title="${b.auto ? 'Auto-declarado' : 'Requiere verificación del admin'}">
+        <div class="badge-pts">${b.pts_pre}/${b.pts_post}pts</div>
+        <div class="badge-icon">${b.icon}</div>
+        <div class="badge-name">${b.nombre}</div>
+        ${estado ? `<div class="badge-status ${estado.status}">${statusTxt}</div>` : ''}
+      </div>`
+    })
+    html += `</div></div>`
+  })
+
+  html += `<button class="badges-save-btn" onclick="guardarInsignias()">Guardar mis insignias</button>
+           <div class="badges-msg" id="badges-msg"></div>`
+  wrap.innerHTML = html
+}
+
+let badgesSeleccionadas = new Set()
+
+function toggleBadge(id){
+  const estado = userBadges[id]
+  if(estado) return // ya declarada, no se puede quitar
+  if(badgesSeleccionadas.has(id)){
+    badgesSeleccionadas.delete(id)
+    document.querySelector(`[onclick="toggleBadge('${id}')"]`)?.classList.remove('selected')
+  } else {
+    badgesSeleccionadas.add(id)
+    document.querySelector(`[onclick="toggleBadge('${id}')"]`)?.classList.add('selected')
+  }
+}
+
+async function guardarInsignias(){
+  if(!currentUser || badgesSeleccionadas.size === 0){
+    document.getElementById('badges-msg').textContent = 'Selecciona al menos una insignia.'
+    return
+  }
+  const cutoff = CUTOFF
+  let totalPts = 0
+  const inserts = []
+  badgesSeleccionadas.forEach(id => {
+    const def = BADGE_DEFS.find(b => b.id === id)
+    if(!def) return
+    const ahora = new Date().toISOString()
+    const esPasado = ahora < cutoff + 'T00:00:00Z'
+    const pts = esPasado ? def.pts_pre : def.pts_post
+    const status = def.auto ? 'approved' : 'pending'
+    inserts.push({ user_id: currentUser.id, badge_id: id, status })
+    if(def.auto) totalPts += pts
+  })
+
+  await supa.from('badges').upsert(inserts, { onConflict: 'user_id,badge_id' })
+
+  if(totalPts > 0){
+    await sumarPuntos(totalPts, 'Insignias auto-declaradas')
+  }
+
+  document.getElementById('badges-msg').textContent = `✓ Guardado. ${totalPts > 0 ? `+${totalPts} pts sumados.` : 'Las insignias verificadas serán revisadas por el equipo.'}`
+  badgesSeleccionadas.clear()
+  await loadUserProfile()
+  renderNivel()
+  renderInsignias()
+}
+
+async function sumarPuntos(amount, reason){
+  const newPts = (userPoints || 0) + amount
+  await supa.from('profiles').update({ points: newPts }).eq('id', currentUser.id)
+  await supa.from('points_history').insert({ user_id: currentUser.id, amount, reason })
+  userPoints = newPts
+}
+
+function copiarRefLink(){
+  const input = document.getElementById('perfil-ref-url')
+  navigator.clipboard.writeText(input.value).then(() => {
+    const btn = document.querySelector('.perfil-ref-copy')
+    btn.textContent = '¡Copiado!'
+    setTimeout(() => btn.textContent = 'Copiar', 2000)
+  })
+}
+
+async function declararRefPasados(){
+  const val = document.getElementById('ref-pasados-select').value
+  if(!val){ document.getElementById('ref-pasados-msg').textContent = 'Selecciona un rango.'; return }
+  const rangoPts = { '1-5':50, '6-10':100, '11-20':175, '21-50':300, '50+':500 }
+  await supa.from('badges').insert({
+    user_id: currentUser.id,
+    badge_id: 'referidos-pasados',
+    status: 'pending',
+    approved_at: null
+  })
+  document.getElementById('ref-pasados-msg').textContent = '✓ Declaración enviada. El equipo la revisará pronto.'
+  document.getElementById('perfil-ref-pasados-wrap').style.display = 'none'
+}
+
+// ── DETECTAR ?ref= en URL ──
+;(function detectRef(){
+  const params = new URLSearchParams(location.search)
+  const ref = params.get('ref')
+  if(ref) localStorage.setItem('javi_ref', ref)
+})()
 
 async function uploadAvatar(input){
   const file = input.files[0]
@@ -2486,9 +2863,114 @@ function switchAdminTab(tab){
   document.getElementById('admin-tab-articulos').style.display = tab === 'articulos' ? 'flex' : 'none'
   document.getElementById('admin-tab-articulos').style.flexDirection = 'column'
   document.getElementById('admin-tab-stats').style.display = tab === 'stats' ? 'block' : 'none'
+  document.getElementById('admin-tab-pendientes').style.display = tab === 'pendientes' ? 'block' : 'none'
   document.getElementById('tab-articulos').classList.toggle('active', tab === 'articulos')
   document.getElementById('tab-stats').classList.toggle('active', tab === 'stats')
+  document.getElementById('tab-pendientes').classList.toggle('active', tab === 'pendientes')
   if(tab === 'stats') loadAdminStats()
+  if(tab === 'pendientes') loadAdminPendientes()
+}
+
+async function loadAdminPendientes(){
+  const el = document.getElementById('admin-tab-pendientes')
+  el.innerHTML = '<div style="padding:20px;color:rgba(255,255,255,0.3);font-size:12px">Cargando pendientes…</div>'
+
+  // Cargar insignias pendientes con info del usuario
+  const { data: pending } = await supa.from('badges')
+    .select('id, user_id, badge_id, status, created_at')
+    .eq('status', 'pending')
+    .order('created_at', { ascending: false })
+
+  if(!pending?.length){
+    el.innerHTML = '<div style="padding:24px;color:rgba(255,255,255,0.2);font-size:13px;text-align:center">No hay solicitudes pendientes</div>'
+    return
+  }
+
+  // Cargar nombres de usuarios
+  const userIds = [...new Set(pending.map(p => p.user_id))]
+  const { data: profiles } = await supa.from('profiles').select('id, username, nombres, points, ref_code').in('id', userIds)
+  const profileMap = {}
+  profiles?.forEach(p => profileMap[p.id] = p)
+
+  const RANGO_PTS = { '1-5':50, '6-10':100, '11-20':175, '21-50':300, '50+':500 }
+
+  el.innerHTML = `<div class="stats-wrap">` + pending.map(item => {
+    const p = profileMap[item.user_id] || {}
+    const def = BADGE_DEFS.find(b => b.id === item.badge_id)
+    const isRefPasado = item.badge_id === 'referidos-pasados'
+    const nombre = p.username || p.nombres || item.user_id.slice(0,8)
+    const fecha = new Date(item.created_at).toLocaleDateString('es-CO',{day:'numeric',month:'short'})
+    const icon = def?.icon || '📋'
+    const badgeName = isRefPasado ? 'Referidos pasados' : (def?.nombre || item.badge_id)
+    const pts = isRefPasado ? '?' : `+${def?.pts_post || 0} pts`
+
+    return `<div class="stat-card" style="display:flex;align-items:center;gap:12px;justify-content:space-between">
+      <div style="display:flex;align-items:center;gap:12px;flex:1;min-width:0">
+        <div style="font-size:22px">${icon}</div>
+        <div style="min-width:0">
+          <div style="font-size:12px;color:var(--blanco);font-weight:500">@${nombre}</div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.4)">${badgeName} · ${fecha}</div>
+          <div style="font-size:10px;color:var(--oro)">${pts}</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:6px;flex-shrink:0">
+        <button onclick="aprobarInsignia('${item.id}','${item.user_id}','${item.badge_id}', this)" style="background:rgba(74,222,128,0.15);border:1px solid rgba(74,222,128,0.3);color:#4ade80;border-radius:6px;padding:6px 12px;font-size:11px;cursor:pointer">✓ Aprobar</button>
+        <button onclick="rechazarInsignia('${item.id}', this)" style="background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.2);color:#ef4444;border-radius:6px;padding:6px 12px;font-size:11px;cursor:pointer">✕</button>
+      </div>
+    </div>`
+  }).join('') + `</div>`
+}
+
+async function aprobarInsignia(badgeRowId, userId, badgeId, btn){
+  btn.disabled = true; btn.textContent = '…'
+  const RANGO_PTS = { '1-5':50, '6-10':100, '11-20':175, '21-50':300, '50+':500 }
+  const isRefPasado = badgeId === 'referidos-pasados'
+
+  await supa.from('badges').update({ status:'approved', approved_at: new Date().toISOString() }).eq('id', badgeRowId)
+
+  // Calcular puntos
+  let pts = 0
+  if(isRefPasado){
+    // Buscar el badge para ver el rango declarado — lo guardamos en badge_id como 'referidos-pasados:6-10'
+    pts = 100 // default, idealmente guardamos el rango en otro campo
+  } else {
+    const def = BADGE_DEFS.find(b => b.id === badgeId)
+    if(def) pts = def.pts_post
+  }
+
+  // Sumar puntos al usuario
+  const { data: prof } = await supa.from('profiles').select('points, referred_by').eq('id', userId).single()
+  const newPts = (prof?.points || 0) + pts
+  await supa.from('profiles').update({ points: newPts }).eq('id', userId)
+  await supa.from('points_history').insert({ user_id: userId, amount: pts, reason: `Insignia aprobada: ${badgeId}` })
+
+  // Si el usuario fue referido, sumar puntos al referidor (nivel 1)
+  if(prof?.referred_by){
+    const { data: referidor } = await supa.from('profiles').select('id, points, referred_by').eq('ref_code', prof.referred_by).single()
+    if(referidor){
+      const ptsRef1 = 250
+      await supa.from('profiles').update({ points: (referidor.points||0) + ptsRef1 }).eq('id', referidor.id)
+      await supa.from('points_history').insert({ user_id: referidor.id, amount: ptsRef1, reason: `Referido consumió: +${pts}pts a ${userId.slice(0,6)}` })
+      // Nivel 2
+      if(referidor.referred_by){
+        const { data: ref2 } = await supa.from('profiles').select('id, points').eq('ref_code', referidor.referred_by).single()
+        if(ref2){
+          await supa.from('profiles').update({ points: (ref2.points||0) + 75 }).eq('id', ref2.id)
+          await supa.from('points_history').insert({ user_id: ref2.id, amount: 75, reason: `Referido nivel 2 consumió` })
+        }
+      }
+    }
+  }
+
+  btn.closest('.stat-card').style.opacity = '0.4'
+  btn.textContent = '✓'
+}
+
+async function rechazarInsignia(badgeRowId, btn){
+  btn.disabled = true
+  await supa.from('badges').delete().eq('id', badgeRowId)
+  btn.closest('.stat-card').style.opacity = '0.3'
+  btn.textContent = '✕'
 }
 
 function openAdmin(){
