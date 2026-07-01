@@ -1838,12 +1838,12 @@ select.admin-input { cursor: pointer; }
           <div style="color:rgba(255,255,255,0.3);font-size:11px">¿Ya realizaste el pago? Completa el formulario</div>
         </div>
         <div class="auth-field">
-          <label class="auth-label">Tu email (con el que te registraste)</label>
+          <label class="auth-label">Tu correo (con el que te registraste)</label>
           <input class="auth-input" type="email" id="yapague-email" placeholder="tu@email.com" required>
         </div>
         <div class="auth-field">
-          <label class="auth-label">Número de transacción Bold</label>
-          <input class="auth-input" type="text" id="yapague-ref" placeholder="Ej: TRX-123456">
+          <label class="auth-label">Tu nombre de usuario en la app</label>
+          <input class="auth-input" type="text" id="yapague-ref" placeholder="Ej: maria_estrella">
         </div>
         <button class="auth-btn" onclick="enviarYaPague()" id="btn-yapague">Notificar mi pago →</button>
         <div class="auth-footer-text">Recibirás acceso en menos de 24 horas hábiles.</div>
@@ -2182,6 +2182,7 @@ select.admin-input { cursor: pointer; }
         <button class="admin-tab" id="tab-pagos" onclick="switchAdminTab('pagos')">Pagos</button>
         <button class="admin-tab" id="tab-retos" onclick="switchAdminTab('retos')">Retos</button>
       </div>
+      <button onclick="closeAdmin()" style="background:rgba(20,184,166,0.12);border:1px solid rgba(20,184,166,0.3);color:var(--turquesa);padding:6px 14px;border-radius:20px;cursor:pointer;font-size:11px;font-family:inherit;white-space:nowrap">← Volver</button>
       <button class="admin-close" onclick="closeAdmin()">✕</button>
     </div>
     <div id="admin-tab-articulos">
@@ -3329,7 +3330,7 @@ async function loadAdminPagos(){
     return `<div class="stat-card" style="display:flex;align-items:center;gap:12px;justify-content:space-between;opacity:${esAprobado?'0.45':'1'}">
       <div style="min-width:0;flex:1">
         <div style="font-size:12px;color:var(--blanco);font-weight:500">${p.email}</div>
-        <div style="font-size:11px;color:rgba(255,255,255,0.4)">Ref: ${p.referencia_bold} · ${fecha}</div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.4)">@${p.referencia_bold} · ${fecha}</div>
         <div style="font-size:10px;color:${esAprobado?'#4ade80':'var(--oro)'}">${esAprobado?'✓ Aprobado':'Pendiente'}</div>
       </div>
       ${!esAprobado ? `<button onclick="aprobarPago('${p.id}','${p.email}',this)" style="background:rgba(74,222,128,0.15);border:1px solid rgba(74,222,128,0.3);color:#4ade80;border-radius:6px;padding:6px 12px;font-size:11px;cursor:pointer;flex-shrink:0">✓ Aprobar</button>` : ''}
