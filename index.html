@@ -525,6 +525,22 @@ nav.scrolled {
 .modal-tab-content { display: none; }
 .modal-tab-content.active { display: block; }
 
+/* Reflexión diaria */
+.ref-dia-label { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--modal-accent, var(--turquesa)); margin-bottom: 10px; }
+.ref-pregunta { font-family: Georgia, serif; font-size: clamp(15px, 2vw, 18px); font-style: italic; color: var(--blanco); line-height: 1.5; padding-left: 16px; border-left: 2px solid var(--modal-accent, var(--turquesa)); }
+.ref-respondida-label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.25); margin-bottom: 8px; }
+.ref-respondida-texto { font-size: 14px; color: rgba(240,250,249,0.7); line-height: 1.7; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); border-radius: 10px; padding: 14px 16px; }
+.ref-textarea { width: 100%; min-height: 120px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; color: var(--blanco); font-family: inherit; font-size: 14px; line-height: 1.7; padding: 14px 16px; resize: vertical; box-sizing: border-box; transition: border-color 0.2s; }
+.ref-textarea:focus { outline: none; border-color: var(--modal-accent, var(--turquesa)); }
+.ref-guardar-btn { margin-top: 10px; background: var(--modal-accent, var(--turquesa)); color: #030408; border: none; border-radius: 8px; padding: 11px 24px; font-size: 13px; font-weight: 600; cursor: pointer; transition: opacity 0.2s; }
+.ref-guardar-btn:hover { opacity: 0.85; }
+.ref-msg { font-size: 12px; color: #4ade80; margin-top: 8px; min-height: 18px; }
+.ref-historial-title { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.2); margin-bottom: 12px; padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.06); }
+.ref-historial-item { margin-bottom: 14px; }
+.ref-historial-fecha { font-size: 10px; color: rgba(255,255,255,0.2); margin-bottom: 4px; }
+.ref-historial-q { font-size: 11px; font-style: italic; color: rgba(255,255,255,0.3); margin-bottom: 4px; }
+.ref-historial-texto { font-size: 13px; color: rgba(240,250,249,0.6); line-height: 1.6; background: rgba(255,255,255,0.025); border-radius: 8px; padding: 10px 14px; }
+
 /* Artículos dentro del modal */
 .modal-posts-list { display: flex; flex-direction: column; gap: 12px; padding: 24px 32px 32px; background: #070b18; }
 .modal-post-card {
@@ -1698,6 +1714,7 @@ select.admin-input { cursor: pointer; }
     <!-- TABS NAV -->
     <div class="modal-tabs">
       <button class="modal-tab active" onclick="switchModalTab('explorar')">Explorar</button>
+      <button class="modal-tab" onclick="switchModalTab('reflexion')">Reflexión</button>
       <button class="modal-tab" onclick="switchModalTab('articulos')">Artículos</button>
       <button class="modal-tab" onclick="switchModalTab('curso')">Curso</button>
     </div>
@@ -1713,6 +1730,29 @@ select.admin-input { cursor: pointer; }
         <div class="modal-section">
           <div class="modal-label">Herramientas de este mundo</div>
           <div class="modal-tools" id="modal-tools"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: REFLEXIÓN -->
+    <div class="modal-tab-content" id="mtab-reflexion">
+      <div class="modal-body" style="display:flex;flex-direction:column;gap:20px">
+        <div class="ref-pregunta-wrap">
+          <div class="ref-dia-label">Pregunta de hoy</div>
+          <div class="ref-pregunta" id="ref-pregunta-texto"></div>
+        </div>
+        <div id="ref-ya-respondio" style="display:none">
+          <div class="ref-respondida-label">Tu respuesta de hoy</div>
+          <div class="ref-respondida-texto" id="ref-respuesta-hoy"></div>
+        </div>
+        <div id="ref-form-wrap">
+          <textarea class="ref-textarea" id="ref-textarea" placeholder="Escribe tu reflexión aquí… es solo para ti."></textarea>
+          <button class="ref-guardar-btn" id="ref-guardar-btn" onclick="guardarReflexion()">Guardar reflexión</button>
+          <div class="ref-msg" id="ref-msg"></div>
+        </div>
+        <div id="ref-historial-wrap" style="display:none">
+          <div class="ref-historial-title">Tu historial</div>
+          <div id="ref-historial-list"></div>
         </div>
       </div>
     </div>
@@ -3028,15 +3068,215 @@ function hidePanel(){
   panelOpen = false
 }
 
+const PREGUNTAS_DIARIAS = {
+  amor: [
+    '¿Qué parte de ti estás ignorando hoy?',
+    '¿Qué te dirías si fueras tu mejor amigo?',
+    '¿En qué momento del día eres más tú mismo/a?',
+    '¿Qué necesitas perdonarte hoy?',
+    '¿Qué límite necesitas poner que has evitado?',
+    '¿Cuándo fue la última vez que te pusiste primero/a sin culpa?',
+    '¿Qué haría alguien que se ama a sí mismo en tu situación?',
+    '¿De qué logro tuyo no te permites estar orgulloso/a?',
+    '¿Qué creencia sobre ti mismo/a ya no te sirve?',
+    '¿Qué parte de ti has callado para encajar?',
+    '¿Cómo tratas tu cuerpo cuando nadie te ve?',
+    '¿Qué te gustaría que otros vieran en ti que tú ya no ves?',
+    '¿Cuándo fue la última vez que hiciste algo solo para ti?',
+    '¿Qué te da miedo que descubras sobre ti mismo/a?',
+    '¿Qué versión de ti quieres honrar hoy?'
+  ],
+  heridas: [
+    '¿Qué es lo que más te ha costado soltar?',
+    '¿A quién sigues esperando que te pida perdón?',
+    '¿Qué herida antigua se activa en tus relaciones de hoy?',
+    '¿Cuándo aprendiste que no era seguro mostrar tu dolor?',
+    '¿Qué emoción evitas sentir a toda costa?',
+    '¿Qué historia te cuentas sobre ese dolor que tal vez no es del todo cierta?',
+    '¿Dónde en tu cuerpo sientes esa herida cuando aparece?',
+    '¿Qué necesitabas recibir que nunca llegó?',
+    '¿Qué significaría sanar esto para tu vida?',
+    '¿Hay algo que guardas y que aún no has dicho en voz alta?',
+    '¿Cuándo fue la primera vez que sentiste eso que sientes hoy?',
+    '¿Qué parte de esa herida te ha hecho más fuerte de lo que crees?',
+    '¿Qué le dirías a la versión más joven de ti que sufrió eso?',
+    '¿Qué comportamiento tuyo viene de esa herida sin que lo notes?',
+    '¿Estás listo/a para soltar, o necesitas más tiempo?'
+  ],
+  pareja: [
+    '¿Qué buscas en una pareja que deberías darte a ti mismo/a?',
+    '¿Qué patrón repites en tus relaciones que ya reconoces?',
+    '¿Cuándo fue la última vez que pediste lo que realmente necesitabas?',
+    '¿Qué tan bien sabes comunicar lo que sientes sin atacar?',
+    '¿Qué significa para ti el amor real?',
+    '¿En qué momento de una relación empiezas a perderte?',
+    '¿Qué cosas toleras en pareja que no deberías?',
+    '¿Qué miedo guía tus decisiones en el amor?',
+    '¿Qué aprendiste del amor en tu familia de origen?',
+    '¿Qué necesitas que tu pareja sepa de ti y aún no sabe?',
+    '¿Qué sería diferente en tu relación si te amaras más?',
+    '¿Cuándo en una relación sientes que eres demasiado?',
+    '¿Qué confundes con amor que en realidad no lo es?',
+    '¿Qué le das a otros que rara vez te das a ti mismo/a?',
+    '¿Cómo quieres que te amen?'
+  ],
+  familiar: [
+    '¿Qué rol cumpliste en tu familia que ya no quieres seguir cumpliendo?',
+    '¿Qué le heredaste a tu familia que quieres romper?',
+    '¿Cuándo en tu familia aprendiste a no pedir ayuda?',
+    '¿Qué conversación pendiente tienes con alguien de tu familia?',
+    '¿Qué parte de tu historia familiar te pesa más?',
+    '¿Qué aprendiste sobre el dinero en tu hogar?',
+    '¿Qué emociones estaban prohibidas en tu familia?',
+    '¿A quién de tu familia te pareces más de lo que quisieras?',
+    '¿Qué necesitabas de tu familia que no recibiste?',
+    '¿Qué límite con tu familia aún no has logrado poner?',
+    '¿Qué te dieron en tu familia que valoras profundamente?',
+    '¿Cuánto de lo que eres hoy viene de lo que viviste en casa?',
+    '¿Qué herida familiar se repite en tu vida adulta?',
+    '¿Qué le perdonarías a tu familia si pudieras?',
+    '¿Qué cadena quieres romper en tu linaje?'
+  ],
+  energia: [
+    '¿Qué te quita energía que sigues haciendo de todas formas?',
+    '¿Cuándo fue la última vez que descansaste de verdad?',
+    '¿Qué personas elevan tu energía y cuáles te la drenan?',
+    '¿En qué momento del día te sientes más vivo/a?',
+    '¿Qué hábito sabes que debes cambiar pero postergues?',
+    '¿Qué tan bien escuchas las señales de tu cuerpo?',
+    '¿Cuándo fue la última vez que hiciste ejercicio sin obligación?',
+    '¿Qué estás cargando que no es tuyo?',
+    '¿Cómo está tu relación con el sueño y el descanso?',
+    '¿Qué te da vida que has dejado de hacer?',
+    '¿Qué emoción guardada te está pesando físicamente?',
+    '¿Qué alimento o ritual te conecta contigo mismo/a?',
+    '¿Qué tan presente estás en tu cuerpo en este momento?',
+    '¿Qué necesitas soltar para sentirte más liviano/a hoy?',
+    '¿Qué acto pequeño de cuidado puedes darte hoy?'
+  ],
+  humor: [
+    '¿Cuándo fue la última vez que reíste de verdad?',
+    '¿Qué tan en serio te tomas a ti mismo/a?',
+    '¿Qué situación difícil del pasado hoy puedes ver con humor?',
+    '¿Cuándo perdiste la capacidad de jugar y por qué?',
+    '¿Qué te da vergüenza que en realidad es gracioso?',
+    '¿Qué parte de tu vida necesita más ligereza?',
+    '¿Con quién te ríes sin filtros?',
+    '¿Qué tan seguido te permites no ser productivo/a?',
+    '¿Cuándo fue la última vez que hiciste algo solo por diversión?',
+    '¿Qué tanto le temes al ridículo?',
+    '¿Qué te haría reír hoy si te lo permites?',
+    '¿Qué problema estás tomando demasiado en serio ahora mismo?',
+    '¿Qué parte de tu historia contarías en clave de humor algún día?',
+    '¿Cuánto espacio ocupa la alegría en tu vida diaria?',
+    '¿Qué niño/a en ti quiere salir a jugar hoy?'
+  ],
+  mente: [
+    '¿Qué historia te sigues contando sobre ti mismo/a que ya no sirve?',
+    '¿Cuántos pensamientos de hoy son realmente tuyos?',
+    '¿Qué tan seguido cuestionas lo que crees?',
+    '¿Qué idea te limita que creíste sin cuestionarla?',
+    '¿Cuándo fue la última vez que cambiaste de opinión sobre algo importante?',
+    '¿Qué te repites en los momentos de crisis?',
+    '¿Qué tan presente estás en tu mente en este momento?',
+    '¿De dónde viene el miedo más frecuente que sientes?',
+    '¿Qué tanto confías en tu intuición?',
+    '¿Qué creencia sobre el éxito te está bloqueando?',
+    '¿Qué tan seguido comparas tu vida con la de otros?',
+    '¿Cuándo tu mente te ayuda y cuándo te sabotea?',
+    '¿Qué pensamiento recurrente merece ser cuestionado hoy?',
+    '¿Qué aprendizaje del año pasado llevas contigo?',
+    '¿Qué le dirías a tu mente si pudiera escucharte?'
+  ]
+}
+
+let currentReflexionWorld = null
+
+function getPreguntaDelDia(worldId){
+  const pool = PREGUNTAS_DIARIAS[worldId] || []
+  const dayOfYear = Math.floor((Date.now() - new Date(new Date().getFullYear(),0,0)) / 86400000)
+  return pool[dayOfYear % pool.length] || ''
+}
+
 function switchModalTab(tab){
   document.querySelectorAll('.modal-tab').forEach(t => t.classList.remove('active'))
   document.querySelectorAll('.modal-tab-content').forEach(t => t.classList.remove('active'))
   document.getElementById('mtab-' + tab).classList.add('active')
-  const idx = ['explorar','articulos','curso'].indexOf(tab)
+  const idx = ['explorar','reflexion','articulos','curso'].indexOf(tab)
   document.querySelectorAll('.modal-tab')[idx].classList.add('active')
+  if(tab === 'reflexion') cargarReflexion()
+}
+
+async function cargarReflexion(){
+  if(!currentUser || !currentReflexionWorld) return
+  const pregunta = getPreguntaDelDia(currentReflexionWorld.id)
+  document.getElementById('ref-pregunta-texto').textContent = pregunta
+
+  const hoy = new Date().toISOString().slice(0,10)
+  const { data } = await supa.from('reflections')
+    .select('*')
+    .eq('user_id', currentUser.id)
+    .eq('world_id', currentReflexionWorld.id)
+    .order('created_at', { ascending: false })
+
+  const respondioHoy = data && data.find(r => r.created_at.slice(0,10) === hoy)
+
+  if(respondioHoy){
+    document.getElementById('ref-ya-respondio').style.display = 'block'
+    document.getElementById('ref-respuesta-hoy').textContent = respondioHoy.answer
+    document.getElementById('ref-form-wrap').style.display = 'none'
+  } else {
+    document.getElementById('ref-ya-respondio').style.display = 'none'
+    document.getElementById('ref-form-wrap').style.display = 'block'
+    document.getElementById('ref-textarea').value = ''
+    document.getElementById('ref-msg').textContent = ''
+  }
+
+  const historial = (data||[]).filter(r => r.created_at.slice(0,10) !== hoy)
+  if(historial.length > 0){
+    document.getElementById('ref-historial-wrap').style.display = 'block'
+    document.getElementById('ref-historial-list').innerHTML = historial.map(r => `
+      <div class="ref-historial-item">
+        <div class="ref-historial-fecha">${new Date(r.created_at).toLocaleDateString('es-CO',{day:'numeric',month:'long',year:'numeric'})}</div>
+        <div class="ref-historial-q">"${r.question}"</div>
+        <div class="ref-historial-texto">${r.answer}</div>
+      </div>
+    `).join('')
+  } else {
+    document.getElementById('ref-historial-wrap').style.display = 'none'
+  }
+}
+
+async function guardarReflexion(){
+  if(!currentUser || !currentReflexionWorld) return
+  const answer = document.getElementById('ref-textarea').value.trim()
+  if(!answer) return
+  const btn = document.getElementById('ref-guardar-btn')
+  btn.disabled = true
+  btn.textContent = 'Guardando…'
+  const pregunta = getPreguntaDelDia(currentReflexionWorld.id)
+  const { error } = await supa.from('reflections').insert({
+    user_id: currentUser.id,
+    world_id: currentReflexionWorld.id,
+    question: pregunta,
+    answer
+  })
+  if(error){
+    document.getElementById('ref-msg').textContent = 'Ocurrió un error. Intenta de nuevo.'
+    document.getElementById('ref-msg').style.color = '#ef4444'
+    btn.disabled = false
+    btn.textContent = 'Guardar reflexión'
+  } else {
+    document.getElementById('ref-msg').textContent = '✓ Guardado'
+    document.getElementById('ref-msg').style.color = '#4ade80'
+    setTimeout(() => cargarReflexion(), 800)
+    btn.disabled = false
+    btn.textContent = 'Guardar reflexión'
+  }
 }
 
 function openModal(w){
+  currentReflexionWorld = w
   // Resetear al primer tab
   switchModalTab('explorar')
 
