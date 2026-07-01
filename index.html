@@ -2503,9 +2503,9 @@ async function loadAdminStats(){
   const el = document.getElementById('admin-tab-stats')
   el.innerHTML = '<div style="padding:24px;color:rgba(255,255,255,0.3);font-size:12px">Cargando estadísticas…</div>'
 
-  const WORLDS = ['amor','heridas','pareja','familiar','energia','humor','mente']
-  const WORLD_NAMES = { amor:'Amor Propio', heridas:'Heridas', pareja:'Pareja', familiar:'Familiar', energia:'Energía', humor:'Humor', mente:'Mente' }
-  const WORLD_COLORS = { amor:'#E8C30A', heridas:'#ef4444', pareja:'#f472b6', familiar:'#fb923c', energia:'#4ade80', humor:'#fde68a', mente:'#93c5fd' }
+  const WORLDS = ['amor','heridas','pareja','familiar','energia','humor','mente','espiritual']
+  const WORLD_NAMES = { amor:'Amor Propio', heridas:'Heridas', pareja:'Pareja', familiar:'Familiar', energia:'Energía', humor:'Humor', mente:'Mente', espiritual:'Espiritual' }
+  const WORLD_COLORS = { amor:'#E8C30A', heridas:'#ef4444', pareja:'#f472b6', familiar:'#fb923c', energia:'#4ade80', humor:'#fde68a', mente:'#93c5fd', espiritual:'#a855f7' }
 
   const [{ count: totalUsers }, { data: profiles }, { data: visits }, { data: tests }, { data: recentUsers }] = await Promise.all([
     supa.from('profiles').select('*', { count: 'exact', head: true }),
@@ -2914,6 +2914,20 @@ const WORLDS = [
     curso: 'https://eventosjv.com#cursos',
     cursoLabel: 'Ver cursos disponibles',
     orbitR: 150, speed: 0.0048, angle: Math.PI*1.4, size: 31
+  },
+  {
+    id: 'espiritual',
+    name: 'Espiritual',
+    tag: 'Mundo del Alma · Fe y Propósito',
+    color: '#a855f7',
+    glowColor: 'rgba(168,85,247,',
+    bg: 'linear-gradient(135deg,#1a0535,#080115)',
+    frase: '"No todo lo que te mueve se explica. Algunas cosas simplemente se sienten."',
+    question: '¿Qué te conecta con algo más grande que tú?',
+    tools: ['Meditación profunda','Reiki Usui','Oración consciente','Silencio interior','Propósito de vida'],
+    curso: 'https://anahata.eventosjv.com',
+    cursoLabel: 'Ver: Academia Anahata',
+    orbitR: 300, speed: 0.0025, angle: Math.PI*0.3, size: 33
   }
 ]
 
@@ -2963,6 +2977,18 @@ const SYMBOLS = {
     <line x1="-0.48" y1="-0.1" x2="-0.3" y2="0.4" stroke-width="0.05" opacity="0.5"/>
     <line x1="0.28" y1="0.48" x2="-0.3" y2="0.5" stroke-width="0.05" opacity="0.5"/>
     <line x1="0" y1="-0.47" x2="0" y2="0.06" stroke-width="0.05" opacity="0.5"/>
+  </svg>`,
+  espiritual: `<svg viewBox="-1 -1 2 2" fill="none" stroke="currentColor" stroke-width="0.1" stroke-linecap="round">
+    <circle cx="0" cy="0" r="0.28" stroke-width="0.08" opacity="0.6"/>
+    <line x1="0" y1="-0.9" x2="0" y2="-0.38"/>
+    <line x1="0" y1="0.38" x2="0" y2="0.9"/>
+    <line x1="-0.9" y1="0" x2="-0.38" y2="0"/>
+    <line x1="0.38" y1="0" x2="0.9" y2="0"/>
+    <line x1="-0.64" y1="-0.64" x2="-0.27" y2="-0.27"/>
+    <line x1="0.27" y1="0.27" x2="0.64" y2="0.64"/>
+    <line x1="0.64" y1="-0.64" x2="0.27" y2="-0.27"/>
+    <line x1="-0.27" y1="0.27" x2="-0.64" y2="0.64"/>
+    <circle cx="0" cy="0" r="0.1" fill="currentColor"/>
   </svg>`
 }
 
@@ -3170,6 +3196,23 @@ const PREGUNTAS_DIARIAS = {
     '¿Qué parte de tu historia contarías en clave de humor algún día?',
     '¿Cuánto espacio ocupa la alegría en tu vida diaria?',
     '¿Qué niño/a en ti quiere salir a jugar hoy?'
+  ],
+  espiritual: [
+    '¿Qué te conecta con algo más grande que tú?',
+    '¿En qué crees cuando todo se derrumba?',
+    '¿Cuándo fue la última vez que sentiste paz real, no solo calma?',
+    '¿Qué papel tiene la fe en tus decisiones diarias?',
+    '¿Cuándo fue la última vez que oraste, meditaste o te detuviste en silencio?',
+    '¿Qué señal has recibido últimamente que has ignorado?',
+    '¿Qué tanto confías en que lo que viene es mejor que lo que fue?',
+    '¿Dónde sientes la presencia de Dios en tu vida cotidiana?',
+    '¿Qué propósito te mueve cuando todo lo demás falla?',
+    '¿Qué tan alineado/a está tu vida con lo que realmente crees?',
+    '¿Qué le agradecerías hoy al universo o a Dios?',
+    '¿Qué momento de tu vida claramente no fue coincidencia?',
+    '¿Cuándo fue la última vez que te rendiste y algo bueno llegó?',
+    '¿Qué tan seguido conectas tu trabajo con un propósito mayor?',
+    '¿Qué le pedirías a Dios hoy si supieras que te escucha?'
   ],
   mente: [
     '¿Qué historia te sigues contando sobre ti mismo/a que ya no sirve?',
