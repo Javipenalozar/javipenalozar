@@ -182,6 +182,102 @@ select.auth-input option { background: #0a0f1e; color: #F0FAF9; }
   margin-top: 20px; line-height: 1.6;
 }
 
+/* ── PRICING BANNER ── */
+.auth-precio-banner {
+  background: rgba(20,184,166,0.06);
+  border-top: 1px solid rgba(20,184,166,0.15);
+  border-bottom: 1px solid rgba(20,184,166,0.15);
+  padding: 14px 24px;
+}
+.auth-precio-items {
+  display: flex; flex-direction: column; gap: 4px;
+  margin-bottom: 10px;
+}
+.auth-precio-items span {
+  font-size: 11px; color: rgba(255,255,255,0.5); letter-spacing: 0.05em;
+}
+.auth-precio-cta {
+  display: flex; align-items: baseline; gap: 8px;
+}
+.auth-precio-old {
+  font-size: 13px; color: rgba(255,255,255,0.25);
+  text-decoration: line-through;
+}
+.auth-precio-new {
+  font-size: 22px; font-weight: 700; color: #E8C30A;
+}
+.auth-precio-label {
+  font-size: 10px; color: rgba(255,255,255,0.35); letter-spacing: 0.08em;
+}
+
+/* ── CONSULTA EXPRESS ── */
+.consulta-header { text-align: center; padding: 20px 0 24px; }
+.consulta-icon { margin-bottom: 12px; }
+.consulta-titulo { font-size: 16px; font-weight: 600; color: var(--blanco); margin-bottom: 6px; }
+.consulta-sub { font-size: 12px; color: rgba(255,255,255,0.4); line-height: 1.5; }
+.consulta-card {
+  background: rgba(20,184,166,0.06);
+  border: 1px solid rgba(20,184,166,0.15);
+  border-radius: 12px; padding: 20px;
+  margin-bottom: 16px;
+}
+.consulta-label { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 8px; }
+.consulta-textarea {
+  width: 100%; background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1); border-radius: 8px;
+  color: var(--blanco); font-size: 13px; font-family: inherit;
+  padding: 12px 14px; resize: vertical; min-height: 100px;
+  outline: none; transition: border-color 0.2s; box-sizing: border-box;
+}
+.consulta-textarea:focus { border-color: rgba(20,184,166,0.4); }
+.consulta-send-btn {
+  width: 100%; padding: 12px; background: var(--turquesa);
+  border: none; border-radius: 8px; color: #030408;
+  font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase;
+  font-weight: 700; cursor: pointer; margin-top: 10px; font-family: inherit;
+}
+.consulta-respuesta {
+  background: rgba(232,195,10,0.06); border: 1px solid rgba(232,195,10,0.2);
+  border-radius: 12px; padding: 16px; margin-top: 16px;
+}
+.consulta-resp-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.consulta-resp-avatar {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: var(--turquesa); display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700; color: #030408; flex-shrink: 0;
+}
+.consulta-resp-name { font-size: 12px; font-weight: 600; color: var(--oro); }
+.consulta-resp-text { font-size: 13px; color: rgba(255,255,255,0.7); line-height: 1.6; }
+
+/* ── RETO MENSUAL ── */
+.reto-header { text-align: center; padding: 20px 0 16px; }
+.reto-titulo { font-size: 18px; font-weight: 700; color: var(--blanco); margin-bottom: 6px; }
+.reto-sub { font-size: 12px; color: rgba(255,255,255,0.4); line-height: 1.5; }
+.reto-premio {
+  background: rgba(232,195,10,0.08); border: 1px solid rgba(232,195,10,0.2);
+  border-radius: 10px; padding: 12px 16px; margin: 12px 0;
+  font-size: 12px; color: var(--oro); text-align: center;
+}
+.reto-dias { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; margin: 20px 0; }
+.reto-dia {
+  aspect-ratio: 1; border-radius: 8px; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 2px;
+  background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+  cursor: pointer; transition: all 0.2s; font-size: 10px; color: rgba(255,255,255,0.3);
+}
+.reto-dia.completado { background: rgba(20,184,166,0.15); border-color: var(--turquesa); color: var(--turquesa); }
+.reto-dia.hoy { border-color: var(--oro); }
+.reto-ranking { margin-top: 16px; }
+.reto-ranking-titulo { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 10px; }
+.reto-ranking-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.reto-ranking-pos { font-size: 14px; font-weight: 700; color: rgba(255,255,255,0.2); width: 24px; }
+.reto-ranking-pos.top { color: var(--oro); }
+.reto-ranking-name { font-size: 13px; color: var(--blanco); flex: 1; }
+.reto-ranking-dias { font-size: 11px; color: var(--turquesa); }
+
 /* ── BARRA DE PROGRESO ── */
 #scroll-bar {
   position: fixed; top: 0; left: 0; height: 2px; z-index: 1000;
@@ -1633,9 +1729,23 @@ select.admin-input { cursor: pointer; }
       <div class="auth-logo">Javi <span>Peñaloza</span></div>
       <div class="auth-subtitle">El Mundo de Javi · Acceso exclusivo</div>
     </div>
+    <div class="auth-precio-banner">
+      <div class="auth-precio-items">
+        <span>✦ Consulta express mensual con Javi</span>
+        <span>✦ 8 mundos de desarrollo personal</span>
+        <span>✦ Retos mensuales con premios reales</span>
+        <span>✦ Reflexiones diarias + insignias</span>
+      </div>
+      <div class="auth-precio-cta">
+        <span class="auth-precio-old">$89.000</span>
+        <span class="auth-precio-new">$59.000</span>
+        <span class="auth-precio-label">COP · pago único vitalicio</span>
+      </div>
+    </div>
     <div class="auth-tabs">
       <button class="auth-tab active" id="tab-registro" onclick="switchTab('registro')">Registrarse</button>
       <button class="auth-tab" id="tab-login" onclick="switchTab('login')">Iniciar sesión</button>
+      <button class="auth-tab" id="tab-yapague" onclick="switchTab('yapague')">Ya pagué</button>
     </div>
     <div class="auth-body">
 
@@ -1710,6 +1820,26 @@ select.admin-input { cursor: pointer; }
         <button class="auth-btn" type="submit" id="btn-login">Entrar al mundo →</button>
         <div class="auth-footer-text">¿Olvidaste tu contraseña? <a href="mailto:psicojavi@javipenaloza.com" style="color:#E8C30A;text-decoration:none">Escríbenos</a></div>
       </form>
+
+      <!-- YA PAGUÉ -->
+      <div class="auth-form" id="form-yapague">
+        <div id="err-yapague" class="auth-error"></div>
+        <div id="ok-yapague" class="auth-success"></div>
+        <div style="text-align:center;margin-bottom:20px">
+          <a href="https://checkout.bold.co/payment/LNK_GCDZ48Y1H6" target="_blank" class="auth-btn" style="display:block;text-decoration:none;text-align:center;margin-bottom:8px">Ir a pagar $59.000 →</a>
+          <div style="color:rgba(255,255,255,0.3);font-size:11px">¿Ya realizaste el pago? Completa el formulario</div>
+        </div>
+        <div class="auth-field">
+          <label class="auth-label">Tu email (con el que te registraste)</label>
+          <input class="auth-input" type="email" id="yapague-email" placeholder="tu@email.com" required>
+        </div>
+        <div class="auth-field">
+          <label class="auth-label">Número de transacción Bold</label>
+          <input class="auth-input" type="text" id="yapague-ref" placeholder="Ej: TRX-123456">
+        </div>
+        <button class="auth-btn" onclick="enviarYaPague()" id="btn-yapague">Notificar mi pago →</button>
+        <div class="auth-footer-text">Recibirás acceso en menos de 24 horas hábiles.</div>
+      </div>
 
     </div>
   </div>
@@ -1916,10 +2046,12 @@ select.admin-input { cursor: pointer; }
 
   <!-- PESTAÑAS -->
   <div class="perfil-tabs">
-    <button class="perfil-tab active" onclick="switchPerfilTab('inicio')">🏠 Inicio</button>
-    <button class="perfil-tab" onclick="switchPerfilTab('insignias')">🏅 Insignias</button>
-    <button class="perfil-tab" onclick="switchPerfilTab('mundos')">🌍 Mundos</button>
-    <button class="perfil-tab" onclick="switchPerfilTab('tests')">📊 Tests</button>
+    <button class="perfil-tab active" onclick="switchPerfilTab('inicio')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> Inicio</button>
+    <button class="perfil-tab" onclick="switchPerfilTab('insignias')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg> Insignias</button>
+    <button class="perfil-tab" onclick="switchPerfilTab('mundos')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg> Mundos</button>
+    <button class="perfil-tab" onclick="switchPerfilTab('tests')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg> Tests</button>
+    <button class="perfil-tab" onclick="switchPerfilTab('consulta')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg> Consulta</button>
+    <button class="perfil-tab" onclick="switchPerfilTab('reto')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> Reto</button>
   </div>
 
   <!-- TAB: INICIO -->
@@ -1990,6 +2122,25 @@ select.admin-input { cursor: pointer; }
       <div class="perfil-tests" id="perfil-tests"></div>
     </div>
   </div>
+
+  <!-- TAB: CONSULTA EXPRESS -->
+  <div class="perfil-tab-content" id="ptab-consulta">
+    <div class="perfil-tab-body">
+      <div class="consulta-header">
+        <div class="consulta-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#14B8A6" stroke-width="1.5"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
+        <div class="consulta-titulo">Consulta Express con Javi</div>
+        <div class="consulta-sub">Una pregunta al mes respondida personalmente por Javi Peñaloza</div>
+      </div>
+      <div id="consulta-wrap"></div>
+    </div>
+  </div>
+
+  <!-- TAB: RETO MENSUAL -->
+  <div class="perfil-tab-content" id="ptab-reto">
+    <div class="perfil-tab-body">
+      <div id="reto-wrap"></div>
+    </div>
+  </div>
 </div>
 
 <!-- TEST MODAL -->
@@ -2015,6 +2166,8 @@ select.admin-input { cursor: pointer; }
         <button class="admin-tab active" id="tab-articulos" onclick="switchAdminTab('articulos')">Artículos</button>
         <button class="admin-tab" id="tab-stats" onclick="switchAdminTab('stats')">Estadísticas</button>
         <button class="admin-tab" id="tab-pendientes" onclick="switchAdminTab('pendientes')">Pendientes</button>
+        <button class="admin-tab" id="tab-pagos" onclick="switchAdminTab('pagos')">Pagos</button>
+        <button class="admin-tab" id="tab-retos" onclick="switchAdminTab('retos')">Retos</button>
       </div>
       <button class="admin-close" onclick="closeAdmin()">✕</button>
     </div>
@@ -2024,6 +2177,8 @@ select.admin-input { cursor: pointer; }
     </div>
     <div id="admin-tab-stats" style="display:none;overflow-y:auto;flex:1"></div>
     <div id="admin-tab-pendientes" style="display:none;overflow-y:auto;flex:1"></div>
+    <div id="admin-tab-pagos" style="display:none;overflow-y:auto;flex:1"></div>
+    <div id="admin-tab-retos" style="display:none;overflow-y:auto;flex:1;flex-direction:column"></div>
   </div>
   <div class="admin-editor" id="admin-editor">
     <div class="admin-empty-state" id="admin-empty">
@@ -2163,6 +2318,22 @@ function switchTab(tab){
   document.getElementById('form-'+tab).classList.add('active')
 }
 
+async function enviarYaPague(){
+  const email = document.getElementById('yapague-email').value.trim()
+  const ref = document.getElementById('yapague-ref').value.trim()
+  const btn = document.getElementById('btn-yapague')
+  const errEl = document.getElementById('err-yapague')
+  const okEl = document.getElementById('ok-yapague')
+  errEl.style.display = 'none'; okEl.style.display = 'none'
+  if(!email || !ref){ errEl.textContent = 'Completa todos los campos.'; errEl.style.display = 'block'; return }
+  btn.disabled = true; btn.textContent = 'Enviando…'
+  const { error } = await supa.from('pagos_pendientes').insert({ email, referencia_bold: ref, estado: 'pendiente' })
+  if(error){ errEl.textContent = 'Error al enviar. Intenta de nuevo.'; errEl.style.display = 'block'; btn.disabled = false; btn.textContent = 'Notificar mi pago →'; return }
+  okEl.textContent = '¡Recibido! Activaremos tu cuenta en menos de 24 horas hábiles. ✓'
+  okEl.style.display = 'block'
+  btn.textContent = 'Enviado ✓'
+}
+
 function showAuthError(id, msg){
   const el = document.getElementById(id)
   el.textContent = msg; el.style.display = 'block'
@@ -2256,7 +2427,14 @@ async function handleLogin(e){
   showAdminBtn()
 }
 
-function enterWorld(){
+async function enterWorld(){
+  if(!isAdmin()){
+    const { data: prof } = await supa.from('profiles').select('premium').eq('id', currentUser.id).single()
+    if(!prof?.premium){
+      showPremiumGate()
+      return
+    }
+  }
   const overlay = document.getElementById('auth-overlay')
   overlay.classList.add('fade-out')
   setTimeout(() => overlay.classList.add('hidden'), 700)
@@ -2274,6 +2452,12 @@ function enterWorld(){
     li.innerHTML = `<a href="#" onclick="logout()" style="color:rgba(255,255,255,0.3)">Salir</a>`
     navLinks.appendChild(li)
   }
+}
+
+function showPremiumGate(){
+  switchTab('yapague')
+  const card = document.querySelector('.auth-card .auth-header .auth-subtitle')
+  if(card) card.textContent = 'Activa tu acceso para entrar'
 }
 
 async function logout(){
@@ -2435,8 +2619,10 @@ function switchPerfilTab(tab){
   document.querySelectorAll('.perfil-tab').forEach(t => t.classList.remove('active'))
   document.querySelectorAll('.perfil-tab-content').forEach(t => t.classList.remove('active'))
   document.getElementById('ptab-' + tab).classList.add('active')
-  const idx = ['inicio','insignias','mundos','tests'].indexOf(tab)
+  const idx = ['inicio','insignias','mundos','tests','consulta','reto'].indexOf(tab)
   document.querySelectorAll('.perfil-tab')[idx]?.classList.add('active')
+  if(tab === 'consulta') loadConsultaExpress()
+  if(tab === 'reto') loadRetoMensual()
 }
 
 function openPerfil(){
@@ -3056,11 +3242,224 @@ function switchAdminTab(tab){
   document.getElementById('admin-tab-articulos').style.flexDirection = 'column'
   document.getElementById('admin-tab-stats').style.display = tab === 'stats' ? 'block' : 'none'
   document.getElementById('admin-tab-pendientes').style.display = tab === 'pendientes' ? 'block' : 'none'
-  document.getElementById('tab-articulos').classList.toggle('active', tab === 'articulos')
-  document.getElementById('tab-stats').classList.toggle('active', tab === 'stats')
-  document.getElementById('tab-pendientes').classList.toggle('active', tab === 'pendientes')
+  document.getElementById('admin-tab-pagos').style.display = tab === 'pagos' ? 'block' : 'none'
+  document.getElementById('admin-tab-retos').style.display = tab === 'retos' ? 'flex' : 'none'
+  ;['articulos','stats','pendientes','pagos','retos'].forEach(t =>
+    document.getElementById('tab-'+t).classList.toggle('active', tab === t)
+  )
   if(tab === 'stats') loadAdminStats()
   if(tab === 'pendientes') loadAdminPendientes()
+  if(tab === 'pagos') loadAdminPagos()
+  if(tab === 'retos') loadAdminRetos()
+}
+
+async function loadAdminPagos(){
+  const el = document.getElementById('admin-tab-pagos')
+  el.innerHTML = '<div style="padding:20px;color:rgba(255,255,255,0.3);font-size:12px">Cargando pagos…</div>'
+  const { data: pagos } = await supa.from('pagos_pendientes').select('*').order('created_at', { ascending: false })
+  if(!pagos?.length){
+    el.innerHTML = '<div style="padding:24px;color:rgba(255,255,255,0.2);font-size:13px;text-align:center">No hay pagos pendientes</div>'
+    return
+  }
+  el.innerHTML = '<div class="stats-wrap">' + pagos.map(p => {
+    const fecha = new Date(p.created_at).toLocaleDateString('es-CO',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})
+    const esAprobado = p.estado === 'aprobado'
+    return `<div class="stat-card" style="display:flex;align-items:center;gap:12px;justify-content:space-between;opacity:${esAprobado?'0.45':'1'}">
+      <div style="min-width:0;flex:1">
+        <div style="font-size:12px;color:var(--blanco);font-weight:500">${p.email}</div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.4)">Ref: ${p.referencia_bold} · ${fecha}</div>
+        <div style="font-size:10px;color:${esAprobado?'#4ade80':'var(--oro)'}">${esAprobado?'✓ Aprobado':'Pendiente'}</div>
+      </div>
+      ${!esAprobado ? `<button onclick="aprobarPago('${p.id}','${p.email}',this)" style="background:rgba(74,222,128,0.15);border:1px solid rgba(74,222,128,0.3);color:#4ade80;border-radius:6px;padding:6px 12px;font-size:11px;cursor:pointer;flex-shrink:0">✓ Aprobar</button>` : ''}
+    </div>`
+  }).join('') + '</div>'
+}
+
+async function aprobarPago(pagoId, email, btn){
+  btn.disabled = true; btn.textContent = '…'
+  // Marcar pago como aprobado
+  await supa.from('pagos_pendientes').update({ estado: 'aprobado' }).eq('id', pagoId)
+  // Buscar usuario por email en profiles
+  const { data: prof } = await supa.from('profiles').select('id').eq('email', email).single()
+  if(prof){
+    await supa.from('profiles').update({ premium: true, premium_aprobado_at: new Date().toISOString() }).eq('id', prof.id)
+  }
+  btn.closest('.stat-card').style.opacity = '0.45'
+  btn.textContent = '✓ Aprobado'
+}
+
+async function loadAdminRetos(){
+  const el = document.getElementById('admin-tab-retos')
+  el.style.flexDirection = 'column'
+  el.style.padding = '16px'
+  el.style.gap = '12px'
+  // Cargar reto activo
+  const { data: reto } = await supa.from('retos').select('*').eq('activo', true).single()
+  el.innerHTML = `
+    <div style="font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:4px">Reto activo</div>
+    <input id="reto-titulo" class="admin-input" placeholder="Título del reto" value="${reto?.titulo||''}">
+    <textarea id="reto-desc" class="admin-input" placeholder="Descripción del reto" style="resize:vertical;min-height:80px;font-family:inherit">${reto?.descripcion||''}</textarea>
+    <input id="reto-premio" class="admin-input" placeholder="Premio (ej: Sesión de reiki con Javi)" value="${reto?.premio||''}">
+    <div style="display:flex;gap:8px;align-items:center">
+      <label style="font-size:11px;color:rgba(255,255,255,0.4)">Duración días:</label>
+      <input id="reto-dias" class="admin-input" type="number" value="${reto?.dias_duracion||7}" style="width:70px">
+    </div>
+    <button onclick="guardarReto('${reto?.id||''}')" style="background:var(--turquesa);border:none;color:#030408;padding:10px;border-radius:8px;cursor:pointer;font-weight:700;font-size:12px;font-family:inherit">${reto ? 'Actualizar reto' : 'Crear reto'}</button>
+    <div id="reto-admin-msg" style="font-size:12px;color:#4ade80;display:none"></div>
+    <div style="margin-top:8px;font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.3)">Ranking del reto actual</div>
+    <div id="reto-ranking-admin" style="overflow-y:auto;flex:1"></div>
+  `
+  if(reto) loadRetoRankingAdmin(reto.id)
+}
+
+async function guardarReto(retoId){
+  const titulo = document.getElementById('reto-titulo').value.trim()
+  const descripcion = document.getElementById('reto-desc').value.trim()
+  const premio = document.getElementById('reto-premio').value.trim()
+  const dias_duracion = parseInt(document.getElementById('reto-dias').value) || 7
+  const mes_año = new Date().toISOString().slice(0,7)
+  const msg = document.getElementById('reto-admin-msg')
+  if(!titulo){ return }
+  if(retoId){
+    await supa.from('retos').update({ titulo, descripcion, premio, dias_duracion }).eq('id', retoId)
+  } else {
+    await supa.from('retos').insert({ titulo, descripcion, premio, dias_duracion, mes_año, activo: true })
+  }
+  msg.textContent = '✓ Guardado'; msg.style.display = 'block'
+  setTimeout(() => msg.style.display = 'none', 2000)
+}
+
+async function loadRetoRankingAdmin(retoId){
+  const el = document.getElementById('reto-ranking-admin')
+  const { data: progreso } = await supa.from('reto_progreso').select('user_id').eq('reto_id', retoId).eq('completado', true)
+  if(!progreso?.length){ el.innerHTML = '<div style="color:rgba(255,255,255,0.2);font-size:12px">Sin participantes aún</div>'; return }
+  const counts = {}
+  progreso.forEach(p => counts[p.user_id] = (counts[p.user_id]||0) + 1)
+  const sorted = Object.entries(counts).sort((a,b) => b[1]-a[1]).slice(0,10)
+  const userIds = sorted.map(s => s[0])
+  const { data: profiles } = await supa.from('profiles').select('id,username,nombres').in('id', userIds)
+  const pMap = {}; profiles?.forEach(p => pMap[p.id] = p)
+  el.innerHTML = sorted.map(([uid, dias], i) => {
+    const p = pMap[uid]||{}
+    return `<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.05)">
+      <div style="font-size:13px;font-weight:700;color:${i<3?'var(--oro)':'rgba(255,255,255,0.2)'};width:20px">${i+1}</div>
+      <div style="flex:1;font-size:12px;color:var(--blanco)">@${p.username||p.nombres||uid.slice(0,6)}</div>
+      <div style="font-size:11px;color:var(--turquesa)">${dias} días</div>
+    </div>`
+  }).join('')
+}
+
+async function loadConsultaExpress(){
+  const wrap = document.getElementById('consulta-wrap')
+  if(!currentUser){ return }
+  const mesAño = new Date().toISOString().slice(0,7)
+  const { data: consulta } = await supa.from('consultas_express').select('*').eq('user_id', currentUser.id).eq('mes_año', mesAño).single()
+  if(consulta){
+    wrap.innerHTML = `
+      <div class="consulta-card">
+        <div class="consulta-label">Tu pregunta de ${mesAño}</div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.7);line-height:1.6">${consulta.pregunta}</div>
+      </div>
+      ${consulta.respondida ? `
+        <div class="consulta-respuesta">
+          <div class="consulta-resp-header">
+            <div class="consulta-resp-avatar">JP</div>
+            <div class="consulta-resp-name">Javi Peñaloza</div>
+          </div>
+          <div class="consulta-resp-text">${consulta.respuesta}</div>
+        </div>
+      ` : `<div style="text-align:center;padding:16px;font-size:12px;color:rgba(255,255,255,0.3)">Javi responderá pronto. Revisa en unos días.</div>`}
+    `
+  } else {
+    wrap.innerHTML = `
+      <div class="consulta-card">
+        <div class="consulta-label">Escribe tu pregunta de este mes</div>
+        <textarea class="consulta-textarea" id="consulta-input" placeholder="¿Qué quieres preguntarle a Javi este mes?" maxlength="500"></textarea>
+        <div style="text-align:right;font-size:10px;color:rgba(255,255,255,0.2);margin-top:4px">Máx. 500 caracteres</div>
+        <button class="consulta-send-btn" onclick="enviarConsulta()">Enviar pregunta →</button>
+      </div>
+      <div id="consulta-msg" class="auth-success" style="display:none"></div>
+    `
+  }
+}
+
+async function enviarConsulta(){
+  const pregunta = document.getElementById('consulta-input')?.value.trim()
+  if(!pregunta) return
+  const mesAño = new Date().toISOString().slice(0,7)
+  const { error } = await supa.from('consultas_express').insert({ user_id: currentUser.id, pregunta, mes_año: mesAño })
+  if(!error){
+    document.getElementById('consulta-msg').textContent = '✓ Pregunta enviada. Javi responderá pronto.'
+    document.getElementById('consulta-msg').style.display = 'block'
+    setTimeout(() => loadConsultaExpress(), 1500)
+  }
+}
+
+async function loadRetoMensual(){
+  const wrap = document.getElementById('reto-wrap')
+  if(!currentUser){ return }
+  const { data: reto } = await supa.from('retos').select('*').eq('activo', true).single()
+  if(!reto){
+    wrap.innerHTML = '<div style="text-align:center;padding:40px;color:rgba(255,255,255,0.2);font-size:13px">No hay un reto activo este mes. ¡Pronto!</div>'
+    return
+  }
+  const { data: progreso } = await supa.from('reto_progreso').select('*').eq('reto_id', reto.id).eq('user_id', currentUser.id)
+  const diasCompletados = new Set(progreso?.filter(p=>p.completado).map(p=>p.dia)||[])
+  const hoy = new Date().getDate()
+  const diasHtml = Array.from({length: reto.dias_duracion}, (_,i) => {
+    const dia = i+1
+    const completado = diasCompletados.has(dia)
+    const esHoy = dia === hoy
+    return `<div class="reto-dia ${completado?'completado':''} ${esHoy&&!completado?'hoy':''}" onclick="toggleRetoDia(${dia},'${reto.id}',this)">
+      <span>${completado?'✓':dia}</span>
+    </div>`
+  }).join('')
+
+  // Ranking
+  const { data: todoProgreso } = await supa.from('reto_progreso').select('user_id').eq('reto_id', reto.id).eq('completado', true)
+  const counts = {}
+  todoProgreso?.forEach(p => counts[p.user_id] = (counts[p.user_id]||0) + 1)
+  const sorted = Object.entries(counts).sort((a,b)=>b[1]-a[1]).slice(0,5)
+  const userIds = sorted.map(s=>s[0])
+  const { data: profiles } = await supa.from('profiles').select('id,username,nombres').in('id', userIds.length?userIds:['none'])
+  const pMap = {}; profiles?.forEach(p => pMap[p.id] = p)
+
+  wrap.innerHTML = `
+    <div class="reto-header">
+      <div class="reto-titulo">${reto.titulo}</div>
+      <div class="reto-sub">${reto.descripcion}</div>
+      <div class="reto-premio">🏆 Premio: ${reto.premio}</div>
+    </div>
+    <div class="reto-dias">${diasHtml}</div>
+    <div style="text-align:center;font-size:12px;color:rgba(255,255,255,0.4);margin-bottom:16px">${diasCompletados.size} de ${reto.dias_duracion} días completados</div>
+    ${sorted.length ? `
+      <div class="reto-ranking">
+        <div class="reto-ranking-titulo">Ranking</div>
+        ${sorted.map(([uid,dias],i) => {
+          const p = pMap[uid]||{}
+          return `<div class="reto-ranking-item">
+            <div class="reto-ranking-pos ${i<3?'top':''}">${i+1}</div>
+            <div class="reto-ranking-name">@${p.username||p.nombres||uid.slice(0,6)}</div>
+            <div class="reto-ranking-dias">${dias} días</div>
+          </div>`
+        }).join('')}
+      </div>` : ''}
+  `
+}
+
+async function toggleRetoDia(dia, retoId, el){
+  if(!currentUser) return
+  const { data: existing } = await supa.from('reto_progreso').select('id,completado').eq('user_id', currentUser.id).eq('reto_id', retoId).eq('dia', dia).single()
+  if(existing){
+    const nuevo = !existing.completado
+    await supa.from('reto_progreso').update({ completado: nuevo }).eq('id', existing.id)
+    el.classList.toggle('completado', nuevo)
+    el.innerHTML = `<span>${nuevo?'✓':dia}</span>`
+  } else {
+    await supa.from('reto_progreso').insert({ user_id: currentUser.id, reto_id: retoId, dia, completado: true })
+    el.classList.add('completado')
+    el.innerHTML = `<span>✓</span>`
+  }
 }
 
 async function loadAdminPendientes(){
