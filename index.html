@@ -590,6 +590,10 @@ nav.scrolled {
 
 /* ── SOBRE JAVI ── */
 #sobre {
+  padding: 80px 40px;
+  box-sizing: border-box;
+}
+.sobre-inner {
   display: grid;
   grid-template-columns: 42% 1fr;
   min-height: 600px;
@@ -717,7 +721,8 @@ nav.scrolled {
 }
 .sobre-link:hover { color: var(--oro); border-color: var(--oro); }
 @media(max-width:768px){
-  #sobre { grid-template-columns: 1fr; border-radius: 0; }
+  #sobre { padding: 0; }
+  .sobre-inner { grid-template-columns: 1fr; border-radius: 0; }
   .sobre-foto { height: 320px; }
   .sobre-content { padding: 36px 24px; }
   .sobre-stats { grid-template-columns: 1fr 1fr; }
@@ -880,7 +885,8 @@ footer {
   .auth-row { grid-template-columns: 1fr !important; gap: 0; }
 
   /* Sobre */
-  #sobre { grid-template-columns: 1fr; padding: 60px 20px; }
+  #sobre { padding: 40px 20px; }
+  .sobre-inner { grid-template-columns: 1fr; }
 
   /* Footer */
   footer { flex-direction: column; text-align: center; padding: 30px 20px; gap: 16px; }
@@ -1715,8 +1721,8 @@ select.admin-input { cursor: pointer; }
 </div>
 
 <!-- SOBRE JAVI -->
-<section id="sobre" style="padding: 80px 40px;">
-  <div style="display:grid;grid-template-columns:42% 1fr;min-height:580px;max-width:1100px;margin:0 auto;border-radius:20px;overflow:hidden;border:1px solid rgba(255,255,255,0.07)">
+<section id="sobre">
+  <div class="sobre-inner">
     <div class="sobre-foto reveal">
       <img src="javi.png" alt="Javi Peñaloza" loading="lazy">
     </div>
