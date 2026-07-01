@@ -107,6 +107,8 @@ body {
 .auth-tabs {
   display: flex; border-bottom: 1px solid rgba(255,255,255,0.06);
   background: rgba(10,15,30,0.98);
+  position: relative; z-index: 5;
+  flex-shrink: 0;
 }
 .auth-tab {
   flex: 1; padding: 14px 6px;
@@ -117,6 +119,9 @@ body {
   transition: color 0.3s, border-bottom 0.3s;
   border-bottom: 2px solid transparent;
   white-space: nowrap;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  position: relative; z-index: 6;
 }
 .auth-tab.active {
   color: #E8C30A;
@@ -189,6 +194,8 @@ select.auth-input option { background: #0a0f1e; color: #F0FAF9; }
   border-top: 1px solid rgba(20,184,166,0.15);
   border-bottom: 1px solid rgba(20,184,166,0.15);
   padding: 14px 24px;
+  position: relative; z-index: 1;
+  pointer-events: none;
 }
 .auth-precio-items {
   display: flex; flex-direction: column; gap: 4px;
