@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>El Mundo de Javi — Javi Peñaloza</title>
-<meta name="description" content="Una experiencia inmersiva en salud mental. 7 mundos emocionales. Tu viaje empieza aquí.">
+<meta name="description" content="Una experiencia inmersiva en salud mental. 8 mundos emocionales. Tu viaje empieza aquí.">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 :root {
@@ -383,7 +383,7 @@ nav.scrolled {
 
 /* ── MODAL MUNDO (full overlay) ── */
 #modal-overlay {
-  position: fixed; inset: 0; z-index: 200;
+  position: fixed; inset: 0; z-index: 1600;
   background: rgba(3,4,8,0);
   display: flex; align-items: center; justify-content: center;
   opacity: 0; pointer-events: none;
@@ -1679,7 +1679,7 @@ select.admin-input { cursor: pointer; }
   <div class="hero-title" id="hero-title">
     <div class="hero-title-sub">Bienvenido a</div>
     <div class="hero-title-main">El Mundo de <em>Javi</em></div>
-    <div class="hero-sub">7 mundos. 1 viaje. Tu salud mental, reimaginada.</div>
+    <div class="hero-sub">8 mundos. 1 viaje. Tu salud mental, reimaginada.</div>
   </div>
 
   <div class="hero-scroll-hint">Explora</div>
@@ -2330,7 +2330,7 @@ function renderPerfil(){
   worldsEl.innerHTML = WORLDS.map(w => {
     const visited = worldVisits[w.id]
     return `
-    <div class="perfil-world-card ${visited?'visited':''}" style="--wcolor:${w.color}" onclick="closePerfil();setTimeout(()=>openModal(${JSON.stringify(w).replace(/"/g,'&quot;')}),300)">
+    <div class="perfil-world-card ${visited?'visited':''}" style="--wcolor:${w.color}" onclick="openModal(${JSON.stringify(w).replace(/"/g,'&quot;')})">
       <div class="perfil-world-glow" style="background:radial-gradient(circle,${w.color}33,transparent)"></div>
       <div class="perfil-world-symbol" style="color:${w.color}">${SYMBOLS[w.id]||''}</div>
       <div class="perfil-world-name">${w.name}</div>
