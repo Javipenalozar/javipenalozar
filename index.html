@@ -590,23 +590,125 @@ nav.scrolled {
 
 /* ── SOBRE JAVI ── */
 #sobre {
-  padding: 100px 40px;
-  max-width: 960px; margin: 0 auto;
-  display: grid; grid-template-columns: 1fr 1fr; gap: 60px;
-  align-items: center;
+  display: grid;
+  grid-template-columns: 42% 1fr;
+  min-height: 600px;
+  max-width: 1100px;
+  margin: 0 auto;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.07);
 }
-.sobre-text h2 {
+.sobre-foto {
+  position: relative;
+  overflow: hidden;
+  background: #0d1f35;
+}
+.sobre-foto img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+  filter: brightness(0.92);
+}
+.sobre-content {
+  background: #070b14;
+  padding: 56px 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0;
+}
+.sobre-eyebrow {
+  font-size: 10px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--turquesa);
+  margin-bottom: 18px;
+}
+.sobre-quote {
   font-family: Georgia, serif;
-  font-size: clamp(28px, 3.5vw, 42px);
-  color: var(--blanco); line-height: 1.2;
-  margin-bottom: 20px;
+  font-size: clamp(22px, 2.8vw, 32px);
+  font-style: italic;
+  color: var(--oro);
+  line-height: 1.25;
+  margin-bottom: 28px;
+  font-weight: 400;
 }
-.sobre-text h2 em { font-style: normal; color: var(--oro); }
-.sobre-text p {
-  font-size: 14px; color: var(--texto);
-  line-height: 1.8; margin-bottom: 16px;
+.sobre-historia {
+  font-size: 14px;
+  line-height: 1.85;
+  color: rgba(240,250,249,0.52);
+  margin-bottom: 32px;
 }
-.sobre-text .links { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 24px; }
+.sobre-historia strong {
+  color: rgba(240,250,249,0.8);
+  font-weight: 500;
+}
+.sobre-divider {
+  height: 1px;
+  background: rgba(255,255,255,0.07);
+  margin-bottom: 28px;
+}
+.sobre-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 28px;
+  margin-bottom: 28px;
+}
+.sobre-stat-item {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+.sobre-stat-num {
+  font-size: 24px;
+  font-weight: 200;
+  color: var(--blanco);
+  line-height: 1;
+}
+.sobre-stat-label {
+  font-size: 11px;
+  color: rgba(255,255,255,0.32);
+  letter-spacing: 0.3px;
+}
+.sobre-personas {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  background: rgba(232,195,10,0.06);
+  border: 1px solid rgba(232,195,10,0.15);
+  border-radius: 12px;
+  margin-bottom: 28px;
+}
+.sobre-personas-num {
+  font-size: 34px;
+  font-weight: 200;
+  color: var(--oro);
+  flex-shrink: 0;
+}
+.sobre-personas-text {
+  font-size: 12px;
+  color: rgba(255,255,255,0.4);
+  line-height: 1.6;
+}
+.sobre-personas-text strong {
+  display: block;
+  font-size: 13px;
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 2px;
+  font-weight: 500;
+}
+.sobre-tagline {
+  font-size: 10px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.2);
+}
+.sobre-tagline span { color: var(--turquesa); }
+.sobre-links { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 20px; }
 .sobre-link {
   font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
   color: var(--turquesa); text-decoration: none;
@@ -614,26 +716,11 @@ nav.scrolled {
   padding-bottom: 2px; transition: color 0.3s, border-color 0.3s;
 }
 .sobre-link:hover { color: var(--oro); border-color: var(--oro); }
-.sobre-visual {
-  position: relative;
-}
-.sobre-card {
-  background: rgba(20,184,166,0.04);
-  border: 1px solid rgba(20,184,166,0.12);
-  padding: 28px; border-radius: 12px;
-}
-.sobre-stat {
-  margin-bottom: 20px; padding-bottom: 20px;
-  border-bottom: 1px solid rgba(255,255,255,0.06);
-}
-.sobre-stat:last-child { margin-bottom: 0; padding-bottom: 0; border: none; }
-.sobre-stat-num {
-  font-family: Georgia, serif;
-  font-size: 36px; font-weight: 700; color: var(--oro);
-}
-.sobre-stat-label {
-  font-size: 11px; color: var(--texto-suave);
-  letter-spacing: 0.1em;
+@media(max-width:768px){
+  #sobre { grid-template-columns: 1fr; border-radius: 0; }
+  .sobre-foto { height: 320px; }
+  .sobre-content { padding: 36px 24px; }
+  .sobre-stats { grid-template-columns: 1fr 1fr; }
 }
 
 /* ── FOOTER ── */
@@ -1628,30 +1715,37 @@ select.admin-input { cursor: pointer; }
 </div>
 
 <!-- SOBRE JAVI -->
-<section id="sobre">
-  <div class="sobre-text reveal">
-    <h2>No vine a darte respuestas.<br><em>Vine a que te hagas las preguntas correctas.</em></h2>
-    <p>Soy Javi Peñaloza — psicólogo, coach y conferencista. Llevo más de una década ayudando a personas a entenderse a sí mismas desde la honestidad, el humor y la profundidad.</p>
-    <p>El Mundo de Javi es mi ecosistema de salud mental: 7 portales emocionales que puedes explorar a tu propio ritmo, con herramientas reales para tu vida real.</p>
-    <div class="links">
-      <a href="https://eventosjv.com" target="_blank" class="sobre-link">eventosjv.com</a>
-      <a href="https://instagram.com/javipenalozar" target="_blank" class="sobre-link">@javipenalozar</a>
-      <a href="https://anahata.eventosjv.com" target="_blank" class="sobre-link">Academia Anahata</a>
+<section id="sobre" style="padding: 80px 40px;">
+  <div style="display:grid;grid-template-columns:42% 1fr;min-height:580px;max-width:1100px;margin:0 auto;border-radius:20px;overflow:hidden;border:1px solid rgba(255,255,255,0.07)">
+    <div class="sobre-foto reveal">
+      <img src="javi.png" alt="Javi Peñaloza" loading="lazy">
     </div>
-  </div>
-  <div class="sobre-visual reveal">
-    <div class="sobre-card">
-      <div class="sobre-stat">
-        <div class="sobre-stat-num">+10</div>
-        <div class="sobre-stat-label">años acompañando procesos de sanación</div>
+    <div class="sobre-content reveal">
+      <div class="sobre-eyebrow">Su historia</div>
+      <div class="sobre-quote">"La psicología<br>me eligió a mí."</div>
+      <p class="sobre-historia">
+        Llegué a la psicología en 2018 — era mi <strong>quinta carrera</strong>. Las cuatro anteriores no terminaron y jamás me imaginé estudiando esto. Hoy entiendo que no fue una decisión: fue un llamado. Me mueve el potencial humano, <strong>Dios, mi familia</strong> y el privilegio de ser luz para otros.
+      </p>
+      <div class="sobre-divider"></div>
+      <div class="sobre-stats">
+        <div class="sobre-stat-item"><span class="sobre-stat-num">15</span><span class="sobre-stat-label">años conferencista</span></div>
+        <div class="sobre-stat-item"><span class="sobre-stat-num">9</span><span class="sobre-stat-label">años terapeuta</span></div>
+        <div class="sobre-stat-item"><span class="sobre-stat-num">6</span><span class="sobre-stat-label">años coach</span></div>
+        <div class="sobre-stat-item"><span class="sobre-stat-num">5</span><span class="sobre-stat-label">años Reiki Usui</span></div>
+        <div class="sobre-stat-item"><span class="sobre-stat-num">3</span><span class="sobre-stat-label">años psicólogo</span></div>
       </div>
-      <div class="sobre-stat">
-        <div class="sobre-stat-num">7</div>
-        <div class="sobre-stat-label">mundos emocionales para explorar</div>
+      <div class="sobre-personas">
+        <div class="sobre-personas-num">40K+</div>
+        <div class="sobre-personas-text">
+          <strong>personas acompañadas</strong>
+          Retiros · eventos empresariales · conferencias en alcaldías
+        </div>
       </div>
-      <div class="sobre-stat">
-        <div class="sobre-stat-num">2</div>
-        <div class="sobre-stat-label">libros publicados — ¿Cómo Estás? y más</div>
+      <div class="sobre-tagline">Confía <span>·</span> Es Posible</div>
+      <div class="sobre-links">
+        <a href="https://eventosjv.com" target="_blank" class="sobre-link">eventosjv.com</a>
+        <a href="https://instagram.com/javipenalozar" target="_blank" class="sobre-link">@javipenalozar</a>
+        <a href="https://anahata.eventosjv.com" target="_blank" class="sobre-link">Academia Anahata</a>
       </div>
     </div>
   </div>
