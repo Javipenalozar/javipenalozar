@@ -1042,31 +1042,16 @@ footer {
 .perfil-racha-txt { font-size: 13px; color: rgba(255,255,255,0.5); }
 .perfil-racha-num { color: var(--oro); font-weight: 500; }
 
-/* ── INSIGNIAS MEDALLAS ── */
-.medallas-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 16px; margin-bottom: 32px; }
-.medalla {
-  display: flex; flex-direction: column; align-items: center; gap: 8px;
-  text-align: center;
-}
-.medalla-circulo {
-  width: 72px; height: 72px; border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 28px; position: relative;
-  box-shadow: 0 0 0 3px #b8860b, 0 0 20px rgba(232,195,10,0.3), inset 0 2px 4px rgba(255,255,255,0.15);
-  background: radial-gradient(circle at 35% 30%, #f5d060, #c9960c 50%, #8a6200);
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-.medalla-circulo:hover { transform: translateY(-2px); box-shadow: 0 4px 0 #8a6200, 0 0 28px rgba(232,195,10,0.5), inset 0 2px 4px rgba(255,255,255,0.2); }
-.medalla-circulo.pending {
-  background: radial-gradient(circle at 35% 30%, rgba(245,208,96,0.4), rgba(139,98,0,0.3));
-  box-shadow: 0 0 0 2px rgba(184,134,11,0.4), 0 0 10px rgba(232,195,10,0.1);
-  opacity: 0.65;
-}
-.medalla-cinta { width: 20px; height: 6px; background: linear-gradient(90deg,#14B8A6,#0d9488); border-radius: 2px; margin-top: -4px; }
-.medalla-nombre { font-size: 10px; color: rgba(255,255,255,0.55); line-height: 1.3; max-width: 88px; }
-.medalla-estado { font-size: 9px; letter-spacing: 1px; text-transform: uppercase; }
+/* ── INSIGNIAS MEDALLAS PREMIUM ── */
+.medallas-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 24px 16px; margin-bottom: 36px; }
+.medalla { display: flex; flex-direction: column; align-items: center; gap: 0; text-align: center; cursor: default; }
+.medalla-svg-wrap { transition: transform 0.3s, filter 0.3s; filter: drop-shadow(0 8px 16px rgba(0,0,0,0.6)); }
+.medalla-svg-wrap:hover { transform: translateY(-4px) scale(1.04); filter: drop-shadow(0 12px 24px rgba(232,195,10,0.4)); }
+.medalla-svg-wrap.pending { filter: drop-shadow(0 4px 8px rgba(0,0,0,0.4)); opacity: 0.6; }
+.medalla-nombre { font-size: 10px; color: rgba(255,255,255,0.6); line-height: 1.35; max-width: 100px; margin-top: 10px; }
+.medalla-estado { font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; margin-top: 4px; }
 .medalla-estado.approved { color: var(--oro); }
-.medalla-estado.pending { color: rgba(255,255,255,0.25); }
+.medalla-estado.pending { color: rgba(255,255,255,0.2); }
 
 /* Insignias disponibles (no obtenidas) */
 .badges-disponibles-title { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.2); margin-bottom: 14px; padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.05); }
@@ -2686,6 +2671,99 @@ function renderNivel(){
   `
 }
 
+function medalSVG(icon, isPending){
+  const op = isPending ? '0.5' : '1'
+  // Genera puntos para los rayos alrededor del borde
+  const studs = Array.from({length:24}, (_,i) => {
+    const a = (i/24)*Math.PI*2 - Math.PI/2
+    const r = 43
+    return `<circle cx="${50+Math.cos(a)*r}" cy="${62+Math.sin(a)*r}" r="1.8" fill="#f5d060" opacity="${isPending?'0.3':'0.7'}"/>`
+  }).join('')
+  const rays = Array.from({length:12}, (_,i) => {
+    const a = (i/12)*Math.PI*2 - Math.PI/2
+    const r1=33, r2=39
+    return `<line x1="${50+Math.cos(a)*r1}" y1="${62+Math.sin(a)*r1}" x2="${50+Math.cos(a)*r2}" y2="${62+Math.sin(a)*r2}" stroke="#c9960c" stroke-width="1.5" opacity="${isPending?'0.2':'0.6'}"/>`
+  }).join('')
+  const gems = Array.from({length:8}, (_,i) => {
+    const a = (i/8)*Math.PI*2 - Math.PI/2
+    const r = 28
+    return `<circle cx="${50+Math.cos(a)*r}" cy="${62+Math.sin(a)*r}" r="2.2" fill="${isPending?'rgba(150,50,50,0.3)':'#c0392b'}" stroke="#8b0000" stroke-width="0.5"/>`
+  }).join('')
+
+  return `<svg width="100" height="124" viewBox="0 0 100 124" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <radialGradient id="gold${icon.codePointAt(0)}" cx="38%" cy="30%" r="65%">
+        <stop offset="0%" stop-color="#fef3a0"/>
+        <stop offset="30%" stop-color="#e8c30a"/>
+        <stop offset="65%" stop-color="#c9960c"/>
+        <stop offset="100%" stop-color="#7a5200"/>
+      </radialGradient>
+      <radialGradient id="inner${icon.codePointAt(0)}" cx="40%" cy="35%" r="70%">
+        <stop offset="0%" stop-color="#1e2d4a"/>
+        <stop offset="100%" stop-color="#06080f"/>
+      </radialGradient>
+      <radialGradient id="gem${icon.codePointAt(0)}" cx="30%" cy="20%" r="80%">
+        <stop offset="0%" stop-color="#ff6b6b"/>
+        <stop offset="100%" stop-color="#8b0000"/>
+      </radialGradient>
+    </defs>
+
+    <!-- Cinta -->
+    <rect x="37" y="0" width="9" height="22" rx="2" fill="#1a4fd6" opacity="${op}"/>
+    <rect x="46" y="0" width="9" height="22" rx="2" fill="#E8C30A" opacity="${op}"/>
+    <rect x="37" y="0" width="18" height="3" rx="1" fill="rgba(255,255,255,0.15)"/>
+
+    <!-- Argolla -->
+    <circle cx="50" cy="22" r="6" fill="none" stroke="url(#gold${icon.codePointAt(0)})" stroke-width="3" opacity="${op}"/>
+    <circle cx="50" cy="22" r="6" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+
+    <!-- Alas decorativas -->
+    <path d="M8,62 Q18,50 28,58 Q20,62 22,70 Q12,68 8,62Z" fill="url(#gold${icon.codePointAt(0)})" opacity="${isPending?'0.25':'0.75'}"/>
+    <path d="M92,62 Q82,50 72,58 Q80,62 78,70 Q88,68 92,62Z" fill="url(#gold${icon.codePointAt(0)})" opacity="${isPending?'0.25':'0.75'}"/>
+    <path d="M10,62 Q18,54 26,60" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="0.8"/>
+    <path d="M90,62 Q82,54 74,60" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="0.8"/>
+
+    <!-- Aro exterior oscuro -->
+    <circle cx="50" cy="62" r="46" fill="#3d2800" opacity="${isPending?'0.4':'1'}"/>
+    <!-- Aro dorado exterior -->
+    <circle cx="50" cy="62" r="44" fill="url(#gold${icon.codePointAt(0)})" opacity="${op}"/>
+    <!-- Highlight superior -->
+    <ellipse cx="38" cy="38" rx="18" ry="8" fill="rgba(255,255,255,0.18)" opacity="${op}"/>
+
+    <!-- Rayos y puntos decorativos -->
+    ${rays}
+    ${studs}
+
+    <!-- Aro interior oscuro -->
+    <circle cx="50" cy="62" r="32" fill="url(#inner${icon.codePointAt(0)})" opacity="${op}"/>
+    <!-- Borde interior dorado -->
+    <circle cx="50" cy="62" r="32" fill="none" stroke="#c9960c" stroke-width="1.5" opacity="${isPending?'0.3':'0.8'}"/>
+    <!-- Highlight interior -->
+    <ellipse cx="43" cy="50" rx="10" ry="5" fill="rgba(255,255,255,0.07)" opacity="${op}"/>
+
+    <!-- Gemas alrededor del centro -->
+    ${gems}
+
+    <!-- Joya superior -->
+    <circle cx="50" cy="29" r="5" fill="url(#gem${icon.codePointAt(0)})" opacity="${op}"/>
+    <circle cx="50" cy="29" r="5" fill="none" stroke="#ffd700" stroke-width="0.8" opacity="${op}"/>
+    <circle cx="48.5" cy="27.5" r="1.5" fill="rgba(255,255,255,0.5)" opacity="${op}"/>
+
+    <!-- Estrella central -->
+    <polygon points="50,46 51.5,50.5 56,50.5 52.5,53.5 53.8,58 50,55.5 46.2,58 47.5,53.5 44,50.5 48.5,50.5" fill="#E8C30A" opacity="${isPending?'0.2':'0.35'}" stroke="#c9960c" stroke-width="0.5"/>
+
+    <!-- Emoji / ícono -->
+    <text x="50" y="73" text-anchor="middle" font-size="22" dominant-baseline="middle" opacity="${op}">${icon}</text>
+
+    ${!isPending ? `
+    <!-- Check de aprobada -->
+    <circle cx="76" cy="88" r="9" fill="#030408"/>
+    <circle cx="76" cy="88" r="8" fill="#E8C30A"/>
+    <text x="76" y="88" text-anchor="middle" dominant-baseline="middle" font-size="10" fill="#030408" font-weight="bold">✓</text>
+    ` : ''}
+  </svg>`
+}
+
 function renderInsignias(){
   const wrap = document.getElementById('perfil-badges-wrap')
   if(!wrap) return
@@ -2698,18 +2776,16 @@ function renderInsignias(){
 
   // ── MEDALLAS GANADAS ──
   if(ganadas.length){
-    html += `<div style="margin-bottom:28px">
-      <div style="font-size:10px;letter-spacing:3px;text-transform:uppercase;color:rgba(232,195,10,0.5);margin-bottom:18px">Mis medallas</div>
+    html += `<div style="margin-bottom:32px">
+      <div style="font-size:10px;letter-spacing:3px;text-transform:uppercase;color:rgba(232,195,10,0.5);margin-bottom:20px">Mis medallas</div>
       <div class="medallas-grid">`
     ganadas.forEach(b => {
       const estado = userBadges[b.id]
       const isPending = estado.status === 'pending'
       html += `<div class="medalla">
-        <div class="medalla-circulo ${isPending ? 'pending' : ''}" title="${isPending ? 'Pendiente de verificación' : 'Obtenida'}">
-          ${b.icon}
-          ${!isPending ? '<div style="position:absolute;bottom:-2px;right:-2px;width:20px;height:20px;background:#E8C30A;border-radius:50%;font-size:11px;display:flex;align-items:center;justify-content:center;border:2px solid #030408">✓</div>' : ''}
+        <div class="medalla-svg-wrap ${isPending?'pending':''}" title="${isPending?'Pendiente de verificación':'Obtenida'}">
+          ${medalSVG(b.icon, isPending)}
         </div>
-        <div class="medalla-cinta"></div>
         <div class="medalla-nombre">${b.nombre}</div>
         <div class="medalla-estado ${estado.status}">${isPending ? 'pendiente' : 'obtenida'}</div>
       </div>`
