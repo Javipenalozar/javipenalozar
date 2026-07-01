@@ -109,13 +109,14 @@ body {
   background: rgba(10,15,30,0.98);
 }
 .auth-tab {
-  flex: 1; padding: 14px;
+  flex: 1; padding: 14px 6px;
   background: none; border: none;
-  font-size: 11px; letter-spacing: 0.18em;
+  font-size: 10px; letter-spacing: 0.12em;
   text-transform: uppercase; cursor: pointer;
   color: rgba(255,255,255,0.35);
   transition: color 0.3s, border-bottom 0.3s;
   border-bottom: 2px solid transparent;
+  white-space: nowrap;
 }
 .auth-tab.active {
   color: #E8C30A;
@@ -1744,8 +1745,8 @@ select.admin-input { cursor: pointer; }
     </div>
     <div class="auth-tabs">
       <button class="auth-tab active" id="tab-registro" onclick="switchTab('registro')">Registrarse</button>
-      <button class="auth-tab" id="tab-login" onclick="switchTab('login')">Iniciar sesión</button>
-      <button class="auth-tab" id="tab-yapague" onclick="switchTab('yapague')">Ya pagué</button>
+      <button class="auth-tab" id="tab-login" onclick="switchTab('login')">Ingresar</button>
+      <button class="auth-tab" id="tab-yapague" onclick="switchTab('yapague')">Activar acceso</button>
     </div>
     <div class="auth-body">
 
