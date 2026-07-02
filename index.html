@@ -1488,8 +1488,9 @@ select.admin-input { cursor: pointer; }
   gap: 12px;
 }
 .admin-empty-state svg { opacity: 0.3; }
-.admin-tabs { display: flex; gap: 4px; flex: 1; }
-.admin-tab { background: none; border: none; color: rgba(255,255,255,0.35); font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; padding: 6px 12px; border-radius: 6px; cursor: pointer; transition: all 0.2s; }
+.admin-tabs { display: flex; gap: 4px; flex: 1; overflow-x: auto; scrollbar-width: none; }
+.admin-tabs::-webkit-scrollbar { display: none; }
+.admin-tab { background: none; border: none; color: rgba(255,255,255,0.35); font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; padding: 6px 12px; border-radius: 6px; cursor: pointer; transition: all 0.2s; white-space: nowrap; flex-shrink: 0; }
 .admin-tab.active { background: rgba(20,184,166,0.12); color: var(--turquesa); }
 .admin-tab:hover:not(.active) { color: rgba(255,255,255,0.7); }
 .stats-wrap { padding: 16px; display: flex; flex-direction: column; gap: 14px; }
@@ -1842,8 +1843,15 @@ select.admin-input { cursor: pointer; }
           <input class="auth-input" type="email" id="yapague-email" placeholder="tu@email.com" required>
         </div>
         <div class="auth-field">
-          <label class="auth-label">Tu nombre de usuario en la app</label>
-          <input class="auth-input" type="text" id="yapague-ref" placeholder="Ej: maria_estrella">
+          <label class="auth-label">Sube el comprobante de pago</label>
+          <label id="yapague-upload-label" style="display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.04);border:1px dashed rgba(255,255,255,0.15);border-radius:10px;padding:14px 16px;cursor:pointer;transition:border-color 0.2s">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            <span id="yapague-filename" style="font-size:12px;color:rgba(255,255,255,0.35)">Captura o foto del recibo Bold</span>
+          </label>
+          <input type="file" id="yapague-comprobante" accept="image/*" style="display:none" onchange="previewComprobante(this)">
+        </div>
+        <div id="yapague-preview-wrap" style="display:none;margin-bottom:12px;border-radius:8px;overflow:hidden">
+          <img id="yapague-preview-img" style="width:100%;max-height:180px;object-fit:cover;border-radius:8px">
         </div>
         <button class="auth-btn" onclick="enviarYaPague()" id="btn-yapague">Notificar mi pago →</button>
         <div class="auth-footer-text">Recibirás acceso en menos de 24 horas hábiles.</div>
@@ -2174,7 +2182,11 @@ select.admin-input { cursor: pointer; }
 <!-- ADMIN PANEL -->
 <div id="admin-panel">
   <div class="admin-sidebar">
-    <div class="admin-sidebar-head">
+    <div class="admin-sidebar-head" style="flex-direction:column;align-items:stretch;gap:12px">
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <button onclick="closeAdmin()" style="background:rgba(20,184,166,0.12);border:1px solid rgba(20,184,166,0.3);color:var(--turquesa);padding:7px 16px;border-radius:20px;cursor:pointer;font-size:11px;font-family:inherit;letter-spacing:0.05em">← Volver al mundo</button>
+        <button class="admin-close" onclick="closeAdmin()">✕</button>
+      </div>
       <div class="admin-tabs">
         <button class="admin-tab active" id="tab-articulos" onclick="switchAdminTab('articulos')">Artículos</button>
         <button class="admin-tab" id="tab-stats" onclick="switchAdminTab('stats')">Estadísticas</button>
@@ -2182,8 +2194,6 @@ select.admin-input { cursor: pointer; }
         <button class="admin-tab" id="tab-pagos" onclick="switchAdminTab('pagos')">Pagos</button>
         <button class="admin-tab" id="tab-retos" onclick="switchAdminTab('retos')">Retos</button>
       </div>
-      <button onclick="closeAdmin()" style="background:rgba(20,184,166,0.12);border:1px solid rgba(20,184,166,0.3);color:var(--turquesa);padding:6px 14px;border-radius:20px;cursor:pointer;font-size:11px;font-family:inherit;white-space:nowrap">← Volver</button>
-      <button class="admin-close" onclick="closeAdmin()">✕</button>
     </div>
     <div id="admin-tab-articulos">
       <button class="admin-new-btn" onclick="newPost()">+ Nuevo artículo</button>
@@ -2332,16 +2342,43 @@ function switchTab(tab){
   document.getElementById('form-'+tab).classList.add('active')
 }
 
+function previewComprobante(input){
+  const file = input.files[0]
+  if(!file) return
+  document.getElementById('yapague-filename').textContent = file.name
+  document.getElementById('yapague-upload-label').style.borderColor = 'rgba(20,184,166,0.5)'
+  const reader = new FileReader()
+  reader.onload = e => {
+    document.getElementById('yapague-preview-img').src = e.target.result
+    document.getElementById('yapague-preview-wrap').style.display = 'block'
+  }
+  reader.readAsDataURL(file)
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const label = document.getElementById('yapague-upload-label')
+  if(label) label.addEventListener('click', () => document.getElementById('yapague-comprobante').click())
+})
+
 async function enviarYaPague(){
   const email = document.getElementById('yapague-email').value.trim()
-  const ref = document.getElementById('yapague-ref').value.trim()
+  const file = document.getElementById('yapague-comprobante').files[0]
   const btn = document.getElementById('btn-yapague')
   const errEl = document.getElementById('err-yapague')
   const okEl = document.getElementById('ok-yapague')
   errEl.style.display = 'none'; okEl.style.display = 'none'
-  if(!email || !ref){ errEl.textContent = 'Completa todos los campos.'; errEl.style.display = 'block'; return }
-  btn.disabled = true; btn.textContent = 'Enviando…'
-  const { error } = await supa.from('pagos_pendientes').insert({ email, referencia_bold: ref, estado: 'pendiente' })
+  if(!email){ errEl.textContent = 'Ingresa tu correo.'; errEl.style.display = 'block'; return }
+  if(!file){ errEl.textContent = 'Sube el comprobante de pago.'; errEl.style.display = 'block'; return }
+  btn.disabled = true; btn.textContent = 'Subiendo comprobante…'
+
+  // Subir imagen a Supabase Storage
+  const ext = file.name.split('.').pop()
+  const filename = `comprobante_${Date.now()}.${ext}`
+  const { error: uploadErr } = await supa.storage.from('comprobantes').upload(filename, file)
+  const comprobante_url = uploadErr ? '(sin imagen)' : filename
+
+  btn.textContent = 'Enviando…'
+  const { error } = await supa.from('pagos_pendientes').insert({ email, referencia_bold: comprobante_url, estado: 'pendiente' })
   if(error){ errEl.textContent = 'Error al enviar. Intenta de nuevo.'; errEl.style.display = 'block'; btn.disabled = false; btn.textContent = 'Notificar mi pago →'; return }
   okEl.textContent = '¡Recibido! Activaremos tu cuenta en menos de 24 horas hábiles. ✓'
   okEl.style.display = 'block'
@@ -3330,7 +3367,8 @@ async function loadAdminPagos(){
     return `<div class="stat-card" style="display:flex;align-items:center;gap:12px;justify-content:space-between;opacity:${esAprobado?'0.45':'1'}">
       <div style="min-width:0;flex:1">
         <div style="font-size:12px;color:var(--blanco);font-weight:500">${p.email}</div>
-        <div style="font-size:11px;color:rgba(255,255,255,0.4)">@${p.referencia_bold} · ${fecha}</div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:2px">${fecha}</div>
+        ${p.referencia_bold && p.referencia_bold !== '(sin imagen)' ? `<a href="https://rpgagnnhsefwaethszfl.supabase.co/storage/v1/object/public/comprobantes/${p.referencia_bold}" target="_blank" style="font-size:11px;color:var(--turquesa);text-decoration:none">📎 Ver comprobante</a>` : ''}
         <div style="font-size:10px;color:${esAprobado?'#4ade80':'var(--oro)'}">${esAprobado?'✓ Aprobado':'Pendiente'}</div>
       </div>
       ${!esAprobado ? `<button onclick="aprobarPago('${p.id}','${p.email}',this)" style="background:rgba(74,222,128,0.15);border:1px solid rgba(74,222,128,0.3);color:#4ade80;border-radius:6px;padding:6px 12px;font-size:11px;cursor:pointer;flex-shrink:0">✓ Aprobar</button>` : ''}
