@@ -1488,12 +1488,16 @@ select.admin-input { cursor: pointer; }
   gap: 12px;
 }
 .admin-empty-state svg { opacity: 0.3; }
-.admin-tabs { display: flex; gap: 4px; flex: 1; overflow-x: auto; scrollbar-width: none; }
+.admin-tabs { display: flex; flex-direction: column; gap: 8px; padding: 14px 16px; overflow-y: auto; scrollbar-width: none; }
 .admin-tabs::-webkit-scrollbar { display: none; }
-.admin-tab { background: none; border: none; color: rgba(255,255,255,0.35); font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; padding: 6px 12px; border-radius: 6px; cursor: pointer; transition: all 0.2s; white-space: nowrap; flex-shrink: 0; }
-.admin-tab.active { background: rgba(20,184,166,0.12); color: var(--turquesa); }
+.admin-tab { background: none; border: 1px solid transparent; color: rgba(255,255,255,0.48); font-size: 12px; letter-spacing: 0.08em; padding: 13px 14px; border-radius: 10px; cursor: pointer; transition: all 0.2s; white-space: nowrap; flex-shrink: 0; text-align: left; font-weight: 700; display: flex; align-items: center; gap: 10px; }
+.admin-tab::before { content: attr(data-icon); width: 18px; color: currentColor; opacity: 0.9; }
+.admin-tab.active { background: rgba(20,184,166,0.12); color: var(--turquesa); border-color: rgba(20,184,166,0.22); }
 .admin-tab:hover:not(.active) { color: rgba(255,255,255,0.7); }
-.stats-wrap { padding: 16px; display: flex; flex-direction: column; gap: 14px; }
+.admin-tab-count { margin-left: auto; min-width: 24px; height: 24px; border-radius: 999px; display: inline-flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; letter-spacing: 0; background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.64); }
+.admin-tab-count.danger { background: rgba(248,113,113,0.18); color: #fca5a5; }
+.admin-tab-count.warn { background: rgba(232,195,10,0.18); color: #f5d93a; }
+.stats-wrap { padding: 24px 32px 36px; display: flex; flex-direction: column; gap: 18px; }
 .stat-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07); border-radius: 12px; padding: 16px 18px; }
 .stat-card-title { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 10px; }
 .stat-big { font-size: 36px; font-weight: 200; color: var(--blanco); line-height: 1; }
@@ -1508,9 +1512,41 @@ select.admin-input { cursor: pointer; }
 .stat-bar-bg { flex: 1; height: 5px; background: rgba(255,255,255,0.07); border-radius: 3px; overflow: hidden; }
 .stat-bar-fill { height: 100%; border-radius: 3px; background: var(--turquesa); }
 .stat-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.admin-dashboard-head { display: flex; justify-content: space-between; gap: 18px; align-items: flex-end; padding: 24px 32px 0; }
+.admin-dashboard-title { font-size: 22px; font-weight: 700; color: var(--blanco); }
+.admin-dashboard-kicker { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(255,255,255,0.28); margin-top: 6px; }
+.admin-metrics-grid { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 14px; }
+.admin-metric-card { min-height: 126px; padding: 20px 22px; }
+.admin-metric-card.danger { border-color: rgba(248,113,113,0.28); }
+.admin-metric-card.warn { border-color: rgba(232,195,10,0.28); }
+.admin-metric-card.danger .stat-big { color: #fca5a5; }
+.admin-metric-card.warn .stat-big { color: #f5d93a; }
+.admin-ops-grid { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(300px, 0.65fr); gap: 18px; }
+.admin-section-head { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 12px; }
+.admin-section-title { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(255,255,255,0.34); font-weight: 800; }
+.admin-section-link { background: none; border: none; color: var(--turquesa); font-family: inherit; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; cursor: pointer; }
+.admin-payment-list { display: flex; flex-direction: column; gap: 12px; }
+.admin-payment-row { display: grid; grid-template-columns: 42px minmax(0,1fr) auto; align-items: center; gap: 14px; padding: 16px 18px; }
+.admin-avatar { width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: rgba(20,184,166,0.12); border: 1px solid rgba(20,184,166,0.22); color: var(--turquesa); font-size: 12px; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase; }
+.admin-row-main { min-width: 0; }
+.admin-row-title { font-size: 13px; color: var(--blanco); font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.admin-row-meta { font-size: 11px; color: rgba(255,255,255,0.38); margin-top: 4px; }
+.admin-row-actions { display: flex; gap: 8px; flex-shrink: 0; }
+.admin-mini-btn { border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.04); color: rgba(255,255,255,0.78); border-radius: 8px; padding: 8px 12px; font-family: inherit; font-size: 11px; font-weight: 700; cursor: pointer; text-decoration: none; }
+.admin-mini-btn.approve { background: var(--oro); border-color: var(--oro); color: #030408; }
+.admin-mini-btn.danger { background: rgba(239,68,68,0.1); border-color: rgba(239,68,68,0.2); color: #ef4444; }
+.admin-empty-note { padding: 24px; color: rgba(255,255,255,0.24); font-size: 13px; text-align: center; border: 1px dashed rgba(255,255,255,0.08); border-radius: 12px; }
+.admin-error-note { padding: 16px 18px; color: #fca5a5; background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.22); border-radius: 12px; font-size: 12px; line-height: 1.5; }
+.admin-lower-grid { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 18px; }
 @media(max-width:768px){
   #admin-panel { flex-direction: column; }
   .admin-sidebar { width: 100%; min-width: unset; border-right: none; border-bottom: 1px solid rgba(255,255,255,0.08); max-height: 200px; }
+  .admin-tabs { flex-direction: row; overflow-x: auto; }
+  .admin-tab { min-width: max-content; }
+  .admin-metrics-grid, .admin-ops-grid, .admin-lower-grid { grid-template-columns: 1fr; }
+  .admin-dashboard-head, .stats-wrap { padding-left: 20px; padding-right: 20px; }
+  .admin-payment-row { grid-template-columns: 38px minmax(0,1fr); }
+  .admin-row-actions { grid-column: 1 / -1; }
   .admin-row { grid-template-columns: 1fr; }
 }
 
@@ -2188,23 +2224,23 @@ select.admin-input { cursor: pointer; }
         <button class="admin-close" onclick="closeAdmin()">✕</button>
       </div>
       <div class="admin-tabs">
-        <button class="admin-tab active" id="tab-articulos" onclick="switchAdminTab('articulos')">Artículos</button>
-        <button class="admin-tab" id="tab-stats" onclick="switchAdminTab('stats')">Estadísticas</button>
-        <button class="admin-tab" id="tab-pendientes" onclick="switchAdminTab('pendientes')">Pendientes</button>
-        <button class="admin-tab" id="tab-pagos" onclick="switchAdminTab('pagos')">Pagos</button>
-        <button class="admin-tab" id="tab-retos" onclick="switchAdminTab('retos')">Retos</button>
+        <button class="admin-tab active" id="tab-stats" data-icon="▦" onclick="switchAdminTab('stats')">Estadísticas</button>
+        <button class="admin-tab" id="tab-pagos" data-icon="▣" onclick="switchAdminTab('pagos')">Pagos <span class="admin-tab-count danger" id="admin-pagos-count" style="display:none">0</span></button>
+        <button class="admin-tab" id="tab-pendientes" data-icon="◷" onclick="switchAdminTab('pendientes')">Pendientes <span class="admin-tab-count warn" id="admin-pendientes-count" style="display:none">0</span></button>
+        <button class="admin-tab" id="tab-articulos" data-icon="☰" onclick="switchAdminTab('articulos')">Artículos</button>
+        <button class="admin-tab" id="tab-retos" data-icon="♕" onclick="switchAdminTab('retos')">Retos</button>
       </div>
     </div>
-    <div id="admin-tab-articulos">
+    <div id="admin-tab-articulos" style="display:none">
       <button class="admin-new-btn" onclick="newPost()">+ Nuevo artículo</button>
       <div class="admin-post-list" id="admin-post-list"></div>
     </div>
+  </div>
+  <div class="admin-editor" id="admin-editor">
     <div id="admin-tab-stats" style="display:none;overflow-y:auto;flex:1"></div>
     <div id="admin-tab-pendientes" style="display:none;overflow-y:auto;flex:1"></div>
     <div id="admin-tab-pagos" style="display:none;overflow-y:auto;flex:1"></div>
     <div id="admin-tab-retos" style="display:none;overflow-y:auto;flex:1;flex-direction:column"></div>
-  </div>
-  <div class="admin-editor" id="admin-editor">
     <div class="admin-empty-state" id="admin-empty">
       <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
         <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/>
@@ -2369,17 +2405,41 @@ async function enviarYaPague(){
   errEl.style.display = 'none'; okEl.style.display = 'none'
   if(!email){ errEl.textContent = 'Ingresa tu correo.'; errEl.style.display = 'block'; return }
   if(!file){ errEl.textContent = 'Sube el comprobante de pago.'; errEl.style.display = 'block'; return }
+  const allowedTypes = ['image/png', 'image/jpeg', 'image/webp']
+  if(!allowedTypes.includes(file.type)){
+    errEl.textContent = 'El comprobante debe ser una imagen PNG, JPG o WebP.'
+    errEl.style.display = 'block'
+    return
+  }
+  if(file.size > 10 * 1024 * 1024){
+    errEl.textContent = 'La imagen pesa demasiado. Sube un comprobante de máximo 10 MB.'
+    errEl.style.display = 'block'
+    return
+  }
   btn.disabled = true; btn.textContent = 'Subiendo comprobante…'
 
   // Subir imagen a Supabase Storage
-  const ext = file.name.split('.').pop()
-  const filename = `comprobante_${Date.now()}.${ext}`
-  const { error: uploadErr } = await supa.storage.from('comprobantes').upload(filename, file)
-  const comprobante_url = uploadErr ? '(sin imagen)' : filename
+  const ext = file.type === 'image/png' ? 'png' : file.type === 'image/webp' ? 'webp' : 'jpg'
+  const safeEmail = email.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 48) || 'usuario'
+  const filename = `${safeEmail}/comprobante_${Date.now()}.${ext}`
+  const { error: uploadErr } = await supa.storage.from('comprobantes').upload(filename, file, { contentType: file.type, upsert: false })
+  if(uploadErr){
+    errEl.textContent = 'No pudimos subir el comprobante: ' + uploadErr.message
+    errEl.style.display = 'block'
+    btn.disabled = false
+    btn.textContent = 'Notificar mi pago →'
+    return
+  }
 
   btn.textContent = 'Enviando…'
-  const { error } = await supa.from('pagos_pendientes').insert({ email, referencia_bold: comprobante_url, estado: 'pendiente' })
-  if(error){ errEl.textContent = 'Error al enviar. Intenta de nuevo.'; errEl.style.display = 'block'; btn.disabled = false; btn.textContent = 'Notificar mi pago →'; return }
+  const { error } = await supa.from('pagos_pendientes').insert({ email, referencia_bold: filename, estado: 'pendiente' })
+  if(error){
+    errEl.textContent = 'El comprobante subió, pero no pudimos registrar el pago: ' + error.message
+    errEl.style.display = 'block'
+    btn.disabled = false
+    btn.textContent = 'Notificar mi pago →'
+    return
+  }
   okEl.textContent = '¡Recibido! Activaremos tu cuenta en menos de 24 horas hábiles. ✓'
   okEl.style.display = 'block'
   btn.textContent = 'Enviado ✓'
@@ -3334,7 +3394,45 @@ function showAdminBtn(){
   if(isAdmin()) document.getElementById('admin-btn').style.display = 'block'
 }
 
-let adminCurrentTab = 'articulos'
+let adminCurrentTab = 'stats'
+
+function setAdminCount(id, count, kind){
+  const el = document.getElementById(id)
+  if(!el) return
+  el.textContent = count
+  el.className = `admin-tab-count ${kind || ''}`.trim()
+  el.style.display = count > 0 ? 'inline-flex' : 'none'
+}
+
+function adminPaymentInitials(email){
+  const name = (email || '').split('@')[0].replace(/[^a-z0-9]+/gi, ' ').trim()
+  const parts = name ? name.split(/\s+/) : ['P']
+  return parts.slice(0,2).map(p => p[0]).join('').toUpperCase()
+}
+
+function adminComprobanteUrl(path){
+  return `https://rpgagnnhsefwaethszfl.supabase.co/storage/v1/object/public/comprobantes/${path}`
+}
+
+function renderAdminPaymentRows(pagos, limit){
+  const items = (pagos || []).filter(p => p.estado !== 'aprobado').slice(0, limit || pagos.length)
+  if(!items.length) return '<div class="admin-empty-note">No hay pagos pendientes por aprobar.</div>'
+  return `<div class="admin-payment-list">${items.map(p => {
+    const fecha = new Date(p.created_at).toLocaleDateString('es-CO',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})
+    const hasFile = p.referencia_bold && p.referencia_bold !== '(sin imagen)'
+    return `<div class="stat-card admin-payment-row">
+      <div class="admin-avatar">${adminPaymentInitials(p.email)}</div>
+      <div class="admin-row-main">
+        <div class="admin-row-title">${p.email}</div>
+        <div class="admin-row-meta">${fecha}${hasFile ? ' · comprobante recibido' : ' · sin imagen'}</div>
+      </div>
+      <div class="admin-row-actions">
+        ${hasFile ? `<a class="admin-mini-btn" href="${adminComprobanteUrl(p.referencia_bold)}" target="_blank">📎 Ver</a>` : ''}
+        <button class="admin-mini-btn approve" onclick="aprobarPago('${p.id}','${p.email}',this)">Aprobar</button>
+      </div>
+    </div>`
+  }).join('')}</div>`
+}
 
 function switchAdminTab(tab){
   adminCurrentTab = tab
@@ -3344,9 +3442,12 @@ function switchAdminTab(tab){
   document.getElementById('admin-tab-pendientes').style.display = tab === 'pendientes' ? 'block' : 'none'
   document.getElementById('admin-tab-pagos').style.display = tab === 'pagos' ? 'block' : 'none'
   document.getElementById('admin-tab-retos').style.display = tab === 'retos' ? 'flex' : 'none'
+  document.getElementById('admin-empty').style.display = tab === 'articulos' ? 'flex' : 'none'
+  document.getElementById('admin-form-wrap').style.display = 'none'
   ;['articulos','stats','pendientes','pagos','retos'].forEach(t =>
     document.getElementById('tab-'+t).classList.toggle('active', tab === t)
   )
+  if(tab === 'articulos') loadAdminPosts()
   if(tab === 'stats') loadAdminStats()
   if(tab === 'pendientes') loadAdminPendientes()
   if(tab === 'pagos') loadAdminPagos()
@@ -3356,30 +3457,51 @@ function switchAdminTab(tab){
 async function loadAdminPagos(){
   const el = document.getElementById('admin-tab-pagos')
   el.innerHTML = '<div style="padding:20px;color:rgba(255,255,255,0.3);font-size:12px">Cargando pagos…</div>'
-  const { data: pagos } = await supa.from('pagos_pendientes').select('*').order('created_at', { ascending: false })
-  if(!pagos?.length){
-    el.innerHTML = '<div style="padding:24px;color:rgba(255,255,255,0.2);font-size:13px;text-align:center">No hay pagos pendientes</div>'
+  const { data: pagos, error } = await supa.from('pagos_pendientes').select('*').order('created_at', { ascending: false })
+  if(error){
+    el.innerHTML = `<div class="stats-wrap"><div class="admin-error-note">No se pudieron cargar los pagos: ${error.message}</div></div>`
     return
   }
-  el.innerHTML = '<div class="stats-wrap">' + pagos.map(p => {
-    const fecha = new Date(p.created_at).toLocaleDateString('es-CO',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})
-    const esAprobado = p.estado === 'aprobado'
-    return `<div class="stat-card" style="display:flex;align-items:center;gap:12px;justify-content:space-between;opacity:${esAprobado?'0.45':'1'}">
-      <div style="min-width:0;flex:1">
-        <div style="font-size:12px;color:var(--blanco);font-weight:500">${p.email}</div>
-        <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:2px">${fecha}</div>
-        ${p.referencia_bold && p.referencia_bold !== '(sin imagen)' ? `<a href="https://rpgagnnhsefwaethszfl.supabase.co/storage/v1/object/public/comprobantes/${p.referencia_bold}" target="_blank" style="font-size:11px;color:var(--turquesa);text-decoration:none">📎 Ver comprobante</a>` : ''}
-        <div style="font-size:10px;color:${esAprobado?'#4ade80':'var(--oro)'}">${esAprobado?'✓ Aprobado':'Pendiente'}</div>
-      </div>
-      ${!esAprobado ? `<button onclick="aprobarPago('${p.id}','${p.email}',this)" style="background:rgba(74,222,128,0.15);border:1px solid rgba(74,222,128,0.3);color:#4ade80;border-radius:6px;padding:6px 12px;font-size:11px;cursor:pointer;flex-shrink:0">✓ Aprobar</button>` : ''}
-    </div>`
-  }).join('') + '</div>'
+  setAdminCount('admin-pagos-count', (pagos || []).filter(p => p.estado !== 'aprobado').length, 'danger')
+  if(!pagos?.length){
+    el.innerHTML = '<div class="stats-wrap"><div class="admin-empty-note">No hay pagos registrados todavía.</div></div>'
+    return
+  }
+  el.innerHTML = `<div class="stats-wrap">
+    <div class="admin-section-head">
+      <div class="admin-section-title">Pagos pendientes de aprobar</div>
+    </div>
+    ${renderAdminPaymentRows(pagos)}
+    <div class="admin-section-head" style="margin-top:8px">
+      <div class="admin-section-title">Historial reciente</div>
+    </div>
+    <div class="admin-payment-list">${pagos.slice(0,8).map(p => {
+      const fecha = new Date(p.created_at).toLocaleDateString('es-CO',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})
+      const esAprobado = p.estado === 'aprobado'
+      return `<div class="stat-card admin-payment-row" style="opacity:${esAprobado?'0.5':'1'}">
+        <div class="admin-avatar">${adminPaymentInitials(p.email)}</div>
+        <div class="admin-row-main">
+          <div class="admin-row-title">${p.email}</div>
+          <div class="admin-row-meta">${fecha} · ${esAprobado?'aprobado':'pendiente'}</div>
+        </div>
+        <div class="admin-row-actions">
+          ${p.referencia_bold && p.referencia_bold !== '(sin imagen)' ? `<a class="admin-mini-btn" href="${adminComprobanteUrl(p.referencia_bold)}" target="_blank">📎 Ver</a>` : ''}
+        </div>
+      </div>`
+    }).join('')}</div>
+  </div>`
 }
 
 async function aprobarPago(pagoId, email, btn){
   btn.disabled = true; btn.textContent = '…'
   // Marcar pago como aprobado
-  await supa.from('pagos_pendientes').update({ estado: 'aprobado' }).eq('id', pagoId)
+  const { error: pagoError } = await supa.from('pagos_pendientes').update({ estado: 'aprobado' }).eq('id', pagoId)
+  if(pagoError){
+    btn.disabled = false
+    btn.textContent = 'Error'
+    alert('No se pudo aprobar el pago: ' + pagoError.message)
+    return
+  }
   // Buscar usuario por email en profiles
   const { data: prof } = await supa.from('profiles').select('id').eq('email', email).single()
   if(prof){
@@ -3387,6 +3509,7 @@ async function aprobarPago(pagoId, email, btn){
   }
   btn.closest('.stat-card').style.opacity = '0.45'
   btn.textContent = '✓ Aprobado'
+  loadAdminStats()
 }
 
 async function loadAdminRetos(){
@@ -3568,13 +3691,19 @@ async function loadAdminPendientes(){
   el.innerHTML = '<div style="padding:20px;color:rgba(255,255,255,0.3);font-size:12px">Cargando pendientes…</div>'
 
   // Cargar insignias pendientes con info del usuario
-  const { data: pending } = await supa.from('badges')
+  const { data: pending, error } = await supa.from('badges')
     .select('id, user_id, badge_id, status, created_at')
     .eq('status', 'pending')
     .order('created_at', { ascending: false })
 
+  if(error){
+    el.innerHTML = `<div class="stats-wrap"><div class="admin-error-note">No se pudieron cargar los pendientes: ${error.message}</div></div>`
+    return
+  }
+
+  setAdminCount('admin-pendientes-count', pending?.length || 0, 'warn')
   if(!pending?.length){
-    el.innerHTML = '<div style="padding:24px;color:rgba(255,255,255,0.2);font-size:13px;text-align:center">No hay solicitudes pendientes</div>'
+    el.innerHTML = '<div class="stats-wrap"><div class="admin-empty-note">No hay solicitudes pendientes.</div></div>'
     return
   }
 
@@ -3586,7 +3715,7 @@ async function loadAdminPendientes(){
 
   const RANGO_PTS = { '1-5':50, '6-10':100, '11-20':175, '21-50':300, '50+':500 }
 
-  el.innerHTML = `<div class="stats-wrap">` + pending.map(item => {
+  el.innerHTML = `<div class="stats-wrap"><div class="admin-section-head"><div class="admin-section-title">Solicitudes pendientes</div></div>` + pending.map(item => {
     const p = profileMap[item.user_id] || {}
     const def = BADGE_DEFS.find(b => b.id === item.badge_id)
     const isRefPasado = item.badge_id === 'referidos-pasados'
@@ -3606,8 +3735,8 @@ async function loadAdminPendientes(){
         </div>
       </div>
       <div style="display:flex;gap:6px;flex-shrink:0">
-        <button onclick="aprobarInsignia('${item.id}','${item.user_id}','${item.badge_id}', this)" style="background:rgba(74,222,128,0.15);border:1px solid rgba(74,222,128,0.3);color:#4ade80;border-radius:6px;padding:6px 12px;font-size:11px;cursor:pointer">✓ Aprobar</button>
-        <button onclick="rechazarInsignia('${item.id}', this)" style="background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.2);color:#ef4444;border-radius:6px;padding:6px 12px;font-size:11px;cursor:pointer">✕</button>
+        <button class="admin-mini-btn approve" onclick="aprobarInsignia('${item.id}','${item.user_id}','${item.badge_id}', this)">Aprobar</button>
+        <button class="admin-mini-btn danger" onclick="rechazarInsignia('${item.id}', this)">✕</button>
       </div>
     </div>`
   }).join('') + `</div>`
@@ -3667,6 +3796,7 @@ async function rechazarInsignia(badgeRowId, btn){
 
 function openAdmin(){
   document.getElementById('admin-panel').classList.add('open')
+  switchAdminTab('stats')
   loadAdminPosts()
 }
 function closeAdmin(){
@@ -3719,59 +3849,104 @@ async function loadAdminStats(){
   // usuarios últimos 7 días
   const hace7 = new Date(Date.now() - 7*24*60*60*1000).toISOString()
   const { count: nuevos7 } = await supa.from('profiles').select('*', { count: 'exact', head: true }).gte('created_at', hace7)
+  const { data: pagos, error: pagosError } = await supa.from('pagos_pendientes').select('*').order('created_at', { ascending: false })
+  const { data: pendingBadges, error: pendingError } = await supa.from('badges')
+    .select('id, user_id, badge_id, status, created_at')
+    .eq('status', 'pending')
+    .order('created_at', { ascending: false })
+  const pagosPendientes = (pagos || []).filter(p => p.estado !== 'aprobado')
+  setAdminCount('admin-pagos-count', pagosPendientes.length, 'danger')
+  setAdminCount('admin-pendientes-count', pendingBadges?.length || 0, 'warn')
 
-  el.innerHTML = `<div class="stats-wrap">
+  el.innerHTML = `<div class="admin-dashboard-head">
+    <div>
+      <div class="admin-dashboard-title">Estadísticas · ${new Date().toLocaleDateString('es-CO', { month:'long', year:'numeric' })}</div>
+      <div class="admin-dashboard-kicker">Resumen operativo</div>
+    </div>
+  </div>
+  <div class="stats-wrap">
 
-    <div class="stat-card" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;background:none;border:none;padding:0">
-      <div class="stat-card" style="text-align:center">
+    <div class="admin-metrics-grid">
+      <div class="stat-card admin-metric-card">
         <div class="stat-card-title">Usuarios</div>
         <div class="stat-big">${totalUsers||0}</div>
         <div class="stat-sub">+${nuevos7||0} esta semana</div>
       </div>
-      <div class="stat-card" style="text-align:center">
+      <div class="stat-card admin-metric-card">
         <div class="stat-card-title">Tests completados</div>
         <div class="stat-big">${testsCount}</div>
         <div class="stat-sub">${WORLDS.length} mundos</div>
       </div>
-    </div>
-
-    <div class="stat-card">
-      <div class="stat-card-title">Mundos más visitados</div>
-      <div class="stat-bar-wrap">
-        ${visitsSorted.map(w => `
-          <div class="stat-bar-row">
-            <div class="stat-bar-label">${WORLD_NAMES[w]}</div>
-            <div class="stat-bar-bg"><div class="stat-bar-fill" style="width:${Math.round(visitCount[w]/maxVisits*100)}%;background:${WORLD_COLORS[w]}"></div></div>
-            <div style="font-size:11px;color:rgba(255,255,255,0.4);width:24px;text-align:right">${visitCount[w]}</div>
-          </div>`).join('')}
+      <div class="stat-card admin-metric-card danger">
+        <div class="stat-card-title">Pagos pendientes</div>
+        <div class="stat-big">${pagosPendientes.length}</div>
+        <div class="stat-sub">requieren revisión</div>
+      </div>
+      <div class="stat-card admin-metric-card warn">
+        <div class="stat-card-title">Solicitudes</div>
+        <div class="stat-big">${pendingBadges?.length || 0}</div>
+        <div class="stat-sub">insignias por aprobar</div>
       </div>
     </div>
 
-    <div class="stat-card">
-      <div class="stat-card-title">¿Cómo llegaron?</div>
-      ${llegadoSorted.map(([k,v]) => `
-        <div class="stat-row">
-          <span class="stat-row-label">${k}</span>
-          <span class="stat-row-val">${v}</span>
-        </div>`).join('') || '<div style="font-size:12px;color:rgba(255,255,255,0.2)">Sin datos aún</div>'}
+    <div class="admin-ops-grid">
+      <div>
+        <div class="admin-section-head">
+          <div class="admin-section-title">Pagos recientes pendientes de aprobar</div>
+          <button class="admin-section-link" onclick="switchAdminTab('pagos')">Ver todos</button>
+        </div>
+        ${pagosError ? `<div class="admin-error-note">No se pudieron cargar los pagos: ${pagosError.message}</div>` : renderAdminPaymentRows(pagos || [], 3)}
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-title">Pendientes rápidos</div>
+        ${pendingError ? `<div class="admin-error-note">No se pudieron cargar pendientes: ${pendingError.message}</div>` : (pendingBadges?.length ? pendingBadges.slice(0,4).map(item => `
+          <div class="stat-row">
+            <span class="stat-row-label">${item.badge_id}</span>
+            <span class="stat-row-val" style="font-size:10px;color:var(--oro)">Revisar</span>
+          </div>
+        `).join('') : '<div class="admin-empty-note">No hay solicitudes pendientes.</div>')}
+      </div>
     </div>
 
-    <div class="stat-card">
-      <div class="stat-card-title">Top países</div>
-      ${paisesSorted.map(([k,v]) => `
-        <div class="stat-row">
-          <span class="stat-row-label">${k}</span>
-          <span class="stat-row-val">${v}</span>
-        </div>`).join('') || '<div style="font-size:12px;color:rgba(255,255,255,0.2)">Sin datos aún</div>'}
-    </div>
+    <div class="admin-lower-grid">
+      <div class="stat-card">
+        <div class="stat-card-title">Mundos más visitados</div>
+        <div class="stat-bar-wrap">
+          ${visitsSorted.map(w => `
+            <div class="stat-bar-row">
+              <div class="stat-bar-label">${WORLD_NAMES[w]}</div>
+              <div class="stat-bar-bg"><div class="stat-bar-fill" style="width:${Math.round(visitCount[w]/maxVisits*100)}%;background:${WORLD_COLORS[w]}"></div></div>
+              <div style="font-size:11px;color:rgba(255,255,255,0.4);width:24px;text-align:right">${visitCount[w]}</div>
+            </div>`).join('')}
+        </div>
+      </div>
 
-    <div class="stat-card">
-      <div class="stat-card-title">Últimos registros</div>
-      ${(recentUsers||[]).map(u => `
-        <div class="stat-row">
-          <span class="stat-row-label">${u.nombres||'Sin nombre'} ${u.apellidos||''} ${u.pais ? '· '+u.pais : ''}</span>
-          <span class="stat-row-val" style="font-size:10px;color:rgba(255,255,255,0.25)">${new Date(u.created_at).toLocaleDateString('es-CO',{day:'numeric',month:'short'})}</span>
-        </div>`).join('') || '<div style="font-size:12px;color:rgba(255,255,255,0.2)">Sin usuarios aún</div>'}
+      <div class="stat-card">
+        <div class="stat-card-title">¿Cómo llegaron?</div>
+        ${llegadoSorted.map(([k,v]) => `
+          <div class="stat-row">
+            <span class="stat-row-label">${k}</span>
+            <span class="stat-row-val">${v}</span>
+          </div>`).join('') || '<div style="font-size:12px;color:rgba(255,255,255,0.2)">Sin datos aún</div>'}
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-card-title">Top países</div>
+        ${paisesSorted.map(([k,v]) => `
+          <div class="stat-row">
+            <span class="stat-row-label">${k}</span>
+            <span class="stat-row-val">${v}</span>
+          </div>`).join('') || '<div style="font-size:12px;color:rgba(255,255,255,0.2)">Sin datos aún</div>'}
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-card-title">Últimos registros</div>
+        ${(recentUsers||[]).map(u => `
+          <div class="stat-row">
+            <span class="stat-row-label">${u.nombres||'Sin nombre'} ${u.apellidos||''} ${u.pais ? '· '+u.pais : ''}</span>
+            <span class="stat-row-val" style="font-size:10px;color:rgba(255,255,255,0.25)">${new Date(u.created_at).toLocaleDateString('es-CO',{day:'numeric',month:'short'})}</span>
+          </div>`).join('') || '<div style="font-size:12px;color:rgba(255,255,255,0.2)">Sin usuarios aún</div>'}
+      </div>
     </div>
 
   </div>`
